@@ -19,6 +19,7 @@ $(function() {
     var destUrl;
     destUrl = 'http://127.0.0.1:9021/api/posts';
     return getToken().then(function(token) {
+      alertify.log("保存中 ......");
       console.log(token);
       return $.ajax({
         type: "POST",

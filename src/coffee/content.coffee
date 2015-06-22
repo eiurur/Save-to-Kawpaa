@@ -24,6 +24,8 @@ $ ->
 
     getToken()
     .then (token) ->
+      alertify.log "保存中 ......"
+
       console.log token
 
       # post.token = token
