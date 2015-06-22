@@ -4,7 +4,7 @@ gulp.task 'build', [
   'bower_css'
   'bower_font'
   'coffee'
-  'scss'
+  'sass'
   'jade'
   'images_copy'
 ]

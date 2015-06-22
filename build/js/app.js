@@ -15,7 +15,7 @@ $(function() {
       token: token
     };
     return chrome.storage.sync.set(item, function() {
-      return $('#console').html('tststs');
+      return $('#console').html((moment().format('YYYY MMMM Do, h:mm:ss')) + ": トークンを保存しました");
     });
   });
 });
