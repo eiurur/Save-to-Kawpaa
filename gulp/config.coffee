@@ -45,6 +45,7 @@ module.exports =
       'bower_components/bootstrap/dist/js/bootstrap.min.js'
       'bower_components/es6-promise/promise.min.js'
       'bower_components/moment/moment.js'
+      'bower_components/alertify.js/lib/alertify.js'
     ]
     dest: dest + "/js/vendors/"
 
@@ -52,6 +53,8 @@ module.exports =
     src: [
       'bower_components/font-awesome/css/font-awesome.min.css'
       'bower_components/bootstrap/dist/css/bootstrap.min.css'
+      'bower_components/alertify.js/themes/alertify.core.css'
+      'bower_components/alertify.js/themes/alertify.default.css'
     ]
     dest: dest + "/css/vendors/"
 

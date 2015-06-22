@@ -6,7 +6,7 @@ $(function() {
       keys = ['token'];
       return chrome.storage.sync.get(keys, function(item) {
         console.log(item);
-        if (item.token === void 0) {
+        if (item.token === void 0 || item.token === '') {
           console.log('token is undefined');
           return reject(void 0);
         }
@@ -31,10 +31,14 @@ $(function() {
           "Access-Control-Allow-Origin": "*"
         }
       }).done(function(data) {
-        return console.log(data);
+        console.log(data);
+        return alertify.success("保存しました。");
       }).fail(function(err) {
         return console.log(err);
       });
+    })["catch"](function(err) {
+      console.log(err);
+      return alertify.error("トークンに誤りがあります。\nもう一度確認してみてください。");
     });
   };
   return (function() {

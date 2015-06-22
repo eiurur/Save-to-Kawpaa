@@ -16,7 +16,10 @@
   "dependencies": {
     "jquery": "~2.1.4",
     "bootstrap": "~3.3.5",
-    "font-awesome": "~4.3.0"
+    "font-awesome": "~4.3.0",
+    "moment": "~2.10.3",
+    "notify.js": "~1.2.5",
+    "alertify.js": "~0.3.11"
   },
   "devDependencies": {}
 }

@@ -9,7 +9,7 @@ $ ->
 
         console.log item
 
-        if item.token is undefined
+        if item.token is undefined or item.token is ''
           console.log 'token is undefined'
           return reject undefined
 
@@ -38,8 +38,12 @@ $ ->
           "Access-Control-Allow-Origin": "*"
       .done (data) ->
         console.log data
+        alertify.success "保存しました。"
       .fail (err) ->
         console.log err
+    .catch (err) ->
+      console.log err
+      alertify.error "トークンに誤りがあります。\nもう一度確認してみてください。"
 
   do ->
 
