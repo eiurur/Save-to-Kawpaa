@@ -1,6 +1,6 @@
 {
   "name": "Save_to_Ona_it_Later",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage": "https://github.com/eiurur/",
   "authors": [
     "eiurur"
@@ -18,7 +18,6 @@
     "bootstrap": "~3.3.5",
     "font-awesome": "~4.3.0",
     "moment": "~2.10.3",
-    "notify.js": "~1.2.5",
     "alertify.js": "~0.3.11"
   },
   "devDependencies": {}
