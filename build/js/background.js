@@ -13,13 +13,17 @@ $(function() {
       return chrome.tabs.executeScript(null, {
         file: 'build/js/vendors/lib.js'
       }, function() {
-        return chrome.tabs.executeScript(null, {
-          code: "var info = " + infoStr + ";"
+        return chrome.tabs.insertCSS(null, {
+          file: 'build/css/vendors/lib.css'
         }, function() {
           return chrome.tabs.executeScript(null, {
-            file: 'build/js/content.js'
+            code: "var info = " + infoStr + ";"
           }, function() {
-            console.log('Script injected.');
+            return chrome.tabs.executeScript(null, {
+              file: 'build/js/content.js'
+            }, function() {
+              console.log('Script injected.');
+            });
           });
         });
       });
