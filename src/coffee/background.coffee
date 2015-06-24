@@ -1,6 +1,6 @@
 $ ->
 
-  # ingo
+  #
   executeOnaItLaterScript = (infoStr) ->
 
     # これってここか？
@@ -9,8 +9,8 @@ $ ->
 
       console.log item
 
-      if item.token is undefined
-        alert 'optionページからトークンを入力してください'
+      if item.token is undefined or item.token is ''
+        alert 'トークンが入力されていません。オプションページからトークンを入力してください'
         return
 
       console.log item.token

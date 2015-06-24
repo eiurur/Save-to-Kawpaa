@@ -5,8 +5,8 @@ $(function() {
     keys = ['token'];
     return chrome.storage.sync.get(keys, function(item) {
       console.log(item);
-      if (item.token === void 0) {
-        alert('optionページからトークンを入力してください');
+      if (item.token === void 0 || item.token === '') {
+        alert('トークンが入力されていません。オプションページからトークンを入力してください');
         return;
       }
       console.log(item.token);
