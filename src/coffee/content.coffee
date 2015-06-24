@@ -6,25 +6,20 @@ $ ->
 
       keys = [ 'token' ]
       chrome.storage.sync.get keys, (item) ->
-
         console.log item
-
-        if item.token is undefined or item.token is ''
-          console.log 'token is undefined'
-          return reject undefined
-
-        console.log item.token
+        return reject undefined　if item.token is undefined or item.token is ''
         return resolve item.token
 
   save2Server = (post) ->
 
     # 開発用
     destUrl = 'http://127.0.0.1:9021/api/posts'
+
+    # 本番用
     # destUrl = 'https://ona-it-later.herokuapp.com/api/posts'
 
     getToken()
     .then (token) ->
-      alertify.log "保存中 ......"
 
       console.log token
 
@@ -40,22 +35,26 @@ $ ->
           "Access-Control-Allow-Origin": "*"
       .done (data) ->
         console.log data
+
+        chrome.runtime.sendMessage({ "newIconPath" : 'build/images/blue/icon19.png' })
+
         alertify.success "保存しました。"
       .fail (err) ->
         console.log err
+
     .catch (err) ->
       console.log err
       alertify.error "トークンに誤りがあります。\nもう一度確認してみてください。"
 
   do ->
 
+    alertify.log "保存中 ......"
+
     data = {}
 
     console.log '=============>'
 
     console.log '=======> info'
-
-    #
     console.log info
     # info = JSON.parse info
     # console.log info.srcUrl
@@ -77,11 +76,9 @@ $ ->
     console.log siteUrl2 = $('meta[property="og:url"]').attr('content')
     data.siteUrl = siteUrl1 or siteUrl2
 
-    # URL
+    # URL と type
     # .jpgとかのURL。
-    # コンテキストメニューからなら
-
-    #そうでないなら
+    # コンテキストメニューから、かつ画像なら image そうでないなら link
     if info?.mediaType? && info.mediaType is 'image'
       data.url = info.srcUrl
       data.type = 'image'
@@ -89,7 +86,7 @@ $ ->
       data.url = data.siteUrl
       data.type = 'link'
 
-    # ホスト名?
+    # ホスト名
     console.log hostName = location.host
     data.hostName = hostName
 
@@ -112,7 +109,7 @@ $ ->
     # MongooseのDefaultが動作しないので、初期値を手動で設定
     data.isPrivate = true
     data.isArchive = false
-    data.isDone = false
+    # data.isDone    = false
 
     console.log data
 

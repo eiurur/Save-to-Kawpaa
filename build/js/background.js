@@ -11,18 +11,26 @@ $(function() {
       }
       console.log(item.token);
       return chrome.tabs.executeScript(null, {
-        file: 'build/js/vendors/lib.js'
+        file: 'bower_components/jquery/dist/jquery.min.js'
       }, function() {
-        return chrome.tabs.insertCSS(null, {
-          file: 'build/css/vendors/lib.css'
+        return chrome.tabs.executeScript(null, {
+          file: 'bower_components/alertify.js/lib/alertify.min.js'
         }, function() {
-          return chrome.tabs.executeScript(null, {
-            code: "var info = " + infoStr + ";"
+          return chrome.tabs.insertCSS(null, {
+            file: 'bower_components/alertify.js/themes/alertify.core.css'
           }, function() {
-            return chrome.tabs.executeScript(null, {
-              file: 'build/js/content.js'
+            return chrome.tabs.insertCSS(null, {
+              file: 'bower_components/alertify.js/themes/alertify.default.css'
             }, function() {
-              console.log('Script injected.');
+              return chrome.tabs.executeScript(null, {
+                code: "var info = " + infoStr + ";"
+              }, function() {
+                return chrome.tabs.executeScript(null, {
+                  file: 'build/js/content.js'
+                }, function() {
+                  console.log('Script injected.');
+                });
+              });
             });
           });
         });
@@ -52,5 +60,15 @@ $(function() {
     'contexts': ['image'],
     'id': 'image'
   });
-  return chrome.contextMenus.onClicked.addListener(clickHandler);
+  chrome.contextMenus.onClicked.addListener(clickHandler);
+
+  /*
+  Icon
+   */
+  return chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    return chrome.browserAction.setIcon({
+      path: request.newIconPath,
+      tabId: sender.tab.id
+    });
+  });
 });

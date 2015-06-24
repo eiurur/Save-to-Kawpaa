@@ -15,16 +15,20 @@ $ ->
 
       console.log item.token
 
-      chrome.tabs.executeScript null, { file: 'build/js/vendors/lib.js' }, ->
+      # chrome.tabs.executeScript null, { file: 'build/js/vendors/lib.min.js' }, ->
+      chrome.tabs.executeScript null, { file: 'bower_components/jquery/dist/jquery.min.js' }, ->
+        chrome.tabs.executeScript null, { file: 'bower_components/alertify.js/lib/alertify.min.js' }, ->
 
-        chrome.tabs.insertCSS null, { file: 'build/css/vendors/lib.css' }, ->
+          # chrome.tabs.insertCSS null, { file: 'build/css/vendors/lib.min.css' }, ->
+          chrome.tabs.insertCSS null, { file: 'bower_components/alertify.js/themes/alertify.core.css' }, ->
+            chrome.tabs.insertCSS null, { file: 'bower_components/alertify.js/themes/alertify.default.css' }, ->
 
-          # 文字列で渡しても、content.jsではobjectとして受け取る。なので名前もinfo
-          chrome.tabs.executeScript null, { code: "var info = #{infoStr};" }, ->
+              # 文字列で渡しても、content.jsではobjectとして受け取る。なので名前もinfo
+              chrome.tabs.executeScript null, { code: "var info = #{infoStr};" }, ->
 
-            chrome.tabs.executeScript null, { file: 'build/js/content.js' }, ->
-              console.log 'Script injected.'
-              return
+                chrome.tabs.executeScript null, { file: 'build/js/content.js' }, ->
+                  console.log 'Script injected.'
+                  return
 
   ###
   Browser Action
@@ -49,3 +53,14 @@ $ ->
     'id': 'image'
 
   chrome.contextMenus.onClicked.addListener(clickHandler)
+
+
+
+  ###
+  Icon
+  ###
+  chrome.runtime.onMessage.addListener (request, sender, sendResponse) ->
+    # read `newIconPath` from request and read `tab.id` from sender
+    chrome.browserAction.setIcon
+      path: request.newIconPath
+      tabId: sender.tab.id

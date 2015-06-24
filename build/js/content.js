@@ -7,10 +7,8 @@ $(function() {
       return chrome.storage.sync.get(keys, function(item) {
         console.log(item);
         if (item.token === void 0 || item.token === '') {
-          console.log('token is undefined');
           return reject(void 0);
         }
-        console.log(item.token);
         return resolve(item.token);
       });
     });
@@ -19,7 +17,6 @@ $(function() {
     var destUrl;
     destUrl = 'http://127.0.0.1:9021/api/posts';
     return getToken().then(function(token) {
-      alertify.log("保存中 ......");
       console.log(token);
       return $.ajax({
         type: "POST",
@@ -33,6 +30,9 @@ $(function() {
         }
       }).done(function(data) {
         console.log(data);
+        chrome.runtime.sendMessage({
+          "newIconPath": 'build/images/blue/icon19.png'
+        });
         return alertify.success("保存しました。");
       }).fail(function(err) {
         return console.log(err);
@@ -44,6 +44,7 @@ $(function() {
   };
   return (function() {
     var data, description1, description2, favicon, hostName, siteImage, siteName, siteUrl1, siteUrl2, title1, title2;
+    alertify.log("保存中 ......");
     data = {};
     console.log('=============>');
     console.log('=======> info');
@@ -80,7 +81,6 @@ $(function() {
     data.favicon = favicon;
     data.isPrivate = true;
     data.isArchive = false;
-    data.isDone = false;
     console.log(data);
     return save2Server(data);
   })();
