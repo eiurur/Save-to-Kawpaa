@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Save to Ona it Later",
   "description": "",
-  "version": "0.1.1",
+  "version": "0.2.1",
   "permissions": [
     "tabs",
     "storage",
@@ -31,5 +31,17 @@
     "16": "build/images/blue/icon19.png",
     "48": "build/images/blue/icon48.png",
     "128": "build/images/blue/icon128.png"
+  },
+  "commands": {
+    // "toggle-feature": {
+    //   "suggested_key": { "default": "Ctrl+Shift+O" },
+    //   "description": "Send a 'toggle-feature' event to the extension"
+    // },
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+S",
+        "mac": "MacCtrl+Shift+S"
+      }
+    }
   }
 }
