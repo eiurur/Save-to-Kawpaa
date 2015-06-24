@@ -64,3 +64,11 @@ $ ->
     chrome.browserAction.setIcon
       path: request.newIconPath
       tabId: sender.tab.id
+
+
+  ###
+  Shortcut Key
+  ###
+  chrome.commands.onCommand.addListener (command) ->
+    console.log command
+    executeOnaItLaterScript(null)

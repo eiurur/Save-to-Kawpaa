@@ -65,10 +65,18 @@ $(function() {
   /*
   Icon
    */
-  return chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     return chrome.browserAction.setIcon({
       path: request.newIconPath,
       tabId: sender.tab.id
     });
+  });
+
+  /*
+  Shortcut Key
+   */
+  return chrome.commands.onCommand.addListener(function(command) {
+    console.log(command);
+    return executeOnaItLaterScript(null);
   });
 });
