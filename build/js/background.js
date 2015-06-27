@@ -26,7 +26,7 @@ $(function() {
                 code: "var info = " + infoStr + ";"
               }, function() {
                 return chrome.tabs.executeScript(null, {
-                  file: 'build/js/content.js'
+                  file: 'build/js/content.min.js'
                 }, function() {
                   console.log('Script injected.');
                 });

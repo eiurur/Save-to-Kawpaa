@@ -36,6 +36,7 @@ $ ->
       .done (data) ->
         console.log data
 
+        # アイコンに色をつけて、完了したことをわかるようにする
         chrome.runtime.sendMessage({ "newIconPath" : 'build/images/blue/icon19.png' })
 
         alertify.success "保存しました。"
@@ -61,19 +62,32 @@ $ ->
 
     # タイトル
     console.log '=======> タイトル'
-    console.log title1 = $('head title').text()
-    console.log title2 = $('meta[property="og:title"]').attr('content')
+
+    title1 = $('head title').text()
+    console.log title1
+
+    title2 = $('meta[property="og:title"]').attr('content')
+    console.log title2
+
     data.title = title1 or title2
 
     # サイトの名前
     console.log '=======> サイトの名前'
-    console.log siteName = $('meta[property="og:site_name"').text()
+
+    siteName = $('meta[property="og:site_name"').text()
+    console.log siteName
+
     data.siteName = siteName
 
     # サイトURL
     console.log '=======> サイトのURL'
-    console.log siteUrl1 = $(location).attr('href')
-    console.log siteUrl2 = $('meta[property="og:url"]').attr('content')
+
+    siteUrl1 = $(location).attr('href')
+    console.log siteUrl1
+
+    siteUrl2 = $('meta[property="og:url"]').attr('content')
+    console.log siteUrl2
+
     data.siteUrl = siteUrl1 or siteUrl2
 
     # URL と type
@@ -83,27 +97,43 @@ $ ->
       data.url = info.srcUrl
       data.type = 'image'
     else
-      data.url = data.siteUrl
+      # bodyタグ内で一番最初の画像を引っ張ってくる
+      # $('body').attr('src', $('img').get(0).src)
+      firstImgUrlInBody = $('img').get(0).src
+      data.url = firstImgUrlInBody
       data.type = 'link'
 
     # ホスト名
-    console.log hostName = location.host
+    hostName = location.host
+    console.log hostName
+
     data.hostName = hostName
 
     # 説明
     console.log '=======> 説明'
-    console.log description1 = $('meta[name="description"]').attr('content')
-    console.log description2 = $('meta[property="og:description"]').attr('content')
+
+    description1 = $('meta[name="description"]').attr('content')
+    console.log description1
+
+    description2 = $('meta[property="og:description"]').attr('content')
+    console.log description2
+
     data.description = description1 or description2
 
     # 画像
     console.log '=======> サイトの画像'
-    console.log siteImage = $('meta[property="og:image"]').attr('content')
+
+    siteImage = $('meta[property="og:image"]').attr('content')
+    console.log siteImage
+
     data.siteImage = siteImage
 
     # favixon
     console.log '=======> faviconのURL'
-    console.log favicon = $('link[rel="shortcut icon"]').prop('href')
+
+    favicon = $('link[rel="shortcut icon"]').prop('href')
+    console.log favicon
+
     data.favicon = favicon
 
     # MongooseのDefaultが動作しないので、初期値を手動で設定

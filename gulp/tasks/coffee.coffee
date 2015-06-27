@@ -11,6 +11,7 @@ gulp.task 'coffee', ->
     .pipe $.coffee(bare: true)
     # .pipe $.concat('app.js')
     .pipe gulp.dest config.dest
+    .pipe $.stripDebug()
     .pipe $.rename suffix: '.min'
     .pipe $.uglify mangle: false
     .pipe gulp.dest config.dest

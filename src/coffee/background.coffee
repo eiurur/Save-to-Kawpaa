@@ -3,7 +3,6 @@ $ ->
   #
   executeOnaItLaterScript = (infoStr) ->
 
-    # これってここか？
     keys = [ 'token' ]
     chrome.storage.sync.get keys, (item) ->
 
@@ -26,7 +25,8 @@ $ ->
               # 文字列で渡しても、content.jsではobjectとして受け取る。なので名前もinfo
               chrome.tabs.executeScript null, { code: "var info = #{infoStr};" }, ->
 
-                chrome.tabs.executeScript null, { file: 'build/js/content.js' }, ->
+                # chrome.tabs.executeScript null, { file: 'build/js/content.js' }, ->
+                chrome.tabs.executeScript null, { file: 'build/js/content.min.js' }, ->
                   console.log 'Script injected.'
                   return
 
@@ -47,6 +47,7 @@ $ ->
     console.log infoStr
     executeOnaItLaterScript(infoStr)
 
+  # TODO: videoも追加
   chrome.contextMenus.create
     'title': 'Save to Ona it Later'
     'contexts': [ 'image' ]
@@ -60,7 +61,6 @@ $ ->
   Icon
   ###
   chrome.runtime.onMessage.addListener (request, sender, sendResponse) ->
-    # read `newIconPath` from request and read `tab.id` from sender
     chrome.browserAction.setIcon
       path: request.newIconPath
       tabId: sender.tab.id
