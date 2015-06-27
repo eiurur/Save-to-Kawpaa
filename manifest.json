@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
   "name": "Save to Ona it Later",
-  "description": "",
-  "version": "0.2.1",
+  "description": "あとで抜く",
+  "version": "0.2.6",
   "permissions": [
     "tabs",
     "storage",
@@ -21,7 +21,8 @@
   },
   "background": {
      "persistent": false,
-     "scripts": [ "build/js/vendors/lib.js", "build/js/background.js" ]
+     "//": [ "build/js/vendors/lib.js", "build/js/background.js" ],
+     "scripts": [ "build/js/vendors/lib.min.js", "build/js/background.min.js" ]
   },
   "web_accessible_resources": [
     "bower_components/jquery/dist/jquery.min.map"
@@ -33,14 +34,10 @@
     "128": "build/images/blue/icon128.png"
   },
   "commands": {
-    // "toggle-feature": {
-    //   "suggested_key": { "default": "Ctrl+Shift+O" },
-    //   "description": "Send a 'toggle-feature' event to the extension"
-    // },
     "_execute_browser_action": {
       "suggested_key": {
-        "default": "Ctrl+Shift+S",
-        "mac": "MacCtrl+Shift+S"
+        "default": "Ctrl+Shift+H",
+        "mac": "MacCtrl+Shift+H"
       }
     }
   }
