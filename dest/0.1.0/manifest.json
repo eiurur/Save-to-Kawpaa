@@ -1,0 +1,44 @@
+{
+  "manifest_version": 2,
+  "name": "Save to Ona it Later",
+  "description": "",
+  "version": "0.1.0",
+  "permissions": [
+    "tabs",
+    "storage",
+    "contextMenus",
+    "notifications",
+    // "http://127.0.0.1:*",
+    "http://*/*",
+    "https://*/*",
+    "chrome://favicon/"
+  ],
+  "browser_action": {
+     "default_icon": {
+        "19": "build/images/icon19.png",
+        "38": "build/images/icon38.png"
+     },
+     "default_title": "Save to Ona it Later"
+  },
+  "background": {
+     "persistent": false,
+     "scripts": [ "build/js/vendors/lib.js", "build/js/background.js" ]
+  },
+ // "background_page": "build/views/views/background.html",
+  // "content_scripts": [
+  //   {
+  //     "matches": ["https://twitter.com/*"],
+  //     "js": ["build/js/vendors/lib.min.js", "build/js/app.js"],
+  //     "run_at": "document_start"
+  //   }
+  // ],
+  "web_accessible_resources": [
+    "bower_components/jquery/dist/jquery.min.map"
+  ],
+  "options_page": "build/views/views/options.html",
+  "icons": {
+    "16": "build/images/icon19.png",
+    "48": "build/images/icon48.png",
+    "128": "build/images/icon128.png"
+  }
+}
