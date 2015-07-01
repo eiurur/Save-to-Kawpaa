@@ -1,24 +1,10 @@
-Save to ona it later
+Save to Ona it Later
 ====
 
-Web service to assist your masturbation life.
+Chrome Extension to assist your masturbation life.
 
-## Description
+This is to be used in conjunction with the Web Service (Ona it Later).
 
+## Satus
 
-
-## Demo
-
-## VS.
-
-## Requirement
-
-## Usage
-
-## Install
-
-## Contribution
-
-## Author
-
-[eiurur](https://github.com/eiurur)
+WIP
