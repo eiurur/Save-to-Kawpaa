@@ -1,6 +1,6 @@
 {
   "name": "Save_to_Ona_it_Later",
-  "version": "0.0.1",
+  "version": "0.2.8",
   "description": "",
   "author": "eiurur",
   "license": "MIT",
@@ -39,7 +39,8 @@
     "vinyl-source-stream": "^1.0.0"
   },
   "scripts": {
-    "coffee": "coffee -o js/  -w coffee/",
-    "test": "mocha --require espower-coffee/guess test/*.coffee"
+    "setup": "npm i & bower i & gulp build",
+    "start": "gulp",
+    "dist": "gulp dist"
   }
 }
