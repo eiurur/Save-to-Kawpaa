@@ -15,6 +15,9 @@ $(function() {
           "Access-Control-Allow-Origin": "*"
         }
       }).done(function(data) {
+        if ((data.statusCode != null) && data.statusCode !== 200) {
+          return reject(data);
+        }
         return resolve(data);
       }).fail(function(err) {
         return reject(err);
@@ -73,7 +76,11 @@ $(function() {
     return alertify.success("保存しました。");
   };
   displatyFailedResult = function(err) {
-    return alertify.error("トークンに誤りがあります。\nもう一度確認してみてください。");
+    if (err.statusCode) {
+      return alertify.error("Error: " + err.statusCode + " " + err.statusMessage);
+    } else {
+      return alertify.error("Error: トークンに誤りがあります。\nもう一度確認してみてください。");
+    }
   };
   return (function() {
     alertify.log("保存中 ......");

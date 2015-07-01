@@ -24,11 +24,9 @@ $ ->
         headers:
           "Access-Control-Allow-Origin": "*"
       .done (data) ->
-        # console.log data
+        return reject data if data.statusCode? and data.statusCode isnt 200
         return resolve data
-
       .fail (err) ->
-        # console.log err
         return reject err
 
   getToken = ->
@@ -148,7 +146,8 @@ $ ->
 
   # TODO: errに応じてメッセージを変える
   displatyFailedResult = (err) ->
-    alertify.error "トークンに誤りがあります。\nもう一度確認してみてください。"
+    if err.statusCode then alertify.error "Error: #{err.statusCode} #{err.statusMessage}"
+    else alertify.error "Error: トークンに誤りがあります。\nもう一度確認してみてください。"
 
 
   do ->

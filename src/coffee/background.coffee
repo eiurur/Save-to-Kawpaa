@@ -19,8 +19,8 @@ $ ->
               # 文字列で渡しても、content.jsではobjectとして受け取る。なので名前もinfo
               chrome.tabs.executeScript null, { code: "var info = #{infoStr};" }, ->
 
-                chrome.tabs.executeScript null, { file: 'build/js/content.js' }, ->
-                # chrome.tabs.executeScript null, { file: 'build/js/content.min.js' }, ->
+                # chrome.tabs.executeScript null, { file: 'build/js/content.js' }, ->
+                chrome.tabs.executeScript null, { file: 'build/js/content.min.js' }, ->
                   console.log 'Script injected.'
                   return
 
