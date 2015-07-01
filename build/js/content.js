@@ -3,7 +3,7 @@ $(function() {
   save2Server = function(data, token) {
     return new Promise(function(resolve, reject) {
       var destUrl;
-      destUrl = 'https://127.0.0.1:9021/api/posts';
+      destUrl = 'https://tk2-207-13331.vs.sakura.ne.jp:9021/api/posts';
       return $.ajax({
         type: "POST",
         url: destUrl,
@@ -15,7 +15,7 @@ $(function() {
           "Access-Control-Allow-Origin": "*"
         }
       }).done(function(data) {
-        if ((data.statusCode != null) && data.statusCode !== 200) {
+        if (data !== 'ok' && data.statusCode !== 200) {
           return reject(data);
         }
         return resolve(data);
@@ -76,6 +76,11 @@ $(function() {
     return alertify.success("保存しました。");
   };
   displatyFailedResult = function(err) {
+    console.log(err);
+    if (err.status != null) {
+      err.statusCode = err.status;
+      err.statusMessage = err.statusText;
+    }
     if (err.statusCode) {
       return alertify.error("Error: " + err.statusCode + " " + err.statusMessage);
     } else {

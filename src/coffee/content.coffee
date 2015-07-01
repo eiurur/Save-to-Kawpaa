@@ -4,7 +4,7 @@ $ ->
     return new Promise (resolve, reject) ->
 
       # 開発用(Win)
-      destUrl = 'https://127.0.0.1:9021/api/posts'
+      # destUrl = 'https://127.0.0.1:9021/api/posts'
 
       # 開発用(Vagrant)
       # destUrl = 'https://192.168.33.10:9021/api/posts'
@@ -13,7 +13,7 @@ $ ->
       # destUrl = 'https://ona-it-later.herokuapp.com/api/posts'
 
       # 本番用(VPS)
-      # destUrl = 'https://tk2-207-13331.vs.sakura.ne.jp:9021/api/posts'
+      destUrl = 'https://tk2-207-13331.vs.sakura.ne.jp:9021/api/posts'
 
       $.ajax
         type: "POST"
@@ -24,7 +24,7 @@ $ ->
         headers:
           "Access-Control-Allow-Origin": "*"
       .done (data) ->
-        return reject data if data.statusCode? and data.statusCode isnt 200
+        return reject data if data isnt 'ok' and data.statusCode isnt 200
         return resolve data
       .fail (err) ->
         return reject err
@@ -32,7 +32,6 @@ $ ->
   getToken = ->
     return new Promise (resolve, reject) ->
       chrome.storage.sync.get ['token'], (item) ->
-        # console.log item
         return reject undefined　if item.token is undefined or item.token is ''
         return resolve item.token
 
@@ -41,13 +40,6 @@ $ ->
     return new Promise (resolve, reject) ->
 
       data = {}
-
-      # console.log '=============>'
-
-      # console.log '=======> info'
-      # console.log info
-      # info = JSON.parse info
-      # console.log info.srcUrl
 
       # タイトル
       # console.log '=======> タイトル'
@@ -133,7 +125,6 @@ $ ->
       # MongooseのDefaultが動作しないので、初期値を手動で設定
       data.isPrivate = true
       data.isArchive = false
-      # data.isDone    = false
 
       # console.log data
 
@@ -144,8 +135,15 @@ $ ->
     chrome.runtime.sendMessage({ "newIconPath" : 'build/images/blue/icon19.png' })
     alertify.success "保存しました。"
 
-  # TODO: errに応じてメッセージを変える
   displatyFailedResult = (err) ->
+    console.log err
+
+    # Ajaxに失敗
+    if err.status?
+      err.statusCode = err.status
+      err.statusMessage = err.statusText
+
+    # Base64に変換をかますときとかにこけた
     if err.statusCode then alertify.error "Error: #{err.statusCode} #{err.statusMessage}"
     else alertify.error "Error: トークンに誤りがあります。\nもう一度確認してみてください。"
 
