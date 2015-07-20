@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Save to Ona it Later",
   "description": "あとで抜く",
-  "version": "0.2.8",
+  "version": "0.2.10",
   "permissions": [
     "tabs",
     "storage",
