@@ -3,7 +3,7 @@ $(function() {
   save2Server = function(data, token) {
     return new Promise(function(resolve, reject) {
       var destUrl;
-      destUrl = 'https://tk2-207-13331.vs.sakura.ne.jp:9021/api/posts';
+      destUrl = 'https://oil.eiurur.xyz/api/posts';
       return $.ajax({
         type: "POST",
         url: destUrl,

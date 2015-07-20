@@ -13,7 +13,8 @@ $ ->
       # destUrl = 'https://ona-it-later.herokuapp.com/api/posts'
 
       # 本番用(VPS)
-      destUrl = 'https://tk2-207-13331.vs.sakura.ne.jp:9021/api/posts'
+      # destUrl = 'https://tk2-207-13331.vs.sakura.ne.jp:9021/api/posts'
+      destUrl = 'https://oil.eiurur.xyz/api/posts'
 
       $.ajax
         type: "POST"
