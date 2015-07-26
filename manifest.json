@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
-  "name": "Save to Ona it Later",
+  "name": "Save to Kawpaa",
   "description": "あとで抜く",
-  "version": "0.2.10",
+  "version": "0.3.0",
   "permissions": [
     "tabs",
     "storage",
@@ -17,7 +17,7 @@
         "19": "build/images/gray/icon19.png",
         "38": "build/images/gray/icon38.png"
      },
-     "default_title": "Save to Ona it Later"
+     "default_title": "Save to Kawpaa"
   },
   "background": {
      "persistent": false,

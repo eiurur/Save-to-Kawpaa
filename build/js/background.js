@@ -53,7 +53,7 @@ $(function() {
     return executeOnaItLaterScript(infoStr);
   };
   chrome.contextMenus.create({
-    'title': 'Save to Ona it Later',
+    'title': 'Save to Kawpaa',
     'contexts': ['image'],
     'id': 'image'
   });

@@ -44,7 +44,7 @@ $ ->
 
   # TODO: videoも追加
   chrome.contextMenus.create
-    'title': 'Save to Ona it Later'
+    'title': 'Save to Kawpaa'
     'contexts': [ 'image' ]
     'id': 'image'
 
@@ -59,7 +59,7 @@ $ ->
   # i = 0
   # while i < contexts.length
   #   context = contexts[i]
-  #   title = "Save to Ona it Later with #{context}"
+  #   title = "Save to Kawpaa with #{context}"
   #   id = chrome.contextMenus.create
   #     'title': title
   #     'contexts': [ context ]

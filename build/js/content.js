@@ -3,7 +3,7 @@ $(function() {
   save2Server = function(data, token) {
     return new Promise(function(resolve, reject) {
       var destUrl;
-      destUrl = 'https://oil.eiurur.xyz/api/posts';
+      destUrl = 'https://kawpaa.eiurur.xyz/api/posts';
       return $.ajax({
         type: "POST",
         url: destUrl,
