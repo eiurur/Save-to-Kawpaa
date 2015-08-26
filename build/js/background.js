@@ -1,5 +1,5 @@
 $(function() {
-  var clickHandler, executeOnaItLaterScript;
+  var clickHandler, contexts, executeOnaItLaterScript;
   executeOnaItLaterScript = function(infoStr) {
     return chrome.storage.sync.get(['token'], function(item) {
       if (item.token === void 0 || item.token === '') {
@@ -52,10 +52,15 @@ $(function() {
     console.log(infoStr);
     return executeOnaItLaterScript(infoStr);
   };
-  chrome.contextMenus.create({
-    'title': 'Save to Kawpaa',
-    'contexts': ['image'],
-    'id': 'image'
+  contexts = ['page', 'image'];
+  contexts.forEach(function(context) {
+    var title;
+    title = "Save to Kawpaa with " + context;
+    return chrome.contextMenus.create({
+      'title': title,
+      'contexts': [context],
+      'id': context
+    });
   });
   chrome.contextMenus.onClicked.addListener(clickHandler);
 

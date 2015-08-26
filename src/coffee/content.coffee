@@ -88,6 +88,11 @@ $ ->
         # bodyタグ内で一番最初の画像を引っ張ってくる
         firstImgUrlInBody = $('img').get(0).src
         data.url = firstImgUrlInBody
+
+        # ニコニコなら動画のサムネを指定
+        if siteUrl1.indexOf("www.nicovideo.jp/watch/sm") > -1
+          data.url = $('.videoThumbnailImage').attr('src')
+
         data.type = 'link'
 
       # ホスト名

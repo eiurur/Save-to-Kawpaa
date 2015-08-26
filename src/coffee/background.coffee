@@ -43,28 +43,25 @@ $ ->
     executeOnaItLaterScript(infoStr)
 
   # TODO: videoも追加
-  chrome.contextMenus.create
-    'title': 'Save to Kawpaa'
-    'contexts': [ 'image' ]
-    'id': 'image'
+  # chrome.contextMenus.create
+  #   'title': 'Save to Kawpaa'
+  #   'contexts': ['page', 'image', 'link']
+  #   'id': 'image'
 
 
   # Create one test item for each context type.
-  # contexts = [
-  #   'page'
-  #   'link'
-  #   'image'
-  #   'video'
-  # ]
-  # i = 0
-  # while i < contexts.length
-  #   context = contexts[i]
-  #   title = "Save to Kawpaa with #{context}"
-  #   id = chrome.contextMenus.create
-  #     'title': title
-  #     'contexts': [ context ]
-  #     'id': context
-  #   i++
+  contexts = [
+    'page'
+    # 'link'
+    'image'
+    # 'video'
+  ]
+  contexts.forEach (context) ->
+    title = "Save to Kawpaa with #{context}"
+    chrome.contextMenus.create
+      'title': title
+      'contexts': [ context ]
+      'id': context
 
 
   chrome.contextMenus.onClicked.addListener(clickHandler)
