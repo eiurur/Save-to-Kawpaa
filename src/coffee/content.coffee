@@ -81,17 +81,32 @@ $ ->
       if info?.mediaType? && info.menuItemId is 'image' # image
         data.url = info.srcUrl
         data.type = 'image'
+
       # else if info?.mediaType? && info.menuItemId is 'video' # video
       #   data.url = info.srcUrl
       #   data.type = 'video'
-      else  # page
-        # bodyタグ内で一番最初の画像を引っ張ってくる
-        firstImgUrlInBody = $('img').get(0).src
-        data.url = firstImgUrlInBody
 
+      else  # page
+        if $('img')? # bodyタグ内で一番最初の画像を引っ張ってくる
+          console.log '画像ファイル発見', $('img')
+          firstImgUrlInBody = $('img').get(0).src
+          data.url = firstImgUrlInBody
+
+        else # ページに画像が存在しない場合は灰色の画像を代わりに使用
+          console.log '画像ファイルが見つからない。'
+          data.url = 'https://dl.dropboxusercontent.com/u/31717228/kawpaa/bg.png'
+
+        # ここから例外処理(特別処理？)
+        if data.url.indexOf("chrome-extension://") > -1 #例外中の例外。もし、他のChromeExtensionがimgを挿入していた場合、urlにchrome-extension://から始まる画像ファイルが代入され、保存に失敗してしまう。
+          console.log 'ChromeExnteionsファイルを画像に設定されてしまった。'
+          data.url =  $('img').get(1).src
         # ニコニコなら動画のサムネを指定
         if siteUrl1.indexOf("www.nicovideo.jp/watch/sm") > -1
           data.url = $('.videoThumbnailImage').attr('src')
+
+        # XVIDEOSなら動画のサムネを指定
+        if siteUrl1.indexOf("xvideos.com/video") > -1
+          data.url = $('img.thumb').attr('src')
 
         data.type = 'link'
 
@@ -132,7 +147,7 @@ $ ->
       data.isPrivate = true
       data.isArchive = false
 
-      # console.log data
+      console.log data
 
       return resolve data
 

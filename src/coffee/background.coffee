@@ -48,8 +48,6 @@ $ ->
   #   'contexts': ['page', 'image', 'link']
   #   'id': 'image'
 
-
-  # Create one test item for each context type.
   contexts = [
     'page'
     # 'link'

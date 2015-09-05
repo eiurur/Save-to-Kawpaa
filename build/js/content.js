@@ -51,10 +51,23 @@ $(function() {
         data.url = info.srcUrl;
         data.type = 'image';
       } else {
-        firstImgUrlInBody = $('img').get(0).src;
-        data.url = firstImgUrlInBody;
+        if ($('img') != null) {
+          console.log('画像ファイル発見', $('img'));
+          firstImgUrlInBody = $('img').get(0).src;
+          data.url = firstImgUrlInBody;
+        } else {
+          console.log('画像ファイルが見つからない。');
+          data.url = 'https://dl.dropboxusercontent.com/u/31717228/kawpaa/bg.png';
+        }
+        if (data.url.indexOf("chrome-extension://") > -1) {
+          console.log('ChromeExnteionsファイルを画像に設定されてしまった。');
+          data.url = $('img').get(1).src;
+        }
         if (siteUrl1.indexOf("www.nicovideo.jp/watch/sm") > -1) {
           data.url = $('.videoThumbnailImage').attr('src');
+        }
+        if (siteUrl1.indexOf("xvideos.com/video") > -1) {
+          data.url = $('img.thumb').attr('src');
         }
         data.type = 'link';
       }
@@ -69,6 +82,7 @@ $(function() {
       data.favicon = favicon;
       data.isPrivate = true;
       data.isArchive = false;
+      console.log(data);
       return resolve(data);
     });
   };
