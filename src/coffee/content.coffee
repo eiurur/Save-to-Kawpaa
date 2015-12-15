@@ -87,9 +87,10 @@ $ ->
       #   data.type = 'video'
 
       else  # page
-        if $('img')? # bodyタグ内で一番最初の画像を引っ張ってくる
-          console.log '画像ファイル発見', $('img')
-          firstImgUrlInBody = $('img').get(0).src
+        $img = $('img')
+        if $img? and $img.length > 0 # bodyタグ内で一番最初の画像を引っ張ってくる
+          console.log '画像ファイル発見', $img
+          firstImgUrlInBody = $img.get(0).src
           data.url = firstImgUrlInBody
 
         else # ページに画像が存在しない場合は灰色の画像を代わりに使用
@@ -99,7 +100,8 @@ $ ->
         # ここから例外処理(特別処理？)
         if data.url.indexOf("chrome-extension://") > -1 #例外中の例外。もし、他のChromeExtensionがimgを挿入していた場合、urlにchrome-extension://から始まる画像ファイルが代入され、保存に失敗してしまう。
           console.log 'ChromeExnteionsファイルを画像に設定されてしまった。'
-          data.url =  $('img').get(1).src
+          data.url =  $img.get(1).src
+
         # ニコニコなら動画のサムネを指定
         if siteUrl1.indexOf("www.nicovideo.jp/watch/sm") > -1
           data.url = $('.videoThumbnailImage').attr('src')

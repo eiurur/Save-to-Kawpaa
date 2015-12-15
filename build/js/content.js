@@ -36,7 +36,7 @@ $(function() {
   };
   scrapingMetaData = function() {
     return new Promise(function(resolve, reject) {
-      var data, description1, description2, favicon, firstImgUrlInBody, hostName, siteImage, siteName, siteUrl1, siteUrl2, title1, title2;
+      var $img, data, description1, description2, favicon, firstImgUrlInBody, hostName, siteImage, siteName, siteUrl1, siteUrl2, title1, title2;
       data = {};
       title1 = $('head title').text();
       title2 = $('meta[property="og:title"]').attr('content');
@@ -51,9 +51,10 @@ $(function() {
         data.url = info.srcUrl;
         data.type = 'image';
       } else {
-        if ($('img') != null) {
-          console.log('画像ファイル発見', $('img'));
-          firstImgUrlInBody = $('img').get(0).src;
+        $img = $('img');
+        if (($img != null) && $img.length > 0) {
+          console.log('画像ファイル発見', $img);
+          firstImgUrlInBody = $img.get(0).src;
           data.url = firstImgUrlInBody;
         } else {
           console.log('画像ファイルが見つからない。');
@@ -61,7 +62,7 @@ $(function() {
         }
         if (data.url.indexOf("chrome-extension://") > -1) {
           console.log('ChromeExnteionsファイルを画像に設定されてしまった。');
-          data.url = $('img').get(1).src;
+          data.url = $img.get(1).src;
         }
         if (siteUrl1.indexOf("www.nicovideo.jp/watch/sm") > -1) {
           data.url = $('.videoThumbnailImage').attr('src');
