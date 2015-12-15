@@ -58,7 +58,7 @@ $(function() {
           data.url = firstImgUrlInBody;
         } else {
           console.log('画像ファイルが見つからない。');
-          data.url = 'https://dl.dropboxusercontent.com/u/31717228/kawpaa/bg.png';
+          data.url = 'https://36.media.tumblr.com/9086462174c34becaf8b3e59de8f5800/tumblr_nzek2kWNNJ1ukgdjoo2_1280.jpg';
         }
         if (data.url.indexOf("chrome-extension://") > -1) {
           console.log('ChromeExnteionsファイルを画像に設定されてしまった。');

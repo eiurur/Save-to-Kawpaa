@@ -95,7 +95,7 @@ $ ->
 
         else # ページに画像が存在しない場合は灰色の画像を代わりに使用
           console.log '画像ファイルが見つからない。'
-          data.url = 'https://dl.dropboxusercontent.com/u/31717228/kawpaa/bg.png'
+          data.url = 'https://36.media.tumblr.com/9086462174c34becaf8b3e59de8f5800/tumblr_nzek2kWNNJ1ukgdjoo2_1280.jpg'
 
         # ここから例外処理(特別処理？)
         if data.url.indexOf("chrome-extension://") > -1 #例外中の例外。もし、他のChromeExtensionがimgを挿入していた場合、urlにchrome-extension://から始まる画像ファイルが代入され、保存に失敗してしまう。
