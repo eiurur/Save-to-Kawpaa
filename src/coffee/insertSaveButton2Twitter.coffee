@@ -9,6 +9,8 @@ do ->
     console.log 'Kawpaa'
     # 画像の差し替え
     $(this).find('.icon-kawpaa').css('background-image', "url(#{DATA_URL_BLUE_16})")
+
+    # TODO: メタデータの取得
     tweetUrl = $(this).closest('.js-stream-tweet').find('.js-permalink').attr('href')
     imageUrl = $(this).closest('.js-stream-tweet').find('.js-adaptive-photo').attr('data-image-url')
 
@@ -23,19 +25,17 @@ do ->
 
     chrome.runtime.sendMessage params, (response) ->
       console.log response
-    # TODO: メタデータの取得
 
     # TODO: トークンの取得
 
     # TODO: サーバにポスト
 
   $(document).on 'mouseenter', '.js-stream-tweet', (e) ->
-    # TODO: ページにリンクが含まれているかチェック
+    # TODO: ツイートにリンクが含まれているかチェック
 
     console.log 'Enter!!'
     console.log $(this).find('.action-kawpaa-container')
     console.log $(this).find('.action-kawpaa-container').length
-    # console.log $(this).find('.action-kawpaa-container').size()
     console.log $(this).find('.ProfileTweet-actionList .action-kawpaa-container')
     return if $(this).find('.action-kawpaa-container').length isnt 0
     html = """
