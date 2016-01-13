@@ -4,17 +4,14 @@ $ ->
     return new Promise (resolve, reject) ->
 
       # 開発用(Win)
-      # destUrl = 'https://127.0.0.1:9021/api/posts'
+      destUrl = 'https://127.0.0.1:9021/api/posts'
 
       # 開発用(Vagrant)
       # destUrl = 'https://192.168.33.10:9021/api/posts'
 
-      # 本番用
-      # destUrl = 'https://ona-it-later.herokuapp.com/api/posts'
-
       # 本番用(VPS)
       # destUrl = 'https://tk2-207-13331.vs.sakura.ne.jp:9021/api/posts'
-      destUrl = 'https://kawpaa.eiurur.xyz/api/posts'
+      # destUrl = 'https://kawpaa.eiurur.xyz/api/posts'
 
       $.ajax
         type: "POST"

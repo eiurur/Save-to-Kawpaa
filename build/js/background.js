@@ -68,6 +68,12 @@ $(function() {
   Icon
    */
   chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    if (request.name === 'twitter') {
+      console.log('request name is Twitter');
+      console.log(request.params);
+      sendResponse('ok');
+      return;
+    }
     return chrome.browserAction.setIcon({
       path: request.newIconPath,
       tabId: sender.tab.id

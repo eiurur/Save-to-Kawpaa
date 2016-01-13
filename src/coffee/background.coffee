@@ -70,6 +70,13 @@ $ ->
   Icon
   ###
   chrome.runtime.onMessage.addListener (request, sender, sendResponse) ->
+    if request.name is 'twitter'
+      console.log 'request name is Twitter'
+      console.log request.params
+      # executeOnaItLaterScript
+      sendResponse 'ok'
+      return
+
     chrome.browserAction.setIcon
       path: request.newIconPath
       tabId: sender.tab.id
