@@ -1,6 +1,6 @@
-path = require("path")
+path = require "path"
 dest = "./build"
-src = "./src"
+src  = "./src"
 
 #//
 # path.relative(from, to)
@@ -27,10 +27,6 @@ module.exports =
     src: src + '/**/!(_)*.jade'
     dest: dest + '/views'
 
-  # jade_copy:
-  #   src: src + app + "/views/**"
-  #   dest: dest + app + '/views/'
-
   images_copy:
     src: src + "/images/**"
     dest: dest + '/images/'
@@ -43,7 +39,6 @@ module.exports =
     src: [
       'bower_components/jquery/dist/jquery.min.js'
       'bower_components/bootstrap/dist/js/bootstrap.min.js'
-      'bower_components/es6-promise/promise.min.js'
       'bower_components/moment/moment.js'
       'bower_components/alertify.js/lib/alertify.js'
     ]
@@ -51,7 +46,7 @@ module.exports =
 
   bower_css:
     src: [
-      'bower_components/font-awesome/css/font-awesome.min.css'
+      # 'bower_components/font-awesome/css/font-awesome.min.css'
       'bower_components/bootstrap/dist/css/bootstrap.min.css'
       'bower_components/alertify.js/themes/alertify.core.css'
       'bower_components/alertify.js/themes/alertify.default.css'
