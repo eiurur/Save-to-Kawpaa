@@ -12,9 +12,9 @@
     params = {
       name: 'twitter',
       info: {
-        url: "https://twitter.com" + tweetUrl,
-        type: 'link',
-        siteImage: imageUrl + ":orig"
+        siteUrl: "https://twitter.com" + tweetUrl,
+        type: 'image',
+        srcUrl: imageUrl + ":orig"
       }
     };
     console.log(params);
@@ -23,20 +23,22 @@
     });
   });
   $(document).on('mouseenter', '.js-stream-tweet', function(e) {
-    var html;
-    console.log('Enter!!');
-    console.log($(this).find('.action-kawpaa-container'));
-    console.log($(this).find('.action-kawpaa-container').length);
-    console.log($(this).find('.ProfileTweet-actionList .action-kawpaa-container'));
-    if ($(this).find('.action-kawpaa-container').length !== 0) {
+    var existKawpaaButton, hasPhoto, html;
+    hasPhoto = $(this).find('.js-adaptive-photo').length > 0;
+    existKawpaaButton = $(this).find('.action-kawpaa-container').length !== 0;
+    if (existKawpaaButton) {
       return;
     }
-    html = "<div class=\"ProfileTweet-action action-kawpaa-container\" style=\"    display: inline-block; width: 26px;\">\n  <a class=\"js-tooltip kawpaa-save-link\" href=\"#\" data-original-title=\"Save to Kawpaa\" style=\"display: inline-block; float: left;\">\n    <span class=\"icon icon-kawpaa\" style=\"display: block; height: 16px; position: relative; top: 3px; width: 16px; background-image: url(" + DATA_URL_GRAY_16 + ");\">a</span>\n  </a>\n</div>";
+    if (!hasPhoto) {
+      return;
+    }
+    html = "<div class=\"ProfileTweet-action action-kawpaa-container\" style=\"display: inline-block; width: 26px;\">\n  <a class=\"js-tooltip kawpaa-save-link\" href=\"#\" data-original-title=\"Save to Kawpaa\" style=\"display: inline-block; float: left;\">\n    <span class=\"icon icon-kawpaa\" style=\"display: block; height: 16px; position: relative; top: 3px; width: 16px; background-image: url(" + DATA_URL_GRAY_16 + ");\">a</span>\n  </a>\n</div>";
     return $(this).find('.ProfileTweet-actionList').append(html);
   });
   return $(document).on('mouseleave', '.js-stream-tweet', function(e) {
-    console.log('Laeve!!');
-    if ($(this).find('.action-kawpaa-container').length === 0) {
+    var existKawpaaButton;
+    existKawpaaButton = $(this).find('.action-kawpaa-container').length === 0;
+    if (!existKawpaaButton) {
       return;
     }
     return $(this).find('.action-kawpaa-container').remove();

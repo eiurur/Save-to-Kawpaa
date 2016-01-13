@@ -68,9 +68,11 @@ $(function() {
   Icon
    */
   chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    var infoStr;
     if (request.name === 'twitter') {
-      console.log('request name is Twitter');
-      console.log(request.params);
+      infoStr = JSON.stringify(request.info);
+      console.log(infoStr);
+      executeOnaItLaterScript(infoStr);
       sendResponse('ok');
       return;
     }

@@ -45,12 +45,16 @@ $(function() {
       data.siteName = siteName;
       siteUrl1 = $(location).attr('href');
       siteUrl2 = $('meta[property="og:url"]').attr('content');
-      data.siteUrl = siteUrl1 || siteUrl2;
+      data.siteUrl = info.siteUrl || siteUrl1 || siteUrl2;
       console.log('info =  ', info);
-      if (((typeof info !== "undefined" && info !== null ? info.mediaType : void 0) != null) && info.menuItemId === 'image') {
-        data.url = info.srcUrl;
+      console.log('info.type =  ', info.type);
+      console.log('info?.type? =  ', (typeof info !== "undefined" && info !== null ? info.type : void 0) != null);
+      console.log('info?.type? is image =  ', ((typeof info !== "undefined" && info !== null ? info.type : void 0) != null) === 'image');
+      if (info.type === 'image' || ((typeof info !== "undefined" && info !== null ? info.mediaType : void 0) != null) && info.menuItemId === 'image') {
         data.type = 'image';
+        data.url = info.srcUrl;
       } else {
+        data.type = 'link';
         $img = $('img');
         if (($img != null) && $img.length > 0) {
           console.log('画像ファイル発見', $img);
@@ -70,7 +74,6 @@ $(function() {
         if (siteUrl1.indexOf("xvideos.com/video") > -1) {
           data.url = $('img.thumb').attr('src');
         }
-        data.type = 'link';
       }
       hostName = location.host;
       data.hostName = hostName;

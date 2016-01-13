@@ -17,9 +17,13 @@ do ->
     params =
       name: 'twitter'
       info:
-        url: "https://twitter.com#{tweetUrl}"
-        type: 'link'
-        siteImage: "#{imageUrl}:orig"
+        siteUrl: "https://twitter.com#{tweetUrl}"
+        type: 'image'
+        srcUrl: "#{imageUrl}:orig"
+      # info:
+      #   url: "https://twitter.com#{tweetUrl}"
+      #   type: 'link'
+      #   siteImage: "#{imageUrl}:orig"
 
     console.log params
 
@@ -33,13 +37,19 @@ do ->
   $(document).on 'mouseenter', '.js-stream-tweet', (e) ->
     # TODO: ツイートにリンクが含まれているかチェック
 
-    console.log 'Enter!!'
-    console.log $(this).find('.action-kawpaa-container')
-    console.log $(this).find('.action-kawpaa-container').length
-    console.log $(this).find('.ProfileTweet-actionList .action-kawpaa-container')
-    return if $(this).find('.action-kawpaa-container').length isnt 0
+    # console.log 'Enter!!'
+    # console.log $(this).find('.action-kawpaa-container')
+    # console.log $(this).find('.action-kawpaa-container').length
+    # console.log $(this).find('.ProfileTweet-actionList .action-kawpaa-container')
+
+    hasPhoto = $(this).find('.js-adaptive-photo').length > 0
+    existKawpaaButton = $(this).find('.action-kawpaa-container').length isnt 0
+    # console.log 'existKawpaaButton = ', existKawpaaButton
+    # console.log 'hasPhoto = ', hasPhoto
+    return if existKawpaaButton
+    return unless hasPhoto
     html = """
-      <div class="ProfileTweet-action action-kawpaa-container" style="    display: inline-block; width: 26px;">
+      <div class="ProfileTweet-action action-kawpaa-container" style="display: inline-block; width: 26px;">
         <a class="js-tooltip kawpaa-save-link" href="#" data-original-title="Save to Kawpaa" style="display: inline-block; float: left;">
           <span class="icon icon-kawpaa" style="display: block; height: 16px; position: relative; top: 3px; width: 16px; background-image: url(#{DATA_URL_GRAY_16});">a</span>
         </a>
@@ -48,8 +58,9 @@ do ->
     $(this).find('.ProfileTweet-actionList').append html
 
   $(document).on 'mouseleave', '.js-stream-tweet', (e) ->
-    console.log 'Laeve!!'
-    return if $(this).find('.action-kawpaa-container').length is 0
+    # console.log 'Laeve!!'
+    existKawpaaButton = $(this).find('.action-kawpaa-container').length is 0
+    return unless existKawpaaButton
     $(this).find('.action-kawpaa-container').remove()
 
 

@@ -71,9 +71,11 @@ $ ->
   ###
   chrome.runtime.onMessage.addListener (request, sender, sendResponse) ->
     if request.name is 'twitter'
-      console.log 'request name is Twitter'
-      console.log request.params
-      # executeOnaItLaterScript
+      # console.log 'request name is Twitter'
+      # console.log request
+      infoStr = JSON.stringify request.info
+      console.log infoStr
+      executeOnaItLaterScript(infoStr)
       sendResponse 'ok'
       return
 

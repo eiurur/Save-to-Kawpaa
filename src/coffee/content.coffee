@@ -39,61 +39,45 @@ $ ->
 
       data = {}
 
-      # タイトル
-      # console.log '=======> タイトル'
-
+      # タイトル (ex) '(1) Twitter'
       title1 = $('head title').text()
-      # console.log title1
-
       title2 = $('meta[property="og:title"]').attr('content')
-      # console.log title2
-
       data.title = title1 or title2
 
-      # サイトの名前
-      # console.log '=======> サイトの名前'
-
+      # サイトの名前 (ex) Twitter
       siteName = $('meta[property="og:site_name"').text()
-      # console.log siteName
-
       data.siteName = siteName
 
-      # サイトURL
-      # console.log '=======> サイトのURL'
-
+      # サイトURL (ex) 'https://twitter.com/haruyuki_nijyou/status/687040101721874432'
       siteUrl1 = $(location).attr('href')
-      # console.log siteUrl1
-
       siteUrl2 = $('meta[property="og:url"]').attr('content')
-      # console.log siteUrl2
-
-      data.siteUrl = siteUrl1 or siteUrl2
+      data.siteUrl = info.siteUrl or siteUrl1 or siteUrl2
 
       console.log 'info =  ', info
+      console.log 'info.type =  ', info.type
+      console.log 'info?.type? =  ', info?.type?
+      console.log 'info?.type? is image =  ', info?.type? is 'image'
 
       # TODO: linkならページ先のURLに対してスクレイピングを行う。
 
       # URL と type
-      # コンテキストメニューから、かつ画像なら image そうでないなら link
-      if info?.mediaType? && info.menuItemId is 'image' # image
-        data.url = info.srcUrl
+      # Twitterで画像または、コンテキストメニューから、かつ画像なら image そうでないなら link
+      if info.type is 'image' or info?.mediaType? && info.menuItemId is 'image' # image
         data.type = 'image'
-
+        data.url = info.srcUrl
       # else if info?.mediaType? && info.menuItemId is 'video' # video
       #   data.url = info.srcUrl
       #   data.type = 'video'
-
       else  # page
+        data.type = 'link'
         $img = $('img')
         if $img? and $img.length > 0 # bodyタグ内で一番最初の画像を引っ張ってくる
           console.log '画像ファイル発見', $img
           firstImgUrlInBody = $img.get(0).src
           data.url = firstImgUrlInBody
-
         else # ページに画像が存在しない場合は灰色の画像を代わりに使用
           console.log '画像ファイルが見つからない。'
           data.url = 'https://36.media.tumblr.com/9086462174c34becaf8b3e59de8f5800/tumblr_nzek2kWNNJ1ukgdjoo2_1280.jpg'
-
         # ここから例外処理(特別処理？)
         if data.url.indexOf("chrome-extension://") > -1 #例外中の例外。もし、他のChromeExtensionがimgを挿入していた場合、urlにchrome-extension://から始まる画像ファイルが代入され、保存に失敗してしまう。
           console.log 'ChromeExnteionsファイルを画像に設定されてしまった。'
@@ -107,39 +91,22 @@ $ ->
         if siteUrl1.indexOf("xvideos.com/video") > -1
           data.url = $('img.thumb').attr('src')
 
-        data.type = 'link'
 
-      # ホスト名
+      # ホスト名 (ex) 'twitter.com'
       hostName = location.host
-      # console.log hostName
-
       data.hostName = hostName
 
-      # 説明
-      # console.log '=======> 説明'
-
+      # 説明 (ex) “中学生大家さん”
       description1 = $('meta[name="description"]').attr('content')
-      # console.log description1
-
       description2 = $('meta[property="og:description"]').attr('content')
-      # console.log description2
-
       data.description = description1 or description2
 
-      # 画像
-      # console.log '=======> サイトの画像'
-
+      # 画像 (ex) 'https://pbs.twimg.com/media/CYjbVOCVAAAEegD.png:large'
       siteImage = $('meta[property="og:image"]').attr('content')
-      # console.log siteImage
-
       data.siteImage = siteImage
 
       # favixon
-      # console.log '=======> faviconのURL'
-
       favicon = $('link[rel="shortcut icon"]').prop('href')
-      # console.log favicon
-
       data.favicon = favicon
 
       # MongooseのDefaultが動作しないので、初期値を手動で設定
