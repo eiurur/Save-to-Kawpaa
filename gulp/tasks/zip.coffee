@@ -6,7 +6,6 @@ gulp.task 'zip', [
   'coffee'
   'jade'
   'sass'
-  'sass'
 ], ->
   manifest = require '../../manifest.json'
   distFileName = "#{manifest.name} v#{manifest.version}.zip"

@@ -1,6 +1,7 @@
 gulp = require 'gulp'
 gulp.task 'build', [
   'bower_js'
+  'bower_options_js'
   'bower_css'
   'bower_font'
   'coffee'

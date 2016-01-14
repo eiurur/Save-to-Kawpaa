@@ -38,9 +38,14 @@ module.exports =
   bower_js:
     src: [
       'bower_components/jquery/dist/jquery.min.js'
+      'bower_components/alertify.js/lib/alertify.min.js'
+    ]
+    dest: dest + "/js/vendors/"
+
+  bower_options_js:
+    src: [
       'bower_components/bootstrap/dist/js/bootstrap.min.js'
       'bower_components/moment/moment.js'
-      'bower_components/alertify.js/lib/alertify.js'
     ]
     dest: dest + "/js/vendors/"
 
