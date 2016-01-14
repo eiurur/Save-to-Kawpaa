@@ -30,7 +30,7 @@ do ->
   ###
   $(document).on
     'mouseenter': (e) -> showKawpaaButton($(this))
-    'mouseleave': (e) -> removeKawpaaButton($(this))
+    # 'mouseleave': (e) -> removeKawpaaButton($(this))
   , '.permalink-tweet-container'
 
 
@@ -39,7 +39,7 @@ do ->
   ###
   $(document).on
     'mouseenter': (e) -> showKawpaaButton($(this))
-    'mouseleave': (e) -> removeKawpaaButton($(this))
+    # 'mouseleave': (e) -> removeKawpaaButton($(this))
   , '.js-stream-tweet'
 
 

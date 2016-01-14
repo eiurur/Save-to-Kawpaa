@@ -28,9 +28,6 @@
   $(document).on({
     'mouseenter': function(e) {
       return showKawpaaButton($(this));
-    },
-    'mouseleave': function(e) {
-      return removeKawpaaButton($(this));
     }
   }, '.permalink-tweet-container');
 
@@ -40,9 +37,6 @@
   $(document).on({
     'mouseenter': function(e) {
       return showKawpaaButton($(this));
-    },
-    'mouseleave': function(e) {
-      return removeKawpaaButton($(this));
     }
   }, '.js-stream-tweet');
   $(document).on('click', '.kawpaa-save-link', function(e) {
