@@ -11,8 +11,7 @@ This is to be used in conjunction with the web service (<a href="https://kawpaa.
 
 WIP
 
-
-##
+## MEMO
 
 以下のページでlinkを保存した場合、例のような値を抽出してサーバに送信する。
 
