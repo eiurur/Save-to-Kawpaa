@@ -7,11 +7,11 @@ Chrome Extension to assist your masturbation life.
 
 This is to be used in conjunction with the web service (<a href="https://kawpaa.eiurur.xyz/" target="_blank">Kawpaa</a>).
 
-## Satus
+## Status
 
 WIP
 
-## MEMO
+## Memo
 
 以下のページでlinkを保存した場合、例のような値を抽出してサーバに送信する。
 
