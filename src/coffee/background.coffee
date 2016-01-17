@@ -36,6 +36,11 @@ $ ->
   Context Menu
   ####
   clickHandler = (info, tab) ->
+    if info.menuItemId is 'browser_action'
+      KAWPAA_URL = 'https://kawpaa.eiurur.xyz/'
+      chrome.tabs.create url: KAWPAA_URL, 'active': true, (tab) -> console.log 'Go to Kawpaa'
+      return
+    console.log tab
     console.log 'Context Menu =====> '
     console.log info
     infoStr = JSON.stringify info
@@ -61,6 +66,10 @@ $ ->
       'contexts': [ context ]
       'id': context
 
+  chrome.contextMenus.create
+    'title': 'Go to Kawpaa'
+    'contexts': ["browser_action"]
+    'id': 'browser_action'
 
   chrome.contextMenus.onClicked.addListener(clickHandler)
 

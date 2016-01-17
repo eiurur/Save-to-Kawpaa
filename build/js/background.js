@@ -45,7 +45,18 @@ $(function() {
   Context Menu
    */
   clickHandler = function(info, tab) {
-    var infoStr;
+    var KAWPAA_URL, infoStr;
+    if (info.menuItemId === 'browser_action') {
+      KAWPAA_URL = 'https://kawpaa.eiurur.xyz/';
+      chrome.tabs.create({
+        url: KAWPAA_URL,
+        'active': true
+      }, function(tab) {
+        return console.log('Go to Kawpaa');
+      });
+      return;
+    }
+    console.log(tab);
     console.log('Context Menu =====> ');
     console.log(info);
     infoStr = JSON.stringify(info);
@@ -61,6 +72,11 @@ $(function() {
       'contexts': [context],
       'id': context
     });
+  });
+  chrome.contextMenus.create({
+    'title': 'Go to Kawpaa',
+    'contexts': ["browser_action"],
+    'id': 'browser_action'
   });
   chrome.contextMenus.onClicked.addListener(clickHandler);
 
