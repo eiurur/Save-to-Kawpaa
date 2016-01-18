@@ -40,23 +40,26 @@
     }
   }, '.js-stream-tweet');
   $(document).on('click', '.kawpaa-save-link', function(e) {
-    var imageUrl, nowPageVariable, params, tweetUrl;
+    var imageUrl, nowPageVariable, params, title, tweetUrl;
     e.preventDefault();
     $(this).find('.icon-kawpaa').css('background-image', "url(" + DATA_URL_BLUE_16 + ")");
     nowPageVariable = $(this).closest('.js-stream-tweet').length > 0 ? 'homeTImeline' : void 0;
     if (nowPageVariable === 'homeTImeline') {
       tweetUrl = $(this).closest('.js-stream-tweet').find('.js-permalink').attr('href');
       imageUrl = $(this).closest('.js-stream-tweet').find('.js-adaptive-photo').attr('data-image-url');
+      title = ($(this).closest('.js-stream-tweet').find('.js-action-profile-name').text()) + " / " + ($(this).closest('.js-stream-tweet').find('.js-tweet-text').text());
     } else {
       tweetUrl = $(this).closest('.permalink-tweet-container').find('.js-permalink').attr('href');
       imageUrl = $(this).closest('.permalink-tweet-container').find('.js-adaptive-photo').attr('data-image-url');
+      title = ($(this).closest('.permalink-tweet-container').find('.js-action-profile-name').text()) + " / " + ($(this).closest('.permalink-tweet-container').find('.js-tweet-text').text());
     }
     params = {
       name: 'twitter',
       info: {
         siteUrl: "https://twitter.com" + tweetUrl,
         type: 'image',
-        srcUrl: imageUrl + ":orig"
+        srcUrl: imageUrl + ":orig",
+        title: title
       }
     };
     console.log(params);

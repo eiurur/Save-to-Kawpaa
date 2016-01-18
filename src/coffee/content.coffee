@@ -43,7 +43,7 @@ $ ->
       # タイトル (ex) '(1) Twitter'
       title1 = $('head title').text()
       title2 = $('meta[property="og:title"]').attr('content')
-      data.title = title1 or title2
+      data.title = info?.title or title1 or title2
 
       # サイトの名前 (ex) Twitter
       siteName = $('meta[property="og:site_name"').text()

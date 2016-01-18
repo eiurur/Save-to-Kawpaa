@@ -54,9 +54,11 @@ do ->
     if nowPageVariable is 'homeTImeline'
       tweetUrl = $(this).closest('.js-stream-tweet').find('.js-permalink').attr('href')
       imageUrl = $(this).closest('.js-stream-tweet').find('.js-adaptive-photo').attr('data-image-url')
+      title = "#{$(this).closest('.js-stream-tweet').find('.js-action-profile-name').text()} / #{$(this).closest('.js-stream-tweet').find('.js-tweet-text').text()}"
     else # 個別ページ
       tweetUrl = $(this).closest('.permalink-tweet-container').find('.js-permalink').attr('href')
       imageUrl = $(this).closest('.permalink-tweet-container').find('.js-adaptive-photo').attr('data-image-url')
+      title = "#{$(this).closest('.permalink-tweet-container').find('.js-action-profile-name').text()} / #{$(this).closest('.permalink-tweet-container').find('.js-tweet-text').text()}"
 
     params =
       name: 'twitter'
@@ -64,6 +66,7 @@ do ->
         siteUrl: "https://twitter.com#{tweetUrl}"
         type: 'image'
         srcUrl: "#{imageUrl}:orig"
+        title: title
       # TODO: linkにも対応。
       # info:
       #   url: "https://twitter.com#{tweetUrl}"

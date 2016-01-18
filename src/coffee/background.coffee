@@ -86,7 +86,7 @@ $ ->
       'id': context
 
   chrome.contextMenus.create
-    'title': 'open Kawpaa'
+    'title': 'Open Kawpaa'
     'contexts': ["browser_action"]
     'id': 'browser_action_open_kawpaa'
 

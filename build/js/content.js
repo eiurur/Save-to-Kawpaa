@@ -40,7 +40,7 @@ $(function() {
       data = {};
       title1 = $('head title').text();
       title2 = $('meta[property="og:title"]').attr('content');
-      data.title = title1 || title2;
+      data.title = (typeof info !== "undefined" && info !== null ? info.title : void 0) || title1 || title2;
       siteName = $('meta[property="og:site_name"').text();
       data.siteName = siteName;
       siteUrl1 = $(location).attr('href');
