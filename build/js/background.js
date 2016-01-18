@@ -7,25 +7,21 @@ $(function() {
         return;
       }
       return chrome.tabs.executeScript(null, {
-        file: 'bower_components/jquery/dist/jquery.min.js'
+        file: 'build/js/vendors/lib.min.js'
       }, function() {
-        return chrome.tabs.executeScript(null, {
-          file: 'bower_components/alertify.js/lib/alertify.min.js'
+        return chrome.tabs.insertCSS(null, {
+          file: 'bower_components/alertify.js/themes/alertify.core.css'
         }, function() {
           return chrome.tabs.insertCSS(null, {
-            file: 'bower_components/alertify.js/themes/alertify.core.css'
+            file: 'bower_components/alertify.js/themes/alertify.default.css'
           }, function() {
-            return chrome.tabs.insertCSS(null, {
-              file: 'bower_components/alertify.js/themes/alertify.default.css'
+            return chrome.tabs.executeScript(null, {
+              code: "var info = " + infoStr + ";"
             }, function() {
               return chrome.tabs.executeScript(null, {
-                code: "var info = " + infoStr + ";"
+                file: 'build/js/content.min.js'
               }, function() {
-                return chrome.tabs.executeScript(null, {
-                  file: 'build/js/content.min.js'
-                }, function() {
-                  console.log('Script injected.');
-                });
+                console.log('Script injected.');
               });
             });
           });
@@ -46,13 +42,13 @@ $(function() {
    */
   clickHandler = function(info, tab) {
     var KAWPAA_URL, infoStr;
-    if (info.menuItemId === 'browser_action') {
+    if (info.menuItemId === 'browser_action_open_kawpaa') {
       KAWPAA_URL = 'https://kawpaa.eiurur.xyz/';
       chrome.tabs.create({
         url: KAWPAA_URL,
         'active': true
       }, function(tab) {
-        return console.log('Go to Kawpaa');
+        return console.log('open Kawpaa');
       });
       return;
     }
@@ -74,9 +70,9 @@ $(function() {
     });
   });
   chrome.contextMenus.create({
-    'title': 'Go to Kawpaa',
+    'title': 'open Kawpaa',
     'contexts': ["browser_action"],
-    'id': 'browser_action'
+    'id': 'browser_action_open_kawpaa'
   });
   chrome.contextMenus.onClicked.addListener(clickHandler);
 

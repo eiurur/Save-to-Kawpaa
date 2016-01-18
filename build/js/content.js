@@ -36,7 +36,7 @@ $(function() {
   };
   scrapingMetaData = function() {
     return new Promise(function(resolve, reject) {
-      var $img, data, description1, description2, favicon, firstImgUrlInBody, hostName, siteImage, siteName, siteUrl1, siteUrl2, title1, title2;
+      var $img, DEFUALT_URL, data, description1, description2, favicon, firstImgUrlInBody, hostName, siteImage, siteName, siteUrl1, siteUrl2, title1, title2;
       data = {};
       title1 = $('head title').text();
       title2 = $('meta[property="og:title"]').attr('content');
@@ -45,24 +45,25 @@ $(function() {
       data.siteName = siteName;
       siteUrl1 = $(location).attr('href');
       siteUrl2 = $('meta[property="og:url"]').attr('content');
-      data.siteUrl = info.siteUrl || siteUrl1 || siteUrl2;
+      data.siteUrl = (typeof info !== "undefined" && info !== null ? info.siteUrl : void 0) || siteUrl1 || siteUrl2;
       console.log('info =  ', info);
-      console.log('info.type =  ', info.type);
+      console.log('info?.type =  ', typeof info !== "undefined" && info !== null ? info.type : void 0);
       console.log('info?.type? =  ', (typeof info !== "undefined" && info !== null ? info.type : void 0) != null);
       console.log('info?.type? is image =  ', ((typeof info !== "undefined" && info !== null ? info.type : void 0) != null) === 'image');
-      if (info.type === 'image' || ((typeof info !== "undefined" && info !== null ? info.mediaType : void 0) != null) && info.menuItemId === 'image') {
+      if ((typeof info !== "undefined" && info !== null ? info.type : void 0) === 'image' || ((typeof info !== "undefined" && info !== null ? info.mediaType : void 0) != null) && (typeof info !== "undefined" && info !== null ? info.menuItemId : void 0) === 'image') {
         data.type = 'image';
         data.url = info.srcUrl;
       } else {
         data.type = 'link';
         $img = $('img');
+        DEFUALT_URL = 'https://36.media.tumblr.com/9086462174c34becaf8b3e59de8f5800/tumblr_nzek2kWNNJ1ukgdjoo2_1280.jpg';
         if (($img != null) && $img.length > 0) {
           console.log('画像ファイル発見', $img);
           firstImgUrlInBody = $img.get(0).src;
-          data.url = firstImgUrlInBody;
+          data.url = firstImgUrlInBody || DEFUALT_URL;
         } else {
           console.log('画像ファイルが見つからない。');
-          data.url = 'https://36.media.tumblr.com/9086462174c34becaf8b3e59de8f5800/tumblr_nzek2kWNNJ1ukgdjoo2_1280.jpg';
+          data.url = DEFUALT_URL;
         }
         if (data.url.indexOf("chrome-extension://") > -1) {
           console.log('ChromeExnteionsファイルを画像に設定されてしまった。');

@@ -37,6 +37,7 @@ $ ->
   scrapingMetaData = ->
     return new Promise (resolve, reject) ->
 
+
       data = {}
 
       # タイトル (ex) '(1) Twitter'
@@ -51,10 +52,10 @@ $ ->
       # サイトURL (ex) 'https://twitter.com/haruyuki_nijyou/status/687040101721874432'
       siteUrl1 = $(location).attr('href')
       siteUrl2 = $('meta[property="og:url"]').attr('content')
-      data.siteUrl = info.siteUrl or siteUrl1 or siteUrl2
+      data.siteUrl = info?.siteUrl or siteUrl1 or siteUrl2
 
       console.log 'info =  ', info
-      console.log 'info.type =  ', info.type
+      console.log 'info?.type =  ', info?.type
       console.log 'info?.type? =  ', info?.type?
       console.log 'info?.type? is image =  ', info?.type? is 'image'
 
@@ -62,22 +63,28 @@ $ ->
 
       # URL と type
       # Twitterで画像または、コンテキストメニューから、かつ画像なら image そうでないなら link
-      if info.type is 'image' or info?.mediaType? && info.menuItemId is 'image' # image
+      if info?.type is 'image' or info?.mediaType? && info?.menuItemId is 'image' # image
         data.type = 'image'
         data.url = info.srcUrl
+      # TODO:
       # else if info?.mediaType? && info.menuItemId is 'video' # video
       #   data.url = info.srcUrl
       #   data.type = 'video'
       else  # page
+
+        # デフォ値の設定
         data.type = 'link'
         $img = $('img')
+        DEFUALT_URL = 'https://36.media.tumblr.com/9086462174c34becaf8b3e59de8f5800/tumblr_nzek2kWNNJ1ukgdjoo2_1280.jpg'
         if $img? and $img.length > 0 # bodyタグ内で一番最初の画像を引っ張ってくる
           console.log '画像ファイル発見', $img
           firstImgUrlInBody = $img.get(0).src
-          data.url = firstImgUrlInBody
+          # Twitterだと、"$img.get(0) = <img class=​"avatar size32" alt>​"とかになる。
+          # 例外対策にデフォ値を設定
+          data.url = firstImgUrlInBody or DEFUALT_URL
         else # ページに画像が存在しない場合は灰色の画像を代わりに使用
           console.log '画像ファイルが見つからない。'
-          data.url = 'https://36.media.tumblr.com/9086462174c34becaf8b3e59de8f5800/tumblr_nzek2kWNNJ1ukgdjoo2_1280.jpg'
+          data.url = DEFUALT_URL
         # ここから例外処理(特別処理？)
         if data.url.indexOf("chrome-extension://") > -1 #例外中の例外。もし、他のChromeExtensionがimgを挿入していた場合、urlにchrome-extension://から始まる画像ファイルが代入され、保存に失敗してしまう。
           console.log 'ChromeExnteionsファイルを画像に設定されてしまった。'
@@ -96,16 +103,16 @@ $ ->
       hostName = location.host
       data.hostName = hostName
 
-      # 説明 (ex) “中学生大家さん”
+      # サイトの説明 (ex) “中学生大家さん”
       description1 = $('meta[name="description"]').attr('content')
       description2 = $('meta[property="og:description"]').attr('content')
       data.description = description1 or description2
 
-      # 画像 (ex) 'https://pbs.twimg.com/media/CYjbVOCVAAAEegD.png:large'
+      # サイトの画像 (ex) 'https://pbs.twimg.com/media/CYjbVOCVAAAEegD.png:large'
       siteImage = $('meta[property="og:image"]').attr('content')
       data.siteImage = siteImage
 
-      # favixon
+      # サイトのfavixon
       favicon = $('link[rel="shortcut icon"]').prop('href')
       data.favicon = favicon
 

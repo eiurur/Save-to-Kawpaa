@@ -1,5 +1,13 @@
 $ ->
 
+  # loadCSSLib = ->
+  #   return new Promise (resolve, reject) ->
+  #     chrome.tabs.insertCSS null, { file: 'build/css/vendors/lib.min.css' }, -> return resolve 'Done CSS Library load'
+
+  # loadJSLib = ->
+  #   return new Promise (resolve, reject) ->
+  #     chrome.tabs.executeScript null, { file: 'build/js/vendors/lib.min.js' }, -> return resolve 'Done JS Library load'
+
   executeOnaItLaterScript = (infoStr) ->
 
     chrome.storage.sync.get ['token'], (item) ->
@@ -8,9 +16,20 @@ $ ->
         alert 'トークンが入力されていません。オプションページからトークンを入力してください'
         return
 
-      # chrome.tabs.executeScript null, { file: 'build/js/vendors/lib.min.js' }, ->
-      chrome.tabs.executeScript null, { file: 'bower_components/jquery/dist/jquery.min.js' }, ->
-        chrome.tabs.executeScript null, { file: 'bower_components/alertify.js/lib/alertify.min.js' }, ->
+      # 直列じゃないとだめみたいです
+      # promises = [loadJSLib, loadCSSLib]
+      # Promise.all promises
+      # .then (resultList) ->
+      #   # 文字列で渡しても、content.jsではobjectとして受け取る。なので名前もinfo
+      #   chrome.tabs.executeScript null, { code: "var info = #{infoStr};" }, ->
+      #     chrome.tabs.executeScript null, { file: 'build/js/content.min.js' }, ->
+      #       console.log 'Script injected.'
+      #       return
+
+
+      chrome.tabs.executeScript null, { file: 'build/js/vendors/lib.min.js' }, ->
+      # chrome.tabs.executeScript null, { file: 'bower_components/jquery/dist/jquery.min.js' }, ->
+      #   chrome.tabs.executeScript null, { file: 'bower_components/alertify.js/lib/alertify.min.js' }, ->
 
           # chrome.tabs.insertCSS null, { file: 'build/css/vendors/lib.min.css' }, ->
           chrome.tabs.insertCSS null, { file: 'bower_components/alertify.js/themes/alertify.core.css' }, ->
@@ -36,9 +55,9 @@ $ ->
   Context Menu
   ####
   clickHandler = (info, tab) ->
-    if info.menuItemId is 'browser_action'
+    if info.menuItemId is 'browser_action_open_kawpaa'
       KAWPAA_URL = 'https://kawpaa.eiurur.xyz/'
-      chrome.tabs.create url: KAWPAA_URL, 'active': true, (tab) -> console.log 'Go to Kawpaa'
+      chrome.tabs.create url: KAWPAA_URL, 'active': true, (tab) -> console.log 'open Kawpaa'
       return
     console.log tab
     console.log 'Context Menu =====> '
@@ -67,9 +86,9 @@ $ ->
       'id': context
 
   chrome.contextMenus.create
-    'title': 'Go to Kawpaa'
+    'title': 'open Kawpaa'
     'contexts': ["browser_action"]
-    'id': 'browser_action'
+    'id': 'browser_action_open_kawpaa'
 
   chrome.contextMenus.onClicked.addListener(clickHandler)
 
