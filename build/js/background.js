@@ -1,28 +1,25 @@
 $(function() {
-  var clickHandler, contexts, executeOnaItLaterScript;
-  executeOnaItLaterScript = function(infoStr) {
+  var clickHandler, contexts, executeKawpaaScript;
+  executeKawpaaScript = function(infoStr) {
     return chrome.storage.sync.get(['token'], function(item) {
       if (item.token === void 0 || item.token === '') {
         alert('トークンが入力されていません。オプションページからトークンを入力してください');
         return;
       }
+      console.log('executeKawpaaScript = infoStr = ', infoStr);
       return chrome.tabs.executeScript(null, {
         file: 'build/js/vendors/lib.min.js'
       }, function() {
         return chrome.tabs.insertCSS(null, {
-          file: 'bower_components/alertify.js/themes/alertify.core.css'
+          file: 'build/css/vendors/lib.min.css'
         }, function() {
-          return chrome.tabs.insertCSS(null, {
-            file: 'bower_components/alertify.js/themes/alertify.default.css'
+          return chrome.tabs.executeScript(null, {
+            code: "var info = " + infoStr + ";"
           }, function() {
             return chrome.tabs.executeScript(null, {
-              code: "var info = " + infoStr + ";"
+              file: 'build/js/content.min.js'
             }, function() {
-              return chrome.tabs.executeScript(null, {
-                file: 'build/js/content.min.js'
-              }, function() {
-                console.log('Script injected.');
-              });
+              console.log('Script injected.');
             });
           });
         });
@@ -34,7 +31,7 @@ $(function() {
   Browser Action
    */
   chrome.browserAction.onClicked.addListener(function(tab) {
-    return executeOnaItLaterScript(null);
+    return executeKawpaaScript(null);
   });
 
   /*
@@ -57,7 +54,7 @@ $(function() {
     console.log(info);
     infoStr = JSON.stringify(info);
     console.log(infoStr);
-    return executeOnaItLaterScript(infoStr);
+    return executeKawpaaScript(infoStr);
   };
   contexts = ['page', 'image'];
   contexts.forEach(function(context) {
@@ -83,9 +80,8 @@ $(function() {
     var infoStr;
     if (request.name === 'twitter') {
       infoStr = JSON.stringify(request.info);
-      console.log(infoStr);
-      executeOnaItLaterScript(infoStr);
-      sendResponse('ok');
+      executeKawpaaScript(infoStr);
+      sendResponse("ok " + infoStr);
       return;
     }
     return chrome.browserAction.setIcon({
@@ -99,6 +95,6 @@ $(function() {
    */
   return chrome.commands.onCommand.addListener(function(command) {
     console.log(command);
-    return executeOnaItLaterScript(null);
+    return executeKawpaaScript(null);
   });
 });
