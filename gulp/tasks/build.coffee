@@ -3,6 +3,7 @@ gulp.task 'build', [
   'bower_js'
   'bower_options_js'
   'bower_css'
+  'bower_options_css'
   'bower_font'
   'coffee'
   'sass'

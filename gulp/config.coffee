@@ -49,10 +49,14 @@ module.exports =
     ]
     dest: dest + "/js/vendors/"
 
+  bower_options_css:
+    src: [
+      'bower_components/bootstrap/dist/css/bootstrap.min.css'
+    ]
+    dest: dest + "/css/vendors/"
+
   bower_css:
     src: [
-      # 'bower_components/font-awesome/css/font-awesome.min.css'
-      'bower_components/bootstrap/dist/css/bootstrap.min.css'
       'bower_components/alertify.js/themes/alertify.core.css'
       'bower_components/alertify.js/themes/alertify.default.css'
     ]

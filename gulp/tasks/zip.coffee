@@ -3,13 +3,11 @@ $    = do require 'gulp-load-plugins'
 path = require 'path'
 
 gulp.task 'zip', [
-  'coffee'
-  'jade'
-  'sass'
+  'build'
 ], ->
   manifest = require '../../manifest.json'
   distFileName = "#{manifest.name} v#{manifest.version}.zip"
   console.log distFileName
-  gulp.src ['build/**/*', 'bower_components/**/*', 'manifest.json'], {base: "."}
+  gulp.src ['build/**/*', 'manifest.json'], {base: "."}
       .pipe $.zip distFileName
       .pipe gulp.dest 'dist'
