@@ -1,9 +1,16 @@
 (function() {
-  var DATA_URL_BLUE_16, DATA_URL_GRAY_16, SELECTOR_JS_STREAM_TWEET, SELECTOR_JS_TWEET_TEXT, SELECTOR_PERMALINK_TWEET_CONTAINER, Twitter, removeKawpaaButton, sendBackground, showKawpaaButton;
+  var DATA_URL_BLUE_16, DATA_URL_GRAY_16, SELECTOR_ACTION_KAWPAA_CONTAINER, SELECTOR_JS_ACTION_PROFILE_NAME, SELECTOR_JS_ADAPTIVE_PHOTO, SELECTOR_JS_PERMALINK, SELECTOR_JS_STREAM_TWEET, SELECTOR_JS_TWEET_TEXT, SELECTOR_PERMALINK_TWEET_CONTAINER, sendBackground, showKawpaaButton;
+  SELECTOR_JS_STREAM_TWEET = '.js-stream-tweet';
+  SELECTOR_JS_TWEET_TEXT = '.js-tweet-text';
+  SELECTOR_PERMALINK_TWEET_CONTAINER = '.permalink-tweet-container';
+  SELECTOR_JS_ADAPTIVE_PHOTO = '.js-adaptive-photo';
+  SELECTOR_JS_PERMALINK = '.js-permalink';
+  SELECTOR_JS_ACTION_PROFILE_NAME = '.js-action-profile-name';
+  SELECTOR_ACTION_KAWPAA_CONTAINER = '.action-kawpaa-container';
   showKawpaaButton = function(_$) {
     var existKawpaaButton, hasPhoto, html;
-    hasPhoto = _$.find('.js-adaptive-photo').length > 0;
-    existKawpaaButton = _$.find('.action-kawpaa-container').length !== 0;
+    hasPhoto = _$.find(SELECTOR_JS_ADAPTIVE_PHOTO).length > 0;
+    existKawpaaButton = _$.find(SELECTOR_ACTION_KAWPAA_CONTAINER).length !== 0;
     if (existKawpaaButton) {
       return;
     }
@@ -13,67 +20,17 @@
     html = "<div class=\"ProfileTweet-action action-kawpaa-container\" style=\"display: inline-block; width: 26px;\">\n  <a class=\"js-tooltip kawpaa-save-link\" href=\"#\" data-original-title=\"Save to Kawpaa\" style=\"display: inline-block; float: left;\">\n    <span class=\"icon icon-kawpaa\" style=\"display: block; height: 16px; position: relative; top: 3px; width: 16px; background-image: url(" + DATA_URL_GRAY_16 + ");\">a</span>\n  </a>\n</div>";
     return _$.find('.ProfileTweet-actionList').append(html);
   };
-  removeKawpaaButton = function(_$) {
-    var existKawpaaButton;
-    existKawpaaButton = _$.find('.action-kawpaa-container').length !== 0;
-    if (!existKawpaaButton) {
-      return;
-    }
-    return _$.find('.action-kawpaa-container').remove();
-  };
   sendBackground = function(params) {
     console.log(params);
     return chrome.runtime.sendMessage(params, function(response) {
       return console.log(response);
     });
   };
-  Twitter = (function() {
-    Twitter.SELECTOR_JS_STREAM_TWEET = '.js-stream-tweet';
-
-    Twitter.SELECTOR_JS_TWEET_TEXT = '.js-tweet-text';
-
-    Twitter.SELECTOR_PERMALINK_TWEET_CONTAINER = '.permalink-tweet-container';
-
-    function Twitter() {
-      this.qJsStreamTweet = $(this).closest(Twitter.SELECTOR_JS_STREAM_TWEET);
-      this.qPermalinkTweetContaner = $(this).closest(Twitter.SELECTOR_PERMALINK_TWEET_CONTAINER);
-    }
-
-    Twitter.prototype.bindEvent = function() {
-      $(document).on({
-        'mouseenter': function(e) {
-          return showKawpaaButton($(this));
-        }
-      }, SELECTOR_PERMALINK_TWEET_CONTAINER);
-      $(document).on({
-        'mouseenter': function(e) {
-          return showKawpaaButton($(this));
-        }
-      }, SELECTOR_JS_STREAM_TWEET);
-      return $(document).on('click', SELECTOR_KAWPAA_SAVE_LINK, function(e) {
-        return e.preventDefault();
-      });
-    };
-
-    return Twitter;
-
-  })();
-  SELECTOR_JS_STREAM_TWEET = '.js-stream-tweet';
-  SELECTOR_JS_TWEET_TEXT = '.js-tweet-text';
-  SELECTOR_PERMALINK_TWEET_CONTAINER = '.permalink-tweet-container';
-
-  /*
-  Individual tweet page
-   */
   $(document).on({
     'mouseenter': function(e) {
       return showKawpaaButton($(this));
     }
   }, SELECTOR_PERMALINK_TWEET_CONTAINER);
-
-  /*
-  Home timeline
-   */
   $(document).on({
     'mouseenter': function(e) {
       return showKawpaaButton($(this));
@@ -93,9 +50,9 @@
       default:
         _targetElement = $permalinkTweetContaner;
     }
-    tweetUrl = _targetElement.find('.js-permalink').attr('href');
-    imageUrl = _targetElement.find('.js-adaptive-photo').attr('data-image-url');
-    title = (_targetElement.find('.js-action-profile-name').text()) + " / " + (_targetElement.find(SELECTOR_JS_TWEET_TEXT).text());
+    tweetUrl = _targetElement.find(SELECTOR_JS_PERMALINK).attr('href');
+    title = (_targetElement.find(SELECTOR_JS_ACTION_PROFILE_NAME).text()) + " / " + (_targetElement.find(SELECTOR_JS_TWEET_TEXT).text());
+    imageUrl = _targetElement.find(SELECTOR_JS_ADAPTIVE_PHOTO).attr('data-image-url');
     params = {
       name: 'twitter',
       info: {

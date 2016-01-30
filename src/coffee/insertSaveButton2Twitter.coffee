@@ -1,8 +1,17 @@
 do ->
 
+
+  SELECTOR_JS_STREAM_TWEET           = '.js-stream-tweet'
+  SELECTOR_JS_TWEET_TEXT             = '.js-tweet-text'
+  SELECTOR_PERMALINK_TWEET_CONTAINER = '.permalink-tweet-container'
+  SELECTOR_JS_ADAPTIVE_PHOTO         = '.js-adaptive-photo'
+  SELECTOR_JS_PERMALINK              = '.js-permalink'
+  SELECTOR_JS_ACTION_PROFILE_NAME    = '.js-action-profile-name'
+  SELECTOR_ACTION_KAWPAA_CONTAINER   = '.action-kawpaa-container'
+
   showKawpaaButton = (_$) ->
-    hasPhoto = _$.find('.js-adaptive-photo').length > 0
-    existKawpaaButton = _$.find('.action-kawpaa-container').length isnt 0
+    hasPhoto = _$.find(SELECTOR_JS_ADAPTIVE_PHOTO).length > 0
+    existKawpaaButton = _$.find(SELECTOR_ACTION_KAWPAA_CONTAINER).length isnt 0
 
     return if existKawpaaButton
     return unless hasPhoto
@@ -17,61 +26,27 @@ do ->
     _$.find('.ProfileTweet-actionList').append html
 
 
-  removeKawpaaButton = (_$) ->
-    existKawpaaButton = _$.find('.action-kawpaa-container').length isnt 0
+  # removeKawpaaButton = (_$) ->
+  #   existKawpaaButton = _$.find(SELECTOR_ACTION_KAWPAA_CONTAINER).length isnt 0
+  #   return unless existKawpaaButton
+  #   _$.find(SELECTOR_ACTION_KAWPAA_CONTAINER).remove()
 
-    return unless existKawpaaButton
-
-    _$.find('.action-kawpaa-container').remove()
 
   sendBackground = (params) ->
     console.log params
     chrome.runtime.sendMessage params, (response) ->
       console.log response
 
-  class Twitter
-
-    @SELECTOR_JS_STREAM_TWEET = '.js-stream-tweet'
-    @SELECTOR_JS_TWEET_TEXT = '.js-tweet-text'
-    @SELECTOR_PERMALINK_TWEET_CONTAINER = '.permalink-tweet-container'
-
-    constructor: ->
-      @qJsStreamTweet = $(this).closest(Twitter.SELECTOR_JS_STREAM_TWEET)
-      @qPermalinkTweetContaner = $(this).closest(Twitter.SELECTOR_PERMALINK_TWEET_CONTAINER)
-
-    bindEvent: ->
-
-      # Individual tweet page
-      $(document).on
-        'mouseenter': (e) -> showKawpaaButton($(this))
-      , SELECTOR_PERMALINK_TWEET_CONTAINER
-
-      # Home timeline
-      $(document).on
-        'mouseenter': (e) -> showKawpaaButton($(this))
-      , SELECTOR_JS_STREAM_TWEET
-
-      # Click
-      $(document).on 'click', SELECTOR_KAWPAA_SAVE_LINK, (e) ->
-        e.preventDefault()
-
-  SELECTOR_JS_STREAM_TWEET = '.js-stream-tweet'
-  SELECTOR_JS_TWEET_TEXT = '.js-tweet-text'
-  SELECTOR_PERMALINK_TWEET_CONTAINER = '.permalink-tweet-container'
 
 
-  ###
-  Individual tweet page
-  ###
+  # Individual tweet page
   $(document).on
     'mouseenter': (e) -> showKawpaaButton($(this))
     # 'mouseleave': (e) -> removeKawpaaButton($(this))
   , SELECTOR_PERMALINK_TWEET_CONTAINER
 
 
-  ###
-  Home timeline
-  ###
+  # Home timeline
   $(document).on
     'mouseenter': (e) -> showKawpaaButton($(this))
     # 'mouseleave': (e) -> removeKawpaaButton($(this))
@@ -97,10 +72,9 @@ do ->
       else # 個別ツイートページ
         _targetElement = $permalinkTweetContaner
 
-    tweetUrl = _targetElement.find('.js-permalink').attr('href')
-    imageUrl = _targetElement.find('.js-adaptive-photo').attr('data-image-url')
-    title = "#{_targetElement.find('.js-action-profile-name').text()} / #{_targetElement.find(SELECTOR_JS_TWEET_TEXT).text()}"
-
+    tweetUrl = _targetElement.find(SELECTOR_JS_PERMALINK).attr('href')
+    title = "#{_targetElement.find(SELECTOR_JS_ACTION_PROFILE_NAME).text()} / #{_targetElement.find(SELECTOR_JS_TWEET_TEXT).text()}"
+    imageUrl = _targetElement.find(SELECTOR_JS_ADAPTIVE_PHOTO).attr('data-image-url')
 
     params =
       name: 'twitter'
@@ -114,8 +88,26 @@ do ->
       #   url: "https://twitter.com#{tweetUrl}"
       #   type: 'link'
       #   siteImage: "#{imageUrl}:orig"
-
     sendBackground(params)
+
+    # 複数枚画像に対応ver
+    # FIX: 同時に違うパラメータをBackgroundに渡すのはいいのだけど、ページ上のデータをスクレイピングしてサーバに送信する実行するスクリプト(content.js)で上書きされてしまう。
+    # _targetElement.find(SELECTOR_JS_ADAPTIVE_PHOTO).each ->
+    #   # sendBackground(getParamsToServer(tweetUrl, $(this).attr('data-image-url'), title))
+    #   # _this = $(this)
+    #   # console.log this
+    #   console.log $(this).attr('data-image-url')
+    #   imageUrl = $(this).attr('data-image-url')
+
+    #   params =
+    #     name: 'twitter'
+    #     info:
+    #       siteUrl: "https://twitter.com#{tweetUrl}"
+    #       type: 'image'
+    #       srcUrl: "#{imageUrl}:orig"
+    #       title: title
+
+    #   sendBackground(params)
 
 
 
