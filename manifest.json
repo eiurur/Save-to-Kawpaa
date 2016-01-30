@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Save to Kawpaa",
   "description": "あとで抜く",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "permissions": [
     "tabs",
     "storage",
@@ -15,6 +15,7 @@
   "content_scripts": [
     {
       "matches": [ "https://twitter.com/*" ],
+      "//": [ "build/js/vendors/lib.js", "build/js/insertSaveButton2Twitter.js" ],
       "js": [ "build/js/vendors/lib.min.js", "build/js/insertSaveButton2Twitter.min.js" ],
       "run_at": "document_end"
     }
@@ -28,8 +29,8 @@
   },
   "background": {
      "persistent": false,
-     "scripts": [ "build/js/vendors/lib.js", "build/js/background.js" ],
-     "//": [ "build/js/vendors/lib.min.js", "build/js/background.min.js" ]
+     "//": [ "build/js/vendors/lib.js", "build/js/background.js" ],
+     "scripts": [ "build/js/vendors/lib.min.js", "build/js/background.min.js" ]
   },
   "web_accessible_resources": [
     "bower_components/jquery/dist/jquery.min.map"
