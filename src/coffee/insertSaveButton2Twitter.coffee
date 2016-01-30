@@ -24,6 +24,41 @@ do ->
 
     _$.find('.action-kawpaa-container').remove()
 
+  sendBackground = (params) ->
+    console.log params
+    chrome.runtime.sendMessage params, (response) ->
+      console.log response
+
+  class Twitter
+
+    @SELECTOR_JS_STREAM_TWEET = '.js-stream-tweet'
+    @SELECTOR_JS_TWEET_TEXT = '.js-tweet-text'
+    @SELECTOR_PERMALINK_TWEET_CONTAINER = '.permalink-tweet-container'
+
+    constructor: ->
+      @qJsStreamTweet = $(this).closest(Twitter.SELECTOR_JS_STREAM_TWEET)
+      @qPermalinkTweetContaner = $(this).closest(Twitter.SELECTOR_PERMALINK_TWEET_CONTAINER)
+
+    bindEvent: ->
+
+      # Individual tweet page
+      $(document).on
+        'mouseenter': (e) -> showKawpaaButton($(this))
+      , SELECTOR_PERMALINK_TWEET_CONTAINER
+
+      # Home timeline
+      $(document).on
+        'mouseenter': (e) -> showKawpaaButton($(this))
+      , SELECTOR_JS_STREAM_TWEET
+
+      # Click
+      $(document).on 'click', SELECTOR_KAWPAA_SAVE_LINK, (e) ->
+        e.preventDefault()
+
+  SELECTOR_JS_STREAM_TWEET = '.js-stream-tweet'
+  SELECTOR_JS_TWEET_TEXT = '.js-tweet-text'
+  SELECTOR_PERMALINK_TWEET_CONTAINER = '.permalink-tweet-container'
+
 
   ###
   Individual tweet page
@@ -31,7 +66,7 @@ do ->
   $(document).on
     'mouseenter': (e) -> showKawpaaButton($(this))
     # 'mouseleave': (e) -> removeKawpaaButton($(this))
-  , '.permalink-tweet-container'
+  , SELECTOR_PERMALINK_TWEET_CONTAINER
 
 
   ###
@@ -40,7 +75,7 @@ do ->
   $(document).on
     'mouseenter': (e) -> showKawpaaButton($(this))
     # 'mouseleave': (e) -> removeKawpaaButton($(this))
-  , '.js-stream-tweet'
+  , SELECTOR_JS_STREAM_TWEET
 
 
   # Click
@@ -50,15 +85,22 @@ do ->
     # 画像の差し替え
     $(this).find('.icon-kawpaa').css('background-image', "url(#{DATA_URL_BLUE_16})")
 
-    nowPageVariable = if $(this).closest('.js-stream-tweet').length > 0 then 'homeTImeline'
-    if nowPageVariable is 'homeTImeline'
-      tweetUrl = $(this).closest('.js-stream-tweet').find('.js-permalink').attr('href')
-      imageUrl = $(this).closest('.js-stream-tweet').find('.js-adaptive-photo').attr('data-image-url')
-      title = "#{$(this).closest('.js-stream-tweet').find('.js-action-profile-name').text()} / #{$(this).closest('.js-stream-tweet').find('.js-tweet-text').text()}"
-    else # 個別ページ
-      tweetUrl = $(this).closest('.permalink-tweet-container').find('.js-permalink').attr('href')
-      imageUrl = $(this).closest('.permalink-tweet-container').find('.js-adaptive-photo').attr('data-image-url')
-      title = "#{$(this).closest('.permalink-tweet-container').find('.js-action-profile-name').text()} / #{$(this).closest('.permalink-tweet-container').find('.js-tweet-text').text()}"
+    $jsStreamTweet = $(this).closest(SELECTOR_JS_STREAM_TWEET)
+    $permalinkTweetContaner = $(this).closest(SELECTOR_PERMALINK_TWEET_CONTAINER)
+
+    # Hack: 拡張性なし
+    nowPageVariable = if $jsStreamTweet.length > 0 then 'homeTImeline'
+
+    switch nowPageVariable
+      when 'homeTImeline'
+        _targetElement = $jsStreamTweet
+      else # 個別ツイートページ
+        _targetElement = $permalinkTweetContaner
+
+    tweetUrl = _targetElement.find('.js-permalink').attr('href')
+    imageUrl = _targetElement.find('.js-adaptive-photo').attr('data-image-url')
+    title = "#{_targetElement.find('.js-action-profile-name').text()} / #{_targetElement.find(SELECTOR_JS_TWEET_TEXT).text()}"
+
 
     params =
       name: 'twitter'
@@ -73,9 +115,8 @@ do ->
       #   type: 'link'
       #   siteImage: "#{imageUrl}:orig"
 
-    console.log params
-    chrome.runtime.sendMessage params, (response) ->
-      console.log response
+    sendBackground(params)
+
 
 
   DATA_URL_GRAY_16 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3wYYByssdLYJhQAABBtJREFUOBEBEATv+wEAAAAAAAAAAAAAAACenp4AYmJiAJ6engQAAABOAAAAKAAAAAAAAADYAAAAsWJiYv2enp4AYmJiAAAAAAAAAAAAAQAAAAAAAAAAnp6eAAAAAAIAAACeAAAAXwAAALYAAADRAAAAAAAAAC8AAABKAAAAoAAAAGMAAAD+YmJiAAAAAAABAAAAAJ6engAAAAAXAAAA4wAAAIRiYmKCAAAAAAAAAAAAAAAAAAAAAAAAAACenp5/AAAAewAAABwAAADqYmJiAAGenp4AAAAAAgAAAPgAAABEYmJiwgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACenp4/AAAAuwAAAAgAAAD+AAAAAACenp6gnp6efgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACenp5/np6enwAAAAABnp6eBAAAAPtiYmIBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACenp7/AAAABAIAAABOAAAAtgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALcAAABOAgAAACgAAADRAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA0QAAACgCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAADYAAAALwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC8AAADYAgAAALIAAABKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASQAAALIAAAAAAJ6enp+enp5+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJ6enoCenp6eAAAAAAGenp4AAAAAAgAAAPgAAABEYmJiwgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACenp4/AAAAuwAAAAcAAAD/AmJiYgAAAAD+AAAAHQAAALyenp5+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAnp6egAAAALsAAAAcAAAA/2JiYgABAAAAAAAAAACenp4AAAAAAgAAAJ0AAABgAAAAtgAAANEAAAAAAAAALwAAAEoAAACfAAAAYwAAAP9iYmIAAAAAAAIAAAAAAAAAAGJiYgAAAAD+YmJiYQAAAAQAAACdAAAA9AAAAPQAAACdAAAABGJiYmIAAAD/YmJiAAAAAAAAAAAA4IxvG+IdfVgAAAAASUVORK5CYII="

@@ -1,5 +1,5 @@
 (function() {
-  var DATA_URL_BLUE_16, DATA_URL_GRAY_16, removeKawpaaButton, showKawpaaButton;
+  var DATA_URL_BLUE_16, DATA_URL_GRAY_16, SELECTOR_JS_STREAM_TWEET, SELECTOR_JS_TWEET_TEXT, SELECTOR_PERMALINK_TWEET_CONTAINER, Twitter, removeKawpaaButton, sendBackground, showKawpaaButton;
   showKawpaaButton = function(_$) {
     var existKawpaaButton, hasPhoto, html;
     hasPhoto = _$.find('.js-adaptive-photo').length > 0;
@@ -21,6 +21,46 @@
     }
     return _$.find('.action-kawpaa-container').remove();
   };
+  sendBackground = function(params) {
+    console.log(params);
+    return chrome.runtime.sendMessage(params, function(response) {
+      return console.log(response);
+    });
+  };
+  Twitter = (function() {
+    Twitter.SELECTOR_JS_STREAM_TWEET = '.js-stream-tweet';
+
+    Twitter.SELECTOR_JS_TWEET_TEXT = '.js-tweet-text';
+
+    Twitter.SELECTOR_PERMALINK_TWEET_CONTAINER = '.permalink-tweet-container';
+
+    function Twitter() {
+      this.qJsStreamTweet = $(this).closest(Twitter.SELECTOR_JS_STREAM_TWEET);
+      this.qPermalinkTweetContaner = $(this).closest(Twitter.SELECTOR_PERMALINK_TWEET_CONTAINER);
+    }
+
+    Twitter.prototype.bindEvent = function() {
+      $(document).on({
+        'mouseenter': function(e) {
+          return showKawpaaButton($(this));
+        }
+      }, SELECTOR_PERMALINK_TWEET_CONTAINER);
+      $(document).on({
+        'mouseenter': function(e) {
+          return showKawpaaButton($(this));
+        }
+      }, SELECTOR_JS_STREAM_TWEET);
+      return $(document).on('click', SELECTOR_KAWPAA_SAVE_LINK, function(e) {
+        return e.preventDefault();
+      });
+    };
+
+    return Twitter;
+
+  })();
+  SELECTOR_JS_STREAM_TWEET = '.js-stream-tweet';
+  SELECTOR_JS_TWEET_TEXT = '.js-tweet-text';
+  SELECTOR_PERMALINK_TWEET_CONTAINER = '.permalink-tweet-container';
 
   /*
   Individual tweet page
@@ -29,7 +69,7 @@
     'mouseenter': function(e) {
       return showKawpaaButton($(this));
     }
-  }, '.permalink-tweet-container');
+  }, SELECTOR_PERMALINK_TWEET_CONTAINER);
 
   /*
   Home timeline
@@ -38,21 +78,24 @@
     'mouseenter': function(e) {
       return showKawpaaButton($(this));
     }
-  }, '.js-stream-tweet');
+  }, SELECTOR_JS_STREAM_TWEET);
   $(document).on('click', '.kawpaa-save-link', function(e) {
-    var imageUrl, nowPageVariable, params, title, tweetUrl;
+    var $jsStreamTweet, $permalinkTweetContaner, _targetElement, imageUrl, nowPageVariable, params, title, tweetUrl;
     e.preventDefault();
     $(this).find('.icon-kawpaa').css('background-image', "url(" + DATA_URL_BLUE_16 + ")");
-    nowPageVariable = $(this).closest('.js-stream-tweet').length > 0 ? 'homeTImeline' : void 0;
-    if (nowPageVariable === 'homeTImeline') {
-      tweetUrl = $(this).closest('.js-stream-tweet').find('.js-permalink').attr('href');
-      imageUrl = $(this).closest('.js-stream-tweet').find('.js-adaptive-photo').attr('data-image-url');
-      title = ($(this).closest('.js-stream-tweet').find('.js-action-profile-name').text()) + " / " + ($(this).closest('.js-stream-tweet').find('.js-tweet-text').text());
-    } else {
-      tweetUrl = $(this).closest('.permalink-tweet-container').find('.js-permalink').attr('href');
-      imageUrl = $(this).closest('.permalink-tweet-container').find('.js-adaptive-photo').attr('data-image-url');
-      title = ($(this).closest('.permalink-tweet-container').find('.js-action-profile-name').text()) + " / " + ($(this).closest('.permalink-tweet-container').find('.js-tweet-text').text());
+    $jsStreamTweet = $(this).closest(SELECTOR_JS_STREAM_TWEET);
+    $permalinkTweetContaner = $(this).closest(SELECTOR_PERMALINK_TWEET_CONTAINER);
+    nowPageVariable = $jsStreamTweet.length > 0 ? 'homeTImeline' : void 0;
+    switch (nowPageVariable) {
+      case 'homeTImeline':
+        _targetElement = $jsStreamTweet;
+        break;
+      default:
+        _targetElement = $permalinkTweetContaner;
     }
+    tweetUrl = _targetElement.find('.js-permalink').attr('href');
+    imageUrl = _targetElement.find('.js-adaptive-photo').attr('data-image-url');
+    title = (_targetElement.find('.js-action-profile-name').text()) + " / " + (_targetElement.find(SELECTOR_JS_TWEET_TEXT).text());
     params = {
       name: 'twitter',
       info: {
@@ -62,10 +105,7 @@
         title: title
       }
     };
-    console.log(params);
-    return chrome.runtime.sendMessage(params, function(response) {
-      return console.log(response);
-    });
+    return sendBackground(params);
   });
   DATA_URL_GRAY_16 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3wYYByssdLYJhQAABBtJREFUOBEBEATv+wEAAAAAAAAAAAAAAACenp4AYmJiAJ6engQAAABOAAAAKAAAAAAAAADYAAAAsWJiYv2enp4AYmJiAAAAAAAAAAAAAQAAAAAAAAAAnp6eAAAAAAIAAACeAAAAXwAAALYAAADRAAAAAAAAAC8AAABKAAAAoAAAAGMAAAD+YmJiAAAAAAABAAAAAJ6engAAAAAXAAAA4wAAAIRiYmKCAAAAAAAAAAAAAAAAAAAAAAAAAACenp5/AAAAewAAABwAAADqYmJiAAGenp4AAAAAAgAAAPgAAABEYmJiwgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACenp4/AAAAuwAAAAgAAAD+AAAAAACenp6gnp6efgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACenp5/np6enwAAAAABnp6eBAAAAPtiYmIBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACenp7/AAAABAIAAABOAAAAtgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALcAAABOAgAAACgAAADRAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA0QAAACgCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAADYAAAALwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC8AAADYAgAAALIAAABKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASQAAALIAAAAAAJ6enp+enp5+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJ6enoCenp6eAAAAAAGenp4AAAAAAgAAAPgAAABEYmJiwgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACenp4/AAAAuwAAAAcAAAD/AmJiYgAAAAD+AAAAHQAAALyenp5+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAnp6egAAAALsAAAAcAAAA/2JiYgABAAAAAAAAAACenp4AAAAAAgAAAJ0AAABgAAAAtgAAANEAAAAAAAAALwAAAEoAAACfAAAAYwAAAP9iYmIAAAAAAAIAAAAAAAAAAGJiYgAAAAD+YmJiYQAAAAQAAACdAAAA9AAAAPQAAACdAAAABGJiYmIAAAD/YmJiAAAAAAAAAAAA4IxvG+IdfVgAAAAASUVORK5CYII=";
   return DATA_URL_BLUE_16 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3wYYBzM05cEJigAABBtJREFUOBEBEATv+wEAAAAAAAAAAAAAAAAbescA5YY5ABt6xwQAAABOAAAAKAAAAAAAAADYAAAAseWGOf0bescA5YY5AAAAAAAAAAAAAQAAAAAAAAAAG3rHAAAAAAIAAACeAAAAXwAAALYAAADRAAAAAAAAAC8AAABKAAAAoAAAAGMAAAD+5YY5AAAAAAAEAAAAABt6xwAAAAAXAAAA4wAAAITlhjkBAAAAAAAAAAAAAAAAAAAAAAAAAAAbesd/AAAA+AAAABwbesfq5YY5AAEbescAAAAAAgAAAPgAAABE5YY5wgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbesc/AAAAuwAAAAgAAAD+AAAAAAAbesegG3rHfgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbesd/G3rHnwAAAAABG3rHBAAAAPvlhjkBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbesf/AAAABAIAAABOAAAAtgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALcAAABOAgAAACgAAADRAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA0QAAACgCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAADYAAAALwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC8AAADYAgAAALIAAABKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASQAAALIAAAAAABt6x58besd+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABt6x4AbeseeAAAAAAEbescAAAAAAgAAAPgAAABE5YY5wgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbesc/AAAAuwAAAAcAAAD/AuWGOQAAAAD+AAAAHQAAALwbesd+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAG3rHgAAAALsAAAAcAAAA/+WGOQABAAAAAAAAAAAbescAAAAAAgAAAJ0AAABgAAAAtgAAANEAAAAAAAAALwAAAEoAAACfAAAAYwAAAP/lhjkAAAAAAAIAAAAAAAAAAOWGOQAAAAD+5YY5YQAAAAQAAACdAAAA9AAAAPQAAACdAAAABOWGOWIAAAD/5YY5AAAAAAAAAAAA+yVtBA+LUxoAAAAASUVORK5CYII=";
