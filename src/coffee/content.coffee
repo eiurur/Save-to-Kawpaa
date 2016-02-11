@@ -120,6 +120,11 @@ $ ->
       data.isPrivate = true
       data.isArchive = false
 
+      # pixivならusernameとpasswordが必要なので一緒に渡す。
+      data.pixiv =
+        username: info.pixiv_username
+        password: info.pixiv_password
+
       console.log data
 
       return resolve data
@@ -130,10 +135,13 @@ $ ->
     alertify.success "保存しました。"
 
   displatyFailedResult = (err) ->
-    console.log err
+    console.log 'displatyFailedResult err = ', err
 
-    # Ajaxに失敗
-    if err.status?
+    # res.status(err.statusCode).json statusCode: err.statusCode, message: err.messageのとき
+    if err.responseJSON?
+      err.statusCode = err.responseJSON.statusCode
+      err.statusMessage = err.responseJSON.message
+    else if err.status? # Ajaxに失敗したとき
       err.statusCode = err.status
       err.statusMessage = err.statusText
 
@@ -143,9 +151,7 @@ $ ->
 
 
   do ->
-
     alertify.log "保存中 ......"
-
     Promise.all [scrapingMetaData(), getToken()]
     .then ([data, token]) -> save2Server data, token
     .then (data) -> displatySuccessResult()

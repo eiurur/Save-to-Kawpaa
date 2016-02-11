@@ -1,11 +1,24 @@
 $(function() {
-  var clickHandler, contexts, executeKawpaaScript;
+  var clickHandler, contexts, executeKawpaaScript, get;
+  get = function(key) {
+    return new Promise(function(resolve, reject) {
+      return chrome.storage.sync.get(key, function(item) {
+        return resolve(item[key]);
+      });
+    });
+  };
   executeKawpaaScript = function(infoStr) {
-    return chrome.storage.sync.get(['token'], function(item) {
-      if (item.token === void 0 || item.token === '') {
+    return Promise.all([get("token"), get("pixiv_username"), get("pixiv_password")]).then(function(itemList) {
+      var info, infoStrAddedPixivData, token;
+      token = itemList[0];
+      if (token === void 0 || token === '') {
         alert('トークンが入力されていません。オプションページからトークンを入力してください');
         return;
       }
+      info = JSON.parse(infoStr);
+      info.pixiv_username = itemList[1];
+      info.pixiv_password = itemList[2];
+      infoStrAddedPixivData = JSON.stringify(info);
       console.log('executeKawpaaScript = infoStr = ', infoStr);
       return chrome.tabs.executeScript(null, {
         file: 'build/js/vendors/lib.min.js'
@@ -14,10 +27,10 @@ $(function() {
           file: 'build/css/vendors/lib.min.css'
         }, function() {
           return chrome.tabs.executeScript(null, {
-            code: "var info = " + infoStr + ";"
+            code: "var info = " + infoStrAddedPixivData + ";"
           }, function() {
             return chrome.tabs.executeScript(null, {
-              file: 'build/js/content.min.js'
+              file: 'build/js/content.js'
             }, function() {
               console.log('Script injected.');
             });

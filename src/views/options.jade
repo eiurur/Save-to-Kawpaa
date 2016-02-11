@@ -7,11 +7,9 @@ html(lang='ja')
     meta(name='author', content='eiurur')
     title 設定画面
 
-    // Bootstrap core CSS
     link(href='../../css/vendors/options.lib.css', rel='stylesheet')
     link(href='../../css/app.css', rel='stylesheet')
 
-    //- link(href='../../css/app.css', rel='stylesheet')
     script(src='../../js/vendors/lib.js')
     script(src='../../js/vendors/options.lib.js')
     script(src='../../js/app.js')
@@ -23,10 +21,6 @@ html(lang='ja')
           .masthead.clearfix
             .inner
               h3.masthead-brand Save to Kawpaa
-              //- nav
-              //-   ul.nav.masthead-nav
-              //-     li.active
-              //-       a(href='#') Home
           .inner.cover
 
             form.form-horizontal
@@ -34,4 +28,11 @@ html(lang='ja')
                 label.col-sm-2.control-label(for='token') Token
                 .col-sm-10
                   input#token.form-control(type='text', placeholder='token を入力してください')
+
+              .form-group
+                label.col-sm-2.control-label(for='pixiv') pixiv (任意)
+                .col-sm-5
+                  input#pixiv_username.form-control(type='text', placeholder='username')
+                .col-sm-5
+                  input#pixiv_password.form-control(type='password', placeholder='password')
             #console

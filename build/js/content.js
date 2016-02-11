@@ -87,6 +87,10 @@ $(function() {
       data.favicon = favicon;
       data.isPrivate = true;
       data.isArchive = false;
+      data.pixiv = {
+        username: info.pixiv_username,
+        password: info.pixiv_password
+      };
       console.log(data);
       return resolve(data);
     });
@@ -98,8 +102,11 @@ $(function() {
     return alertify.success("保存しました。");
   };
   displatyFailedResult = function(err) {
-    console.log(err);
-    if (err.status != null) {
+    console.log('displatyFailedResult err = ', err);
+    if (err.responseJSON != null) {
+      err.statusCode = err.responseJSON.statusCode;
+      err.statusMessage = err.responseJSON.message;
+    } else if (err.status != null) {
       err.statusCode = err.status;
       err.statusMessage = err.statusText;
     }
