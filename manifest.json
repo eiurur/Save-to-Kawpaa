@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Save to Kawpaa",
   "description": "あとで抜く",
-  "version": "0.4.3",
+  "version": "0.5.0",
   "permissions": [
     "tabs",
     "storage",
@@ -32,9 +32,6 @@
      "//": [ "build/js/vendors/lib.js", "build/js/background.js" ],
      "scripts": [ "build/js/vendors/lib.min.js", "build/js/background.min.js" ]
   },
-  "web_accessible_resources": [
-    "bower_components/jquery/dist/jquery.min.map"
-  ],
   "options_page": "build/views/views/options.html",
   "icons": {
     "16": "build/images/blue/icon19.png",
