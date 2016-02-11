@@ -37,7 +37,6 @@ $ ->
   scrapingMetaData = ->
     return new Promise (resolve, reject) ->
 
-
       data = {}
 
       # タイトル (ex) '(1) Twitter'

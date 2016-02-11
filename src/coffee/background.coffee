@@ -6,29 +6,27 @@ $ ->
   executeKawpaaScript = (infoStr) ->
     Promise.all [
       get "token"
-      get "pixiv_username"
-      get "pixiv_password"
+      # get "pixiv_username"
+      # get "pixiv_password"
     ]
     .then (itemList) ->
       token = itemList[0]
       if token is undefined or token is ''
         alert 'トークンが入力されていません。オプションページからトークンを入力してください'
         return
-      info = JSON.parse infoStr
-      info.pixiv_username = itemList[1]
-      info.pixiv_password = itemList[2]
-      infoStrAddedPixivData = JSON.stringify info
-
+      # info = JSON.parse infoStr
+      # info.pixiv_username = itemList[1]
+      # info.pixiv_password = itemList[2]
+      # infoStrAddedPixivData = JSON.stringify info
       console.log 'executeKawpaaScript = infoStr = ', infoStr
-
       chrome.tabs.executeScript null, { file: 'build/js/vendors/lib.min.js' }, ->
         chrome.tabs.insertCSS null, { file: 'build/css/vendors/lib.min.css' }, ->
 
           # 文字列で渡しても、content.jsではobjectとして受け取る。なので名前もinfo
-          chrome.tabs.executeScript null, { code: "var info = #{infoStrAddedPixivData};" }, ->
+          chrome.tabs.executeScript null, { code: "var info = #{infoStr};" }, ->
 
-            chrome.tabs.executeScript null, { file: 'build/js/content.js' }, ->
-            # chrome.tabs.executeScript null, { file: 'build/js/content.min.js' }, ->
+            # chrome.tabs.executeScript null, { file: 'build/js/content.js' }, ->
+            chrome.tabs.executeScript null, { file: 'build/js/content.min.js' }, ->
               console.log 'Script injected.'
               return
 
