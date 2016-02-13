@@ -87,10 +87,6 @@ $(function() {
       data.favicon = favicon;
       data.isPrivate = true;
       data.isArchive = false;
-      data.pixiv = {
-        username: info.pixiv_username,
-        password: info.pixiv_password
-      };
       console.log(data);
       return resolve(data);
     });

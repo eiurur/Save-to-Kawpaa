@@ -119,11 +119,6 @@ $ ->
       data.isPrivate = true
       data.isArchive = false
 
-      # pixivならusernameとpasswordが必要なので一緒に渡す。
-      data.pixiv =
-        username: info.pixiv_username
-        password: info.pixiv_password
-
       console.log data
 
       return resolve data
