@@ -6,8 +6,6 @@ $ ->
   executeKawpaaScript = (infoStr) ->
     Promise.all [
       get "token"
-      # get "pixiv_username"
-      # get "pixiv_password"
     ]
     .then (itemList) ->
       token = itemList[0]
@@ -15,9 +13,6 @@ $ ->
         alert 'トークンが入力されていません。オプションページからトークンを入力してください'
         return
       # info = JSON.parse infoStr
-      # info.pixiv_username = itemList[1]
-      # info.pixiv_password = itemList[2]
-      # infoStrAddedPixivData = JSON.stringify info
       console.log 'executeKawpaaScript = infoStr = ', infoStr
       chrome.tabs.executeScript null, { file: 'build/js/vendors/lib.min.js' }, ->
         chrome.tabs.insertCSS null, { file: 'build/css/vendors/lib.min.css' }, ->
@@ -86,8 +81,6 @@ $ ->
   ###
   chrome.runtime.onMessage.addListener (request, sender, sendResponse) ->
     if request.name is 'twitter'
-      # console.log 'request name is Twitter'
-      # console.log request
       infoStr = JSON.stringify request.info
       executeKawpaaScript(infoStr)
       sendResponse "ok #{infoStr}"

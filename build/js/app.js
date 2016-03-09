@@ -1,8 +1,4 @@
 $(function() {
-
-  /*
-  For options.html
-   */
   chrome.storage.sync.get("token", function(item) {
     return $("#token").val(item.token);
   });
@@ -16,8 +12,4 @@ $(function() {
       return $('#console').html((moment().format('YYYY MMMM Do, h:mm:ss')) + ": トークンを保存しました");
     });
   });
-
-  /*
-  Pixiv
-   */
 });
