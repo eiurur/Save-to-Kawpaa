@@ -3,7 +3,7 @@ $(function() {
   save2Server = function(data, token) {
     return new Promise(function(resolve, reject) {
       var destUrl;
-      destUrl = 'https://kawpaa.eiurur.xyz/api/posts';
+      destUrl = 'https://127.0.0.1:9021/api/posts';
       return $.ajax({
         type: "POST",
         url: destUrl,
@@ -14,10 +14,9 @@ $(function() {
         headers: {
           "Access-Control-Allow-Origin": "*"
         }
-      }).done(function(data) {
-        if (data !== 'ok' && data.statusCode !== 200) {
-          return reject(data);
-        }
+      }).done(function(data, status) {
+        console.log(data);
+        console.log(status);
         return resolve(data);
       }).fail(function(err) {
         return reject(err);

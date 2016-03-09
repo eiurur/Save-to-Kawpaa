@@ -4,14 +4,13 @@ $ ->
     return new Promise (resolve, reject) ->
 
       # 開発用(Win)
-      # destUrl = 'https://127.0.0.1:9021/api/posts'
+      destUrl = 'https://127.0.0.1:9021/api/posts'
 
       # 開発用(Vagrant)
       # destUrl = 'https://192.168.33.10:9021/api/posts'
 
       # 本番用(VPS)
-      # destUrl = 'https://tk2-207-13331.vs.sakura.ne.jp:9021/api/posts'
-      destUrl = 'https://kawpaa.eiurur.xyz/api/posts'
+      # destUrl = 'https://kawpaa.eiurur.xyz/api/posts'
 
       $.ajax
         type: "POST"
@@ -21,8 +20,11 @@ $ ->
           post: data
         headers:
           "Access-Control-Allow-Origin": "*"
-      .done (data) ->
-        return reject data if data isnt 'ok' and data.statusCode isnt 200
+      .done (data, status) ->
+        console.log data
+        console.log status
+        # return reject data if data isnt 'ok' and data.statusCode isnt 200
+        # return reject data if status isnt 200
         return resolve data
       .fail (err) ->
         return reject err
