@@ -81,7 +81,7 @@ $ ->
   ###
   chrome.runtime.onMessage.addListener (request, sender, sendResponse) ->
     switch request.name
-      when 'twitter', 'danbooru', 'gelbooru'
+      when 'twitter', 'danbooru', 'konachan', 'gelbooru'
         infoStr = JSON.stringify request.info
         executeKawpaaScript(infoStr)
         sendResponse "ok #{infoStr}"

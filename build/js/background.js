@@ -90,6 +90,7 @@ $(function() {
     switch (request.name) {
       case 'twitter':
       case 'danbooru':
+      case 'konachan':
       case 'gelbooru':
         infoStr = JSON.stringify(request.info);
         executeKawpaaScript(infoStr);

@@ -43,15 +43,16 @@
     },
     {
       "matches": [
-        "http://gelbooru.com/index.php*"
-      ],
-      "//": [
-        "build/js/vendors/lib.js",
-        "build/js/insertSaveLink2Gelbooru.js"
+        "http://gelbooru.com/index.php*",
+        "https://konachan.com/post/show/*"
       ],
       "js": [
+        "build/js/vendors/lib.js",
+        "build/js/insertSaveLink.js"
+      ],
+      "//": [
         "build/js/vendors/lib.min.js",
-        "build/js/insertSaveLink2Gelbooru.min.js"
+        "build/js/insertSaveLink.min.js"
       ],
       "run_at": "document_end"
     }
