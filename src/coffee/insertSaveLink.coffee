@@ -36,6 +36,15 @@ do ->
           info:
             type: 'image'
             srcUrl: srcUrl
+      when 'yande.re'
+        # 個人的にsampleサイズでも十分に感じるため大きいサイズに変換する処理は行わない。
+        originalImageSrc = $('#image').attr('src')
+        srcUrl = originalImageSrc
+        params =
+          name: 'yande.re'
+          info:
+            type: 'image'
+            srcUrl: srcUrl
 
     return params
 

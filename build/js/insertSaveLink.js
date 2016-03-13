@@ -38,6 +38,17 @@
             srcUrl: srcUrl
           }
         };
+        break;
+      case 'yande.re':
+        originalImageSrc = $('#image').attr('src');
+        srcUrl = originalImageSrc;
+        params = {
+          name: 'yande.re',
+          info: {
+            type: 'image',
+            srcUrl: srcUrl
+          }
+        };
     }
     return params;
   };

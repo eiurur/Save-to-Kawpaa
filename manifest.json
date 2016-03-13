@@ -44,7 +44,8 @@
     {
       "matches": [
         "http://gelbooru.com/index.php*",
-        "https://konachan.com/post/show/*"
+        "https://konachan.com/post/show/*",
+        "https://yande.re/post/show/*"
       ],
       "js": [
         "build/js/vendors/lib.js",

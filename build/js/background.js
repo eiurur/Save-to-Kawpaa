@@ -92,6 +92,7 @@ $(function() {
       case 'danbooru':
       case 'konachan':
       case 'gelbooru':
+      case 'yande.re':
         infoStr = JSON.stringify(request.info);
         executeKawpaaScript(infoStr);
         sendResponse("ok " + infoStr);
