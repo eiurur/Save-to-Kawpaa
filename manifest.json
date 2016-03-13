@@ -29,20 +29,8 @@
     },
     {
       "matches": [
-        "https://danbooru.donmai.us/posts/*"
-      ],
-      "//": [
-        "build/js/vendors/lib.js",
-        "build/js/insertSaveLink2Danbooru.js"
-      ],
-      "js": [
-        "build/js/vendors/lib.min.js",
-        "build/js/insertSaveLink2Danbooru.min.js"
-      ],
-      "run_at": "document_end"
-    },
-    {
-      "matches": [
+        "https://chan.sankakucomplex.com/*/post/show/*",
+        "https://danbooru.donmai.us/posts/*",
         "http://gelbooru.com/index.php*",
         "https://konachan.com/post/show/*",
         "https://yande.re/post/show/*"

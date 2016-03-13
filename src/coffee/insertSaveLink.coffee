@@ -1,13 +1,41 @@
 do ->
 
-  SELECTOR_INSERTION_TARGET_OF_KAWPAA_LINK = '#right-col h4'
+  getSelectorInsertionTagetOfKawpaaLink = ->
+    result = null
+    hostname = location.host
+    switch hostname
+      when 'chan.sankakucomplex.com'
+        result = '#share'
+      when 'danbooru.donmai.us'
+        result = '#post-sections'
+      when 'gelbooru.com', 'konachan.com', 'yande.re'
+        result = '#right-col h4'
+    return result
+
+  getHtmlToInsert = ->
+    result = null
+    hostname = location.host
+    switch hostname
+      when 'chan.sankakucomplex.com'
+        result = """
+          <a class="kawpaa-save-link" href="#">Save to Kawpaa</a>
+        """
+      when 'danbooru.donmai.us'
+        result = """
+          <li><a class="kawpaa-save-link" href="#">Save to Kawpaa</a></li>
+        """
+      when 'gelbooru.com', 'konachan.com', 'yande.re'
+        result = """
+           |
+          <a class="kawpaa-save-link" href="#">Save to Kawpaa</a>
+        """
+    return result
 
   showKawpaaLink = ->
-    html = """
-       |
-      <a class="kawpaa-save-link" href="#">Save to Kawpaa</a>
-    """
-    $(document).find(SELECTOR_INSERTION_TARGET_OF_KAWPAA_LINK).append html
+    selector = getSelectorInsertionTagetOfKawpaaLink()
+    html = getHtmlToInsert()
+    $(document).find(selector).append html
+
 
   sendBackground = (params) ->
     console.log params
@@ -15,14 +43,49 @@ do ->
       console.log response
 
   getParamsToServer = ->
+    result = null
     hostname = location.host
     console.log hostname
-
     switch hostname
+      when 'chan.sankakucomplex.com'
+        # 画像のFQDN
+        #   => https://cs.sankakucomplex.com/data/34/38/34381c7e1c53bc1929f68b491fb5c0c8.png?4767698
+        #
+        # 縮小後のURL ===  $('#image').attr('src') で得られる画像のURL
+        #   => //cs.sankakucomplex.com/data/sample/34/38/sample-34381c7e1c53bc1929f68b491fb5c0c8.jpg?4767698
+        # 原寸大のURL
+        #   => https://cs.sankakucomplex.com/data/34/38/34381c7e1c53bc1929f68b491fb5c0c8.png?4767698
+        sampleImgUrl = $('#image').attr('src')
+        sampleImgUrl = sampleImgUrl.replace 'sample-', ''
+        originalImageSrc = sampleImgUrl.replace '/sample', ''
+        # originalImageSrc = $('#image').attr('src')
+        srcUrl = "https:#{originalImageSrc}"
+        result =
+          name: 'sankakucomplex'
+          info:
+            type: 'image'
+            srcUrl: srcUrl
+      when 'danbooru.donmai.us'
+        # 画像のFQDN
+        #   => https://danbooru.donmai.us/data/sample/sample-2a7955046380f0aaa95d83f1a4c4bd14.jpg
+        #
+        # 縮小後のURL ===  $('#image').attr('src') で得られる画像のURL
+        #   => /data/sample/sample-2a7955046380f0aaa95d83f1a4c4bd14.jpg
+        #
+        # 原寸大のURL
+        #   => /data/2a7955046380f0aaa95d83f1a4c4bd14.jpg
+        sampleImgUrl = $('#image').attr('src')
+        originalImageSrc = sampleImgUrl.replace 'sample/sample-', ''
+        srcUrl = "https://danbooru.donmai.us#{originalImageSrc}"
+        result =
+          name: 'danbooru'
+          info:
+            type: 'image'
+            srcUrl: srcUrl
       when 'gelbooru.com'
         originalImageSrc = $('#image').attr('src')
         srcUrl = originalImageSrc
-        params =
+        result =
           name: 'gelbooru'
           info:
             type: 'image'
@@ -31,7 +94,7 @@ do ->
         # 個人的にsampleサイズでも十分に感じるため大きいサイズに変換する処理は行わない。
         originalImageSrc = $('#image').attr('src')
         srcUrl = originalImageSrc
-        params =
+        result =
           name: 'konachan'
           info:
             type: 'image'
@@ -40,17 +103,17 @@ do ->
         # 個人的にsampleサイズでも十分に感じるため大きいサイズに変換する処理は行わない。
         originalImageSrc = $('#image').attr('src')
         srcUrl = originalImageSrc
-        params =
+        result =
           name: 'yande.re'
           info:
             type: 'image'
             srcUrl: srcUrl
-
-    return params
+    return result
 
   $(document).on 'click', '.kawpaa-save-link', (e) ->
     e.preventDefault()
     params = getParamsToServer()
     sendBackground(params)
+
 
   do showKawpaaLink

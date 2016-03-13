@@ -110,7 +110,7 @@ $ ->
 
       # サイトの画像 (ex) 'https://pbs.twimg.com/media/CYjbVOCVAAAEegD.png:large'
       siteImage = $('meta[property="og:image"]').attr('content')
-      data.siteImage = siteImage
+      data.siteImage = info?.siteImage or siteImage
 
       # サイトのfavixon
       favicon = $('link[rel="shortcut icon"]').prop('href')

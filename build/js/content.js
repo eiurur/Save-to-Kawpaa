@@ -80,7 +80,7 @@ $(function() {
       description2 = $('meta[property="og:description"]').attr('content');
       data.description = description1 || description2;
       siteImage = $('meta[property="og:image"]').attr('content');
-      data.siteImage = siteImage;
+      data.siteImage = (typeof info !== "undefined" && info !== null ? info.siteImage : void 0) || siteImage;
       favicon = $('link[rel="shortcut icon"]').prop('href');
       data.favicon = favicon;
       data.isPrivate = true;
