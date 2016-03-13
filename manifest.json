@@ -40,6 +40,20 @@
         "build/js/insertSaveLink2Danbooru.min.js"
       ],
       "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "http://gelbooru.com/index.php*"
+      ],
+      "//": [
+        "build/js/vendors/lib.js",
+        "build/js/insertSaveLink2Gelbooru.js"
+      ],
+      "js": [
+        "build/js/vendors/lib.min.js",
+        "build/js/insertSaveLink2Gelbooru.min.js"
+      ],
+      "run_at": "document_end"
     }
   ],
   "browser_action": {
