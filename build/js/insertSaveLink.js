@@ -49,76 +49,81 @@
     });
   };
   getParamsToServer = function() {
-    var hostname, originalImageSrc, result, sampleImgUrl, srcUrl;
-    result = null;
-    hostname = location.host;
-    console.log(hostname);
-    switch (hostname) {
-      case 'chan.sankakucomplex.com':
-        sampleImgUrl = $('#image').attr('src');
-        sampleImgUrl = sampleImgUrl.replace('sample-', '');
-        originalImageSrc = sampleImgUrl.replace('/sample', '');
-        srcUrl = "https:" + originalImageSrc;
-        result = {
-          name: 'sankakucomplex',
-          info: {
-            type: 'image',
-            srcUrl: srcUrl
-          }
-        };
-        break;
-      case 'danbooru.donmai.us':
-        sampleImgUrl = $('#image').attr('src');
-        originalImageSrc = sampleImgUrl.replace('sample/sample-', '');
-        srcUrl = "https://danbooru.donmai.us" + originalImageSrc;
-        result = {
-          name: 'danbooru',
-          info: {
-            type: 'image',
-            srcUrl: srcUrl
-          }
-        };
-        break;
-      case 'gelbooru.com':
-        originalImageSrc = $('#image').attr('src');
-        srcUrl = originalImageSrc;
-        result = {
-          name: 'gelbooru',
-          info: {
-            type: 'image',
-            srcUrl: srcUrl
-          }
-        };
-        break;
-      case 'konachan.com':
-        originalImageSrc = $('#image').attr('src');
-        srcUrl = originalImageSrc;
-        result = {
-          name: 'konachan',
-          info: {
-            type: 'image',
-            srcUrl: srcUrl
-          }
-        };
-        break;
-      case 'yande.re':
-        originalImageSrc = $('#image').attr('src');
-        srcUrl = originalImageSrc;
-        result = {
-          name: 'yande.re',
-          info: {
-            type: 'image',
-            srcUrl: srcUrl
-          }
-        };
-    }
-    return result;
+    return new Promise(function(resolve, reject) {
+      var hostname, originalImageSrc, result, sampleImgUrl, srcUrl;
+      result = null;
+      hostname = location.host;
+      console.log(hostname);
+      switch (hostname) {
+        case 'chan.sankakucomplex.com':
+          $('#image').on('click', function(e) {
+            var originalImageSrc, srcUrl;
+            originalImageSrc = $('#image').attr('src');
+            srcUrl = "https:" + originalImageSrc;
+            result = {
+              name: 'sankakucomplex',
+              info: {
+                type: 'image',
+                srcUrl: srcUrl
+              }
+            };
+            return resolve(result);
+          });
+          $('#image').click();
+          break;
+        case 'danbooru.donmai.us':
+          sampleImgUrl = $('#image').attr('src');
+          originalImageSrc = sampleImgUrl.replace('sample/sample-', '');
+          srcUrl = "https://danbooru.donmai.us" + originalImageSrc;
+          result = {
+            name: 'danbooru',
+            info: {
+              type: 'image',
+              srcUrl: srcUrl
+            }
+          };
+          return resolve(result);
+        case 'gelbooru.com':
+          originalImageSrc = $('#image').attr('src');
+          srcUrl = originalImageSrc;
+          result = {
+            name: 'gelbooru',
+            info: {
+              type: 'image',
+              srcUrl: srcUrl
+            }
+          };
+          return resolve(result);
+        case 'konachan.com':
+          originalImageSrc = $('#image').attr('src');
+          srcUrl = originalImageSrc;
+          result = {
+            name: 'konachan',
+            info: {
+              type: 'image',
+              srcUrl: srcUrl
+            }
+          };
+          return resolve(result);
+        case 'yande.re':
+          originalImageSrc = $('#image').attr('src');
+          srcUrl = originalImageSrc;
+          result = {
+            name: 'yande.re',
+            info: {
+              type: 'image',
+              srcUrl: srcUrl
+            }
+          };
+          return resolve(result);
+      }
+    });
   };
   $(document).on('click', '.kawpaa-save-link', function(e) {
-    var params;
     e.preventDefault();
-    params = getParamsToServer();
-    return sendBackground(params);
+    return getParamsToServer().then(function(params) {
+      return sendBackground(params);
+    });
   });
   return showKawpaaLink();
 })();
