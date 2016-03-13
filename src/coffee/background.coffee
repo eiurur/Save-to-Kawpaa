@@ -80,11 +80,12 @@ $ ->
   Icon
   ###
   chrome.runtime.onMessage.addListener (request, sender, sendResponse) ->
-    if request.name is 'twitter'
-      infoStr = JSON.stringify request.info
-      executeKawpaaScript(infoStr)
-      sendResponse "ok #{infoStr}"
-      return
+    switch request.name
+      when 'twitter', 'danbooru'
+        infoStr = JSON.stringify request.info
+        executeKawpaaScript(infoStr)
+        sendResponse "ok #{infoStr}"
+        return
 
     chrome.browserAction.setIcon
       path: request.newIconPath

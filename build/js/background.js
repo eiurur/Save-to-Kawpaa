@@ -87,11 +87,13 @@ $(function() {
    */
   chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     var infoStr;
-    if (request.name === 'twitter') {
-      infoStr = JSON.stringify(request.info);
-      executeKawpaaScript(infoStr);
-      sendResponse("ok " + infoStr);
-      return;
+    switch (request.name) {
+      case 'twitter':
+      case 'danbooru':
+        infoStr = JSON.stringify(request.info);
+        executeKawpaaScript(infoStr);
+        sendResponse("ok " + infoStr);
+        return;
     }
     return chrome.browserAction.setIcon({
       path: request.newIconPath,

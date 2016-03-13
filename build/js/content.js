@@ -14,9 +14,8 @@ $(function() {
         headers: {
           "Access-Control-Allow-Origin": "*"
         }
-      }).done(function(data, status) {
+      }).done(function(data) {
         console.log(data);
-        console.log(status);
         return resolve(data);
       }).fail(function(err) {
         return reject(err);

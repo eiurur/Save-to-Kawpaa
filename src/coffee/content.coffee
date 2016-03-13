@@ -20,9 +20,8 @@ $ ->
           post: data
         headers:
           "Access-Control-Allow-Origin": "*"
-      .done (data, status) ->
+      .done (data) ->
         console.log data
-        console.log status
         # return reject data if data isnt 'ok' and data.statusCode isnt 200
         # return reject data if status isnt 200
         return resolve data
