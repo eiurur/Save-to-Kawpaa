@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Save to Kawpaa",
   "description": "あとで抜く",
-  "version": "0.5.2",
+  "version": "0.6.0",
   "permissions": [
     "tabs",
     "storage",
@@ -12,25 +12,37 @@
     "https://*/*",
     "chrome://favicon/"
   ],
-  "content_scripts": [
-    {
-      "matches": [ "https://twitter.com/*" ],
-      "//": [ "build/js/vendors/lib.js", "build/js/insertSaveButton2Twitter.js" ],
-      "js": [ "build/js/vendors/lib.min.js", "build/js/insertSaveButton2Twitter.min.js" ],
-      "run_at": "document_end"
-    }
-  ],
+  "content_scripts": [{
+    "matches": [
+      "https://twitter.com/*"
+    ],
+    "//": [
+      "build/js/vendors/lib.js",
+      "build/js/insertSaveButton2Twitter.js"
+    ],
+    "js": [
+      "build/js/vendors/lib.min.js",
+      "build/js/insertSaveButton2Twitter.min.js"
+    ],
+    "run_at": "document_end"
+  }],
   "browser_action": {
-     "default_icon": {
-        "19": "build/images/gray/icon19.png",
-        "38": "build/images/gray/icon38.png"
-     },
-     "default_title": "Save to Kawpaa"
+    "default_icon": {
+      "19": "build/images/gray/icon19.png",
+      "38": "build/images/gray/icon38.png"
+    },
+    "default_title": "Save to Kawpaa"
   },
   "background": {
-     "persistent": false,
-     "//": [ "build/js/vendors/lib.js", "build/js/background.js" ],
-     "scripts": [ "build/js/vendors/lib.min.js", "build/js/background.min.js" ]
+    "persistent": false,
+    "scripts": [
+      "build/js/vendors/lib.js",
+      "build/js/background.js"
+    ],
+    "//": [
+      "build/js/vendors/lib.min.js",
+      "build/js/background.min.js"
+    ]
   },
   "options_page": "build/views/views/options.html",
   "icons": {
