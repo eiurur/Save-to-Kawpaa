@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Save to Kawpaa",
   "description": "あとで抜く",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "permissions": [
     "tabs",
     "storage",
@@ -12,40 +12,37 @@
     "https://*/*",
     "chrome://favicon/"
   ],
-  "content_scripts": [
-    {
-      "matches": [
-        "https://twitter.com/*"
-      ],
-      "//": [
-        "build/js/vendors/lib.js",
-        "build/js/insertSaveButton2Twitter.js"
-      ],
-      "js": [
-        "build/js/vendors/lib.min.js",
-        "build/js/insertSaveButton2Twitter.min.js"
-      ],
-      "run_at": "document_end"
-    },
-    {
-      "matches": [
-        "https://chan.sankakucomplex.com/*/post/show/*",
-        "https://danbooru.donmai.us/posts/*",
-        "http://gelbooru.com/index.php*",
-        "https://konachan.com/post/show/*",
-        "https://yande.re/post/show/*"
-      ],
-      "js": [
-        "build/js/vendors/lib.js",
-        "build/js/insertSaveLink.js"
-      ],
-      "//": [
-        "build/js/vendors/lib.min.js",
-        "build/js/insertSaveLink.min.js"
-      ],
-      "run_at": "document_end"
-    }
-  ],
+  "content_scripts": [{
+    "matches": [
+      "https://twitter.com/*"
+    ],
+    "//": [
+      "build/js/vendors/lib.js",
+      "build/js/insertSaveButton2Twitter.js"
+    ],
+    "js": [
+      "build/js/vendors/lib.min.js",
+      "build/js/insertSaveButton2Twitter.min.js"
+    ],
+    "run_at": "document_end"
+  }, {
+    "matches": [
+      "https://chan.sankakucomplex.com/*/post/show/*",
+      "https://danbooru.donmai.us/posts/*",
+      "http://gelbooru.com/index.php*",
+      "https://konachan.com/post/show/*",
+      "https://yande.re/post/show/*"
+    ],
+    "//": [
+      "build/js/vendors/lib.js",
+      "build/js/insertSaveLink.js"
+    ],
+    "js": [
+      "build/js/vendors/lib.min.js",
+      "build/js/insertSaveLink.min.js"
+    ],
+    "run_at": "document_end"
+  }],
   "browser_action": {
     "default_icon": {
       "19": "build/images/gray/icon19.png",
