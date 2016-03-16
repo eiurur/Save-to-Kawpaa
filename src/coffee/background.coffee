@@ -75,18 +75,26 @@ $ ->
   chrome.contextMenus.onClicked.addListener(clickHandler)
 
 
+  # todo: 共通化したい
+  SANKAKUCOMPLEX_HOSTNAME = 'chan.sankakucomplex.com'
+  DANBOORU_HOSTNAME       = 'danbooru.donmai.us'
+  DEVIANTART_HOSTNAME     = 'deviantart.com'
+  GELBOORU_HOSTNAME       = 'gelbooru.com'
+  KONACHAN_HOSTNAME       = 'konachan.com'
+  TWITTER_HOSTNAME        = 'twitter.com'
+  YANDE_RE_HOSTNAME       = 'yande.re'
 
-  ###
-  Icon
-  ###
+  isRequestFromSpecificService = (name) ->
+    hostnameList = ['twitter', DANBOORU_HOSTNAME, GELBOORU_HOSTNAME, KONACHAN_HOSTNAME, SANKAKUCOMPLEX_HOSTNAME, YANDE_RE_HOSTNAME]
+    return true if name.indexOf(DEVIANTART_HOSTNAME) isnt -1
+    return hostnameList.includes(name)
+
   chrome.runtime.onMessage.addListener (request, sender, sendResponse) ->
-    switch request.name
-      when 'twitter', 'danbooru', 'gelbooru', 'konachan', 'sankakucomplex', 'yande.re'
-        infoStr = JSON.stringify request.info
-        executeKawpaaScript(infoStr)
-        sendResponse "ok #{infoStr}"
-        return
-
+    if isRequestFromSpecificService(request.name)
+      infoStr = JSON.stringify request.info
+      executeKawpaaScript(infoStr)
+      sendResponse "ok #{infoStr}"
+      return
     chrome.browserAction.setIcon
       path: request.newIconPath
       tabId: sender.tab.id

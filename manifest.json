@@ -29,15 +29,16 @@
     "matches": [
       "https://chan.sankakucomplex.com/*/post/show/*",
       "https://danbooru.donmai.us/posts/*",
+      "http://*.deviantart.com/art/*",
       "http://gelbooru.com/index.php*",
       "https://konachan.com/post/show/*",
       "https://yande.re/post/show/*"
     ],
-    "//": [
+    "js": [
       "build/js/vendors/lib.js",
       "build/js/insertSaveLink.js"
     ],
-    "js": [
+    "//": [
       "build/js/vendors/lib.min.js",
       "build/js/insertSaveLink.min.js"
     ],
