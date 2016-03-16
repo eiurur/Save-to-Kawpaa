@@ -76,14 +76,12 @@
   getParamsToServer = function() {
     return new Promise(function(resolve, reject) {
       var hostname, originalImageSrc, result, sampleImgUrl, srcUrl;
-      result = null;
-      hostname = location.host;
-      console.log(hostname);
       result = {
         info: {
           type: 'image'
         }
       };
+      hostname = location.host;
       switch (hostname) {
         case DANBOORU_HOSTNAME:
           sampleImgUrl = $('#image').attr('src');

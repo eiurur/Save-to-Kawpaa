@@ -75,10 +75,8 @@ do ->
 
   getParamsToServer = ->
     return new Promise (resolve, reject) ->
-      result = null
-      hostname = location.host
-      console.log hostname
       result = info: type: 'image'
+      hostname = location.host
       switch hostname
         when DANBOORU_HOSTNAME
           # 画像のFQDN
