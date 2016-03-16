@@ -36,6 +36,8 @@ Go to Site
 - [ ] pixiv
   - x_x unsupport multi-illustrations
 - [x] yande.re
+- [ ] Tumblr
+  - x_x unsupport multi-illustrations
 - [ ] Twitter
   - x_x unsupport multi-illustrations
 
