@@ -1,19 +1,19 @@
 (function() {
-  var DANBOORU_HOSTNAME, DATA_URL_BLUE_16, DEVIANTART_HOSTNAME, GELBOORU_HOSTNAME, KONACHAN_HOSTNAME, SANKAKUCOMPLEX_HOSTNAME, YANDE_RE_HOSTNAME, getHtmlToInsert, getParamsToServer, getSelectorInsertionTagetOfKawpaaLink, sendBackground, showKawpaaLink;
-  SANKAKUCOMPLEX_HOSTNAME = 'chan.sankakucomplex.com';
+  var DANBOORU_HOSTNAME, DATA_URL_BLUE_16, DEVIANTART_HOSTNAME, GELBOORU_HOSTNAME, KONACHAN_HOSTNAME, PIXIV_HOSTNAME, SANKAKUCOMPLEX_HOSTNAME, YANDE_RE_HOSTNAME, getHtmlToInsert, getParamsToServer, getSelectorInsertionTagetOfKawpaaLink, sendBackground, showKawpaaLink;
   DANBOORU_HOSTNAME = 'danbooru.donmai.us';
   DEVIANTART_HOSTNAME = 'deviantart.com';
   GELBOORU_HOSTNAME = 'gelbooru.com';
   KONACHAN_HOSTNAME = 'konachan.com';
+  PIXIV_HOSTNAME = 'www.pixiv.net';
+  SANKAKUCOMPLEX_HOSTNAME = 'chan.sankakucomplex.com';
   YANDE_RE_HOSTNAME = 'yande.re';
+  DATA_URL_BLUE_16 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3wYYBzM05cEJigAABBtJREFUOBEBEATv+wEAAAAAAAAAAAAAAAAbescA5YY5ABt6xwQAAABOAAAAKAAAAAAAAADYAAAAseWGOf0bescA5YY5AAAAAAAAAAAAAQAAAAAAAAAAG3rHAAAAAAIAAACeAAAAXwAAALYAAADRAAAAAAAAAC8AAABKAAAAoAAAAGMAAAD+5YY5AAAAAAAEAAAAABt6xwAAAAAXAAAA4wAAAITlhjkBAAAAAAAAAAAAAAAAAAAAAAAAAAAbesd/AAAA+AAAABwbesfq5YY5AAEbescAAAAAAgAAAPgAAABE5YY5wgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbesc/AAAAuwAAAAgAAAD+AAAAAAAbesegG3rHfgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbesd/G3rHnwAAAAABG3rHBAAAAPvlhjkBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbesf/AAAABAIAAABOAAAAtgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALcAAABOAgAAACgAAADRAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA0QAAACgCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAADYAAAALwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC8AAADYAgAAALIAAABKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASQAAALIAAAAAABt6x58besd+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABt6x4AbeseeAAAAAAEbescAAAAAAgAAAPgAAABE5YY5wgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbesc/AAAAuwAAAAcAAAD/AuWGOQAAAAD+AAAAHQAAALwbesd+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAG3rHgAAAALsAAAAcAAAA/+WGOQABAAAAAAAAAAAbescAAAAAAgAAAJ0AAABgAAAAtgAAANEAAAAAAAAALwAAAEoAAACfAAAAYwAAAP/lhjkAAAAAAAIAAAAAAAAAAOWGOQAAAAD+5YY5YQAAAAQAAACdAAAA9AAAAPQAAACdAAAABOWGOWIAAAD/5YY5AAAAAAAAAAAA+yVtBA+LUxoAAAAASUVORK5CYII=";
   getSelectorInsertionTagetOfKawpaaLink = function() {
     var hostname, result;
     result = null;
     hostname = location.host;
+    console.log(hostname);
     switch (hostname) {
-      case SANKAKUCOMPLEX_HOSTNAME:
-        result = '#share';
-        break;
       case DANBOORU_HOSTNAME:
         result = '#post-sections';
         break;
@@ -21,6 +21,12 @@
       case KONACHAN_HOSTNAME:
       case YANDE_RE_HOSTNAME:
         result = '#right-col h4';
+        break;
+      case PIXIV_HOSTNAME:
+        result = '.bookmark-container';
+        break;
+      case SANKAKUCOMPLEX_HOSTNAME:
+        result = '#share';
         break;
       default:
         if (hostname.indexOf(DEVIANTART_HOSTNAME) !== -1) {
@@ -34,9 +40,6 @@
     result = null;
     hostname = location.host;
     switch (hostname) {
-      case SANKAKUCOMPLEX_HOSTNAME:
-        result = "<a class=\"kawpaa-save-link\" href=\"#\">Save to Kawpaa</a>";
-        break;
       case DANBOORU_HOSTNAME:
         result = "<li><a class=\"kawpaa-save-link\" href=\"#\">Save to Kawpaa</a></li>";
         break;
@@ -44,6 +47,12 @@
       case KONACHAN_HOSTNAME:
       case YANDE_RE_HOSTNAME:
         result = " |\n<a class=\"kawpaa-save-link\" href=\"#\">Save to Kawpaa</a>";
+        break;
+      case PIXIV_HOSTNAME:
+        result = "<a href=\"#\" class=\"add-bookmark _button kawpaa-save-link\">Save to Kawpaa</a>";
+        break;
+      case SANKAKUCOMPLEX_HOSTNAME:
+        result = "<a class=\"kawpaa-save-link\" href=\"#\">Save to Kawpaa</a>";
         break;
       default:
         if (hostname.indexOf(DEVIANTART_HOSTNAME) !== -1) {
@@ -76,17 +85,6 @@
         }
       };
       switch (hostname) {
-        case SANKAKUCOMPLEX_HOSTNAME:
-          $('#image').on('click', function(e) {
-            var originalImageSrc, srcUrl;
-            originalImageSrc = $('#image').attr('src');
-            srcUrl = "https:" + originalImageSrc;
-            result.name = SANKAKUCOMPLEX_HOSTNAME;
-            result.info.srcUrl = srcUrl;
-            return resolve(result);
-          });
-          $('#image').click();
-          break;
         case DANBOORU_HOSTNAME:
           sampleImgUrl = $('#image').attr('src');
           originalImageSrc = sampleImgUrl.replace('sample/sample-', '');
@@ -106,6 +104,22 @@
           result.name = KONACHAN_HOSTNAME;
           result.info.srcUrl = srcUrl;
           return resolve(result);
+        case PIXIV_HOSTNAME:
+          originalImageSrc = $('.original-image').data('src');
+          srcUrl = originalImageSrc;
+          result.name = PIXIV_HOSTNAME;
+          result.info.srcUrl = srcUrl;
+          return resolve(result);
+        case SANKAKUCOMPLEX_HOSTNAME:
+          $('#image').on('click', function(e) {
+            originalImageSrc = $('#image').attr('src');
+            srcUrl = "https:" + originalImageSrc;
+            result.name = SANKAKUCOMPLEX_HOSTNAME;
+            result.info.srcUrl = srcUrl;
+            return resolve(result);
+          });
+          $('#image').click();
+          break;
         case YANDE_RE_HOSTNAME:
           originalImageSrc = $('#image').attr('src');
           srcUrl = originalImageSrc;
@@ -129,6 +143,5 @@
       return sendBackground(params);
     });
   });
-  showKawpaaLink();
-  return DATA_URL_BLUE_16 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3wYYBzM05cEJigAABBtJREFUOBEBEATv+wEAAAAAAAAAAAAAAAAbescA5YY5ABt6xwQAAABOAAAAKAAAAAAAAADYAAAAseWGOf0bescA5YY5AAAAAAAAAAAAAQAAAAAAAAAAG3rHAAAAAAIAAACeAAAAXwAAALYAAADRAAAAAAAAAC8AAABKAAAAoAAAAGMAAAD+5YY5AAAAAAAEAAAAABt6xwAAAAAXAAAA4wAAAITlhjkBAAAAAAAAAAAAAAAAAAAAAAAAAAAbesd/AAAA+AAAABwbesfq5YY5AAEbescAAAAAAgAAAPgAAABE5YY5wgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbesc/AAAAuwAAAAgAAAD+AAAAAAAbesegG3rHfgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbesd/G3rHnwAAAAABG3rHBAAAAPvlhjkBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbesf/AAAABAIAAABOAAAAtgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALcAAABOAgAAACgAAADRAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA0QAAACgCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAADYAAAALwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC8AAADYAgAAALIAAABKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASQAAALIAAAAAABt6x58besd+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABt6x4AbeseeAAAAAAEbescAAAAAAgAAAPgAAABE5YY5wgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbesc/AAAAuwAAAAcAAAD/AuWGOQAAAAD+AAAAHQAAALwbesd+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAG3rHgAAAALsAAAAcAAAA/+WGOQABAAAAAAAAAAAbescAAAAAAgAAAJ0AAABgAAAAtgAAANEAAAAAAAAALwAAAEoAAACfAAAAYwAAAP/lhjkAAAAAAAIAAAAAAAAAAOWGOQAAAAD+5YY5YQAAAAQAAACdAAAA9AAAAPQAAACdAAAABOWGOWIAAAD/5YY5AAAAAAAAAAAA+yVtBA+LUxoAAAAASUVORK5CYII=";
+  return showKawpaaLink();
 })();

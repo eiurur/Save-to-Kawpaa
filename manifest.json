@@ -32,6 +32,7 @@
       "http://*.deviantart.com/art/*",
       "http://gelbooru.com/index.php*",
       "https://konachan.com/post/show/*",
+      "http://www.pixiv.net/member_illust.php*",
       "https://yande.re/post/show/*"
     ],
     "js": [

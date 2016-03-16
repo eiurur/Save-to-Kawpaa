@@ -1,5 +1,5 @@
 $(function() {
-  var DANBOORU_HOSTNAME, DEVIANTART_HOSTNAME, GELBOORU_HOSTNAME, KONACHAN_HOSTNAME, SANKAKUCOMPLEX_HOSTNAME, TWITTER_HOSTNAME, YANDE_RE_HOSTNAME, clickHandler, contexts, executeKawpaaScript, get, isRequestFromSpecificService;
+  var DANBOORU_HOSTNAME, DEVIANTART_HOSTNAME, GELBOORU_HOSTNAME, KONACHAN_HOSTNAME, PIXIV_HOSTNAME, SANKAKUCOMPLEX_HOSTNAME, TWITTER_HOSTNAME, YANDE_RE_HOSTNAME, clickHandler, contexts, executeKawpaaScript, get, isRequestFromSpecificService;
   get = function(key) {
     return new Promise(function(resolve, reject) {
       return chrome.storage.sync.get(key, function(item) {
@@ -81,16 +81,17 @@ $(function() {
     'id': 'browser_action_open_kawpaa'
   });
   chrome.contextMenus.onClicked.addListener(clickHandler);
-  SANKAKUCOMPLEX_HOSTNAME = 'chan.sankakucomplex.com';
   DANBOORU_HOSTNAME = 'danbooru.donmai.us';
   DEVIANTART_HOSTNAME = 'deviantart.com';
   GELBOORU_HOSTNAME = 'gelbooru.com';
   KONACHAN_HOSTNAME = 'konachan.com';
+  PIXIV_HOSTNAME = 'www.pixiv.net';
+  SANKAKUCOMPLEX_HOSTNAME = 'chan.sankakucomplex.com';
   TWITTER_HOSTNAME = 'twitter.com';
   YANDE_RE_HOSTNAME = 'yande.re';
   isRequestFromSpecificService = function(name) {
     var hostnameList;
-    hostnameList = ['twitter', DANBOORU_HOSTNAME, GELBOORU_HOSTNAME, KONACHAN_HOSTNAME, SANKAKUCOMPLEX_HOSTNAME, YANDE_RE_HOSTNAME];
+    hostnameList = ['twitter', DANBOORU_HOSTNAME, GELBOORU_HOSTNAME, KONACHAN_HOSTNAME, PIXIV_HOSTNAME, SANKAKUCOMPLEX_HOSTNAME, YANDE_RE_HOSTNAME];
     if (name.indexOf(DEVIANTART_HOSTNAME) !== -1) {
       return true;
     }

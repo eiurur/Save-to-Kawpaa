@@ -76,16 +76,17 @@ $ ->
 
 
   # todo: 共通化したい
-  SANKAKUCOMPLEX_HOSTNAME = 'chan.sankakucomplex.com'
   DANBOORU_HOSTNAME       = 'danbooru.donmai.us'
   DEVIANTART_HOSTNAME     = 'deviantart.com'
   GELBOORU_HOSTNAME       = 'gelbooru.com'
   KONACHAN_HOSTNAME       = 'konachan.com'
+  PIXIV_HOSTNAME          = 'www.pixiv.net'
+  SANKAKUCOMPLEX_HOSTNAME = 'chan.sankakucomplex.com'
   TWITTER_HOSTNAME        = 'twitter.com'
   YANDE_RE_HOSTNAME       = 'yande.re'
 
   isRequestFromSpecificService = (name) ->
-    hostnameList = ['twitter', DANBOORU_HOSTNAME, GELBOORU_HOSTNAME, KONACHAN_HOSTNAME, SANKAKUCOMPLEX_HOSTNAME, YANDE_RE_HOSTNAME]
+    hostnameList = ['twitter', DANBOORU_HOSTNAME, GELBOORU_HOSTNAME, KONACHAN_HOSTNAME, PIXIV_HOSTNAME, SANKAKUCOMPLEX_HOSTNAME, YANDE_RE_HOSTNAME]
     return true if name.indexOf(DEVIANTART_HOSTNAME) isnt -1
     return hostnameList.includes(name)
 
