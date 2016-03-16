@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Save to Kawpaa",
   "description": "あとで抜く",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "permissions": [
     "tabs",
     "storage",
@@ -35,11 +35,11 @@
       "http://www.pixiv.net/member_illust.php*",
       "https://yande.re/post/show/*"
     ],
-    "js": [
+    "//": [
       "build/js/vendors/lib.js",
       "build/js/insertSaveLink.js"
     ],
-    "//": [
+    "js": [
       "build/js/vendors/lib.min.js",
       "build/js/insertSaveLink.min.js"
     ],
