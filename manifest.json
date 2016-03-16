@@ -27,6 +27,19 @@
     "run_at": "document_end"
   }, {
     "matches": [
+      "https://www.tumblr.com/*"
+    ],
+    "//": [
+      "build/js/vendors/lib.js",
+      "build/js/insertSaveButton2Tumblr.js"
+    ],
+    "js": [
+      "build/js/vendors/lib.min.js",
+      "build/js/insertSaveButton2Tumblr.min.js"
+    ],
+    "run_at": "document_end"
+  }, {
+    "matches": [
       "https://chan.sankakucomplex.com/*/post/show/*",
       "https://danbooru.donmai.us/posts/*",
       "http://*.deviantart.com/art/*",
