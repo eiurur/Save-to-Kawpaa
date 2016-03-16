@@ -1,11 +1,43 @@
 Save to Kawpaa
 ====
 
-Old name is 'Save to Ona it Later'.
-
-Chrome Extension to assist your masturbation life.
+Chrome Extension to assist your masturbation life. Old name is 'Save to Ona it Later'.
 
 This is to be used in conjunction with the web service (<a href="https://kawpaa.eiurur.xyz/" target="_blank">Kawpaa</a>).
+
+## Usage
+
+### Save
+
+**Image**
+
+if you want to save the image, open context menu on the image and click "Save to Kawpaa with Image".
+
+![](https://dl.dropboxusercontent.com/u/31717228/ShareX/2016/03/chrome_2016-03-17_00-48-32.png)
+
+**Link**
+
+if you want to save like Pocket the URL for the page you're seeing, click this icon.
+
+![](https://dl.dropboxusercontent.com/u/31717228/ShareX/2016/03/chrome_2016-03-17_00-52-43.png)
+
+### Browse
+
+Go to Site
+
+> <a href="https://kawpaa.eiurur.xyz/" target="_blank">Kawpaa</a>
+
+## Support Service
+
+- [x] Danbooru
+- [x] DevianART
+- [x] Gelbooru
+- [x] Konachan
+- [ ] pixiv
+  - x_x unsupport multi-illustrations
+- [x] yande.re
+- [ ] Twitter
+  - x_x unsupport multi-illustrations
 
 ## Status
 
