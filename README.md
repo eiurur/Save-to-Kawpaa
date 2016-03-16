@@ -5,9 +5,9 @@ Chrome Extension to assist your masturbation life. Old name is 'Save to Ona it L
 
 This is to be used in conjunction with the web service (<a href="https://kawpaa.eiurur.xyz/" target="_blank">Kawpaa</a>).
 
-## Usage
+# Usage
 
-### Save
+## Save
 
 **Image**
 
@@ -21,13 +21,13 @@ if you want to save like Pocket the URL for the page you're seeing, click this i
 
 ![](https://dl.dropboxusercontent.com/u/31717228/ShareX/2016/03/chrome_2016-03-17_00-52-43.png)
 
-### Browse
+## Browse
 
 Go to Site
 
 > <a href="https://kawpaa.eiurur.xyz/" target="_blank">Kawpaa</a>
 
-## Support Service
+# Support Service
 
 - [x] Danbooru
 - [x] DevianART
@@ -39,11 +39,11 @@ Go to Site
 - [ ] Twitter
   - x_x unsupport multi-illustrations
 
-## Status
+# Status
 
 WIP
 
-## Memo
+# Memo
 
 以下のページでlinkを保存した場合、例のような値を抽出してサーバに送信する。
 
