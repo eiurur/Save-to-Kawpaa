@@ -26,6 +26,7 @@ do ->
       when SANKAKUCOMPLEX_HOSTNAME
         result = '#share'
       else
+        # DevianArtは個人ページをサブドメインで管理する方法をとっているので判定方法をちょっと変える
         result = '.dev-meta-actions' if hostname.indexOf(DEVIANTART_HOSTNAME) isnt -1
 
     return result
@@ -87,8 +88,8 @@ do ->
           #
           # 原寸大のURL
           #   => /data/2a7955046380f0aaa95d83f1a4c4bd14.jpg
-          sampleImgUrl = $('#image').attr('src')
-          originalImageSrc = sampleImgUrl.replace 'sample/sample-', ''
+          imgUrl = $('#image-resize-link').attr('href') or $('#image').attr('src')
+          originalImageSrc = imgUrl.replace 'sample/sample-', ''
           srcUrl = "https://danbooru.donmai.us#{originalImageSrc}"
           result.name = DANBOORU_HOSTNAME
           result.info.srcUrl = srcUrl

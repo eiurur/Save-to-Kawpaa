@@ -75,7 +75,7 @@
   };
   getParamsToServer = function() {
     return new Promise(function(resolve, reject) {
-      var hostname, originalImageSrc, result, sampleImgUrl, srcUrl;
+      var hostname, imgUrl, originalImageSrc, result, sampleImgUrl, srcUrl;
       result = {
         info: {
           type: 'image'
@@ -84,8 +84,8 @@
       hostname = location.host;
       switch (hostname) {
         case DANBOORU_HOSTNAME:
-          sampleImgUrl = $('#image').attr('src');
-          originalImageSrc = sampleImgUrl.replace('sample/sample-', '');
+          imgUrl = $('#image-resize-link').attr('href') || $('#image').attr('src');
+          originalImageSrc = imgUrl.replace('sample/sample-', '');
           srcUrl = "https://danbooru.donmai.us" + originalImageSrc;
           result.name = DANBOORU_HOSTNAME;
           result.info.srcUrl = srcUrl;
