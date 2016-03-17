@@ -1,6 +1,5 @@
 do ->
 
-  # todo: 共通化したい
   DANBOORU_HOSTNAME       = 'danbooru.donmai.us'
   DEVIANTART_HOSTNAME     = 'deviantart.com'
   GELBOORU_HOSTNAME       = 'gelbooru.com'
@@ -12,144 +11,177 @@ do ->
   DATA_URL_BLUE_16 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3wYYBzM05cEJigAABBtJREFUOBEBEATv+wEAAAAAAAAAAAAAAAAbescA5YY5ABt6xwQAAABOAAAAKAAAAAAAAADYAAAAseWGOf0bescA5YY5AAAAAAAAAAAAAQAAAAAAAAAAG3rHAAAAAAIAAACeAAAAXwAAALYAAADRAAAAAAAAAC8AAABKAAAAoAAAAGMAAAD+5YY5AAAAAAAEAAAAABt6xwAAAAAXAAAA4wAAAITlhjkBAAAAAAAAAAAAAAAAAAAAAAAAAAAbesd/AAAA+AAAABwbesfq5YY5AAEbescAAAAAAgAAAPgAAABE5YY5wgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbesc/AAAAuwAAAAgAAAD+AAAAAAAbesegG3rHfgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbesd/G3rHnwAAAAABG3rHBAAAAPvlhjkBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbesf/AAAABAIAAABOAAAAtgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALcAAABOAgAAACgAAADRAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA0QAAACgCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAADYAAAALwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC8AAADYAgAAALIAAABKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASQAAALIAAAAAABt6x58besd+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABt6x4AbeseeAAAAAAEbescAAAAAAgAAAPgAAABE5YY5wgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbesc/AAAAuwAAAAcAAAD/AuWGOQAAAAD+AAAAHQAAALwbesd+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAG3rHgAAAALsAAAAcAAAA/+WGOQABAAAAAAAAAAAbescAAAAAAgAAAJ0AAABgAAAAtgAAANEAAAAAAAAALwAAAEoAAACfAAAAYwAAAP/lhjkAAAAAAAIAAAAAAAAAAOWGOQAAAAD+5YY5YQAAAAQAAACdAAAA9AAAAPQAAACdAAAABOWGOWIAAAD/5YY5AAAAAAAAAAAA+yVtBA+LUxoAAAAASUVORK5CYII="
 
 
-  getSelectorInsertionTagetOfKawpaaLink = ->
-    result = null
+  class KawpaaLinkInserter
+    constructor: (@hostname) ->
+      @selector = null
+      @html = null
+
+    insert: ->
+      $(document).find(@selector).append @html
+
+    getParamsToServer: ->
+
+    bindClickEvent: ->
+      $(document).on 'click', '.kawpaa-save-link', (e) =>
+        e.preventDefault()
+        @getParamsToServer().then (params) => @sendBackground(params)
+
+    sendBackground:  (params) ->
+      chrome.runtime.sendMessage params, (response) -> console.log response
+
+
+  class DanbooruKawpaaLinkInserter extends KawpaaLinkInserter
+    constructor: ->
+      super(DANBOORU_HOSTNAME)
+      @selector = '#post-sections'
+      @html = """
+        <li><a class="kawpaa-save-link" href="#">Save to Kawpaa</a></li>
+      """
+
+    getParamsToServer: ->
+      return new Promise (resolve, reject) =>
+        params = info: type: 'image'
+        imgUrl = $('#image-resize-link').attr('href') or $('#image').attr('src')
+        originalImageSrc = imgUrl.replace 'sample/sample-', ''
+        srcUrl = "https://danbooru.donmai.us#{originalImageSrc}"
+        params.name = DANBOORU_HOSTNAME
+        params.info.srcUrl = srcUrl
+        return resolve params
+
+
+  class GelbooruKawpaaLinkInserter extends KawpaaLinkInserter
+    constructor: ->
+      super(GELBOORU_HOSTNAME)
+      @selector = '#right-col h4'
+      @html = """
+         |
+        <a class="kawpaa-save-link" href="#">Save to Kawpaa</a>
+      """
+
+    getParamsToServer: ->
+      return new Promise (resolve, reject) =>
+        params = info: type: 'image'
+        originalImageSrc = $('#image').attr('src')
+        srcUrl = originalImageSrc
+        params.name = GELBOORU_HOSTNAME
+        params.info.srcUrl = srcUrl
+        return resolve params
+
+
+  class KonachanKawpaaLinkInserter extends KawpaaLinkInserter
+    constructor: ->
+      super(KONACHAN_HOSTNAME)
+      @selector = '#right-col h4'
+      @html = """
+         |
+        <a class="kawpaa-save-link" href="#">Save to Kawpaa</a>
+      """
+
+    getParamsToServer: ->
+      return new Promise (resolve, reject) =>
+        params = info: type: 'image'
+        # 個人的にsampleサイズでも十分に感じるため大きいサイズに変換する処理は行わない。
+        originalImageSrc = $('#image').attr('src')
+        srcUrl = originalImageSrc
+        params.name = KONACHAN_HOSTNAME
+        params.info.srcUrl = srcUrl
+        return resolve params
+
+
+  class YandereKawpaaLinkInserter extends KawpaaLinkInserter
+    constructor: ->
+      super(YANDE_RE_HOSTNAME)
+      @selector = '#right-col h4'
+      @html = """
+         |
+        <a class="kawpaa-save-link" href="#">Save to Kawpaa</a>
+      """
+
+    getParamsToServer: ->
+      return new Promise (resolve, reject) =>
+        params = info: type: 'image'
+        # 個人的にsampleサイズでも十分に感じるため大きいサイズに変換する処理は行わない。
+        originalImageSrc = $('#image').attr('src')
+        srcUrl = originalImageSrc
+        params.name = YANDE_RE_HOSTNAME
+        params.info.srcUrl = srcUrl
+        return resolve params
+
+
+  class PixivKawpaaLinkInserter extends KawpaaLinkInserter
+    constructor: ->
+      super(PIXIV_HOSTNAME)
+      @selector = '.bookmark-container'
+      @html = """
+        <a href="#" class="add-bookmark _button kawpaa-save-link">Save to Kawpaa</a>
+      """
+
+    getParamsToServer: ->
+      return new Promise (resolve, reject) =>
+        params = info: type: 'image'
+        originalImageSrc = $('.original-image').data('src')
+        srcUrl = originalImageSrc
+        params.name = PIXIV_HOSTNAME
+        params.info.srcUrl = srcUrl
+        return resolve params
+
+
+  class SankakuComplexKawpaaLinkInserter extends KawpaaLinkInserter
+    constructor: ->
+      super(SANKAKUCOMPLEX_HOSTNAME)
+      @selector = '#share'
+      @html = """
+        <a class="kawpaa-save-link" href="#">Save to Kawpaa</a>
+      """
+
+    getParamsToServer: ->
+      return new Promise (resolve, reject) =>
+        params = info: type: 'image'
+        $('#image').on 'click', (e) ->
+          originalImageSrc = $('#image').attr('src')
+          srcUrl = "https:#{originalImageSrc}"
+          params.name = SANKAKUCOMPLEX_HOSTNAME
+          params.info.srcUrl = srcUrl
+          return resolve params
+        $('#image').click()
+
+
+  class DevianArtKawpaaLinkInserter extends KawpaaLinkInserter
+    constructor: ->
+      super(DEVIANTART_HOSTNAME)
+      @selector = '.dev-meta-actions'
+      @html = """
+        <a class="dev-page-button dev-page-button-with-text dev-page-download kawpaa-save-link" href="#" data-download_url="http://www.deviantart.com/download/460347620/gochiusa_by_azizkeybackspace-d7m2uhw.png?token=a6e80ce8b02c8c1dc7762417c29bf3d3b57bd13d&amp;ts=1458132778">
+         <i style="background: url(#{DATA_URL_BLUE_16}); background-position: none; background-repeat: no-repeat;"></i>
+         <span class="label">Save to Kawpaa</span>
+        </a>
+      """
+
+    getParamsToServer: ->
+      return new Promise (resolve, reject) =>
+        params = info: type: 'image'
+        sampleImgUrl = $('.dev-content-full').attr('src')
+        srcUrl = sampleImgUrl
+        params.name = DEVIANTART_HOSTNAME
+        params.info.srcUrl = srcUrl
+        return resolve params
+
+
+  getSaveTokawpaaLinkInserter = ->
     hostname = location.host
     console.log hostname
     switch hostname
-      when DANBOORU_HOSTNAME
-        result = '#post-sections'
-      when GELBOORU_HOSTNAME, KONACHAN_HOSTNAME, YANDE_RE_HOSTNAME
-        result = '#right-col h4'
-      when PIXIV_HOSTNAME
-        result = '.bookmark-container'
-      when SANKAKUCOMPLEX_HOSTNAME
-        result = '#share'
+      when DANBOORU_HOSTNAME then return new DanbooruKawpaaLinkInserter()
+      when GELBOORU_HOSTNAME then return new GelbooruKawpaaLinkInserter()
+      when KONACHAN_HOSTNAME then return new KonachanKawpaaLinkInserter()
+      when YANDE_RE_HOSTNAME then return new YandereKawpaaLinkInserter()
+      when PIXIV_HOSTNAME then return new PixivKawpaaLinkInserter()
+      when SANKAKUCOMPLEX_HOSTNAME then return new SankakuComplexKawpaaLinkInserter()
       else
         # DevianArtは個人ページをサブドメインで管理する方法をとっているので判定方法をちょっと変える
-        result = '.dev-meta-actions' if hostname.indexOf(DEVIANTART_HOSTNAME) isnt -1
-
-    return result
-
-  getHtmlToInsert = ->
-    result = null
-    hostname = location.host
-    switch hostname
-      when DANBOORU_HOSTNAME
-        result = """
-          <li><a class="kawpaa-save-link" href="#">Save to Kawpaa</a></li>
-        """
-      when GELBOORU_HOSTNAME, KONACHAN_HOSTNAME, YANDE_RE_HOSTNAME
-        result = """
-           |
-          <a class="kawpaa-save-link" href="#">Save to Kawpaa</a>
-        """
-      when PIXIV_HOSTNAME
-        result = """
-          <a href="#" class="add-bookmark _button kawpaa-save-link">Save to Kawpaa</a>
-        """
-      when SANKAKUCOMPLEX_HOSTNAME
-        result = """
-          <a class="kawpaa-save-link" href="#">Save to Kawpaa</a>
-        """
-      else
-        if hostname.indexOf(DEVIANTART_HOSTNAME) isnt -1
-          result = """
-            <a class="dev-page-button dev-page-button-with-text dev-page-download kawpaa-save-link" href="#" data-download_url="http://www.deviantart.com/download/460347620/gochiusa_by_azizkeybackspace-d7m2uhw.png?token=a6e80ce8b02c8c1dc7762417c29bf3d3b57bd13d&amp;ts=1458132778">
-             <i style="background: url(#{DATA_URL_BLUE_16}); background-position: none; background-repeat: no-repeat;"></i>
-             <span class="label">Save to Kawpaa</span>
-            </a>
-          """
-    return result
+        if hostname.indexOf(DEVIANTART_HOSTNAME) isnt -1 then return new DevianArtKawpaaLinkInserter()
 
 
-  showKawpaaLink = ->
-    selector = getSelectorInsertionTagetOfKawpaaLink()
-    html = getHtmlToInsert()
-    $(document).find(selector).append html
-
-
-  sendBackground = (params) ->
-    console.log params
-    chrome.runtime.sendMessage params, (response) ->
-      console.log response
-
-  getParamsToServer = ->
-    return new Promise (resolve, reject) ->
-      result = info: type: 'image'
-      hostname = location.host
-      switch hostname
-        when DANBOORU_HOSTNAME
-          # 画像のFQDN
-          #   => https://danbooru.donmai.us/data/sample/sample-2a7955046380f0aaa95d83f1a4c4bd14.jpg
-          #
-          # 縮小後のURL ===  $('#image').attr('src') で得られる画像のURL
-          #   => /data/sample/sample-2a7955046380f0aaa95d83f1a4c4bd14.jpg
-          #
-          # 原寸大のURL
-          #   => /data/2a7955046380f0aaa95d83f1a4c4bd14.jpg
-          imgUrl = $('#image-resize-link').attr('href') or $('#image').attr('src')
-          originalImageSrc = imgUrl.replace 'sample/sample-', ''
-          srcUrl = "https://danbooru.donmai.us#{originalImageSrc}"
-          result.name = DANBOORU_HOSTNAME
-          result.info.srcUrl = srcUrl
-          return resolve result
-        when GELBOORU_HOSTNAME
-          originalImageSrc = $('#image').attr('src')
-          srcUrl = originalImageSrc
-          result.name = GELBOORU_HOSTNAME
-          result.info.srcUrl = srcUrl
-          return resolve result
-        when KONACHAN_HOSTNAME
-          # 個人的にsampleサイズでも十分に感じるため大きいサイズに変換する処理は行わない。
-          originalImageSrc = $('#image').attr('src')
-          srcUrl = originalImageSrc
-          result.name = KONACHAN_HOSTNAME
-          result.info.srcUrl = srcUrl
-          return resolve result
-        when PIXIV_HOSTNAME
-          originalImageSrc = $('.original-image').data('src')
-          srcUrl = originalImageSrc
-          result.name = PIXIV_HOSTNAME
-          result.info.srcUrl = srcUrl
-          return resolve result
-        when SANKAKUCOMPLEX_HOSTNAME
-          # 画像のFQDN
-          #   => https://cs.sankakucomplex.com/data/34/38/34381c7e1c53bc1929f68b491fb5c0c8.png?4767698
-          #
-          # 縮小後のURL ===  $('#image').attr('src') で得られる画像のURL
-          #   => //cs.sankakucomplex.com/data/sample/34/38/sample-34381c7e1c53bc1929f68b491fb5c0c8.jpg?4767698
-          # 原寸大のURL
-          #   => https://cs.sankakucomplex.com/data/34/38/34381c7e1c53bc1929f68b491fb5c0c8.png?4767698
-
-          # 縮小時の画像URLと原寸大の画像URLの拡張子が異なる場合があり、
-          # その場合は置換のしようがないため、クリックして原寸大のURLを取得する方法を使用した
-          $('#image').on 'click', (e) ->
-            originalImageSrc = $('#image').attr('src')
-            srcUrl = "https:#{originalImageSrc}"
-            result.name = SANKAKUCOMPLEX_HOSTNAME
-            result.info.srcUrl = srcUrl
-            return resolve result
-          $('#image').click()
-        when YANDE_RE_HOSTNAME
-          # 個人的にsampleサイズでも十分に感じるため大きいサイズに変換する処理は行わない。
-          originalImageSrc = $('#image').attr('src')
-          srcUrl = originalImageSrc
-          result.name = YANDE_RE_HOSTNAME
-          result.info.srcUrl = srcUrl
-          return resolve result
-        else
-          if hostname.indexOf(DEVIANTART_HOSTNAME) isnt -1
-            sampleImgUrl = $('.dev-content-full').attr('src')
-            srcUrl = sampleImgUrl
-            result.name = DEVIANTART_HOSTNAME
-            result.info.srcUrl = srcUrl
-            return resolve result
-      return
-
-  $(document).on 'click', '.kawpaa-save-link', (e) ->
-    e.preventDefault()
-    getParamsToServer().then (params) -> sendBackground(params)
-
-
-  do showKawpaaLink
+  saveToKawpaaLinkInserter = getSaveTokawpaaLinkInserter()
+  saveToKawpaaLinkInserter.insert()
+  saveToKawpaaLinkInserter.bindClickEvent()

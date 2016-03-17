@@ -1,5 +1,8 @@
+var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+  hasProp = {}.hasOwnProperty;
+
 (function() {
-  var DANBOORU_HOSTNAME, DATA_URL_BLUE_16, DEVIANTART_HOSTNAME, GELBOORU_HOSTNAME, KONACHAN_HOSTNAME, PIXIV_HOSTNAME, SANKAKUCOMPLEX_HOSTNAME, YANDE_RE_HOSTNAME, getHtmlToInsert, getParamsToServer, getSelectorInsertionTagetOfKawpaaLink, sendBackground, showKawpaaLink;
+  var DANBOORU_HOSTNAME, DATA_URL_BLUE_16, DEVIANTART_HOSTNAME, DanbooruKawpaaLinkInserter, DevianArtKawpaaLinkInserter, GELBOORU_HOSTNAME, GelbooruKawpaaLinkInserter, KONACHAN_HOSTNAME, KawpaaLinkInserter, KonachanKawpaaLinkInserter, PIXIV_HOSTNAME, PixivKawpaaLinkInserter, SANKAKUCOMPLEX_HOSTNAME, SankakuComplexKawpaaLinkInserter, YANDE_RE_HOSTNAME, YandereKawpaaLinkInserter, getSaveTokawpaaLinkInserter, saveToKawpaaLinkInserter;
   DANBOORU_HOSTNAME = 'danbooru.donmai.us';
   DEVIANTART_HOSTNAME = 'deviantart.com';
   GELBOORU_HOSTNAME = 'gelbooru.com';
@@ -8,138 +11,278 @@
   SANKAKUCOMPLEX_HOSTNAME = 'chan.sankakucomplex.com';
   YANDE_RE_HOSTNAME = 'yande.re';
   DATA_URL_BLUE_16 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3wYYBzM05cEJigAABBtJREFUOBEBEATv+wEAAAAAAAAAAAAAAAAbescA5YY5ABt6xwQAAABOAAAAKAAAAAAAAADYAAAAseWGOf0bescA5YY5AAAAAAAAAAAAAQAAAAAAAAAAG3rHAAAAAAIAAACeAAAAXwAAALYAAADRAAAAAAAAAC8AAABKAAAAoAAAAGMAAAD+5YY5AAAAAAAEAAAAABt6xwAAAAAXAAAA4wAAAITlhjkBAAAAAAAAAAAAAAAAAAAAAAAAAAAbesd/AAAA+AAAABwbesfq5YY5AAEbescAAAAAAgAAAPgAAABE5YY5wgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbesc/AAAAuwAAAAgAAAD+AAAAAAAbesegG3rHfgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbesd/G3rHnwAAAAABG3rHBAAAAPvlhjkBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbesf/AAAABAIAAABOAAAAtgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALcAAABOAgAAACgAAADRAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA0QAAACgCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAADYAAAALwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC8AAADYAgAAALIAAABKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASQAAALIAAAAAABt6x58besd+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABt6x4AbeseeAAAAAAEbescAAAAAAgAAAPgAAABE5YY5wgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbesc/AAAAuwAAAAcAAAD/AuWGOQAAAAD+AAAAHQAAALwbesd+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAG3rHgAAAALsAAAAcAAAA/+WGOQABAAAAAAAAAAAbescAAAAAAgAAAJ0AAABgAAAAtgAAANEAAAAAAAAALwAAAEoAAACfAAAAYwAAAP/lhjkAAAAAAAIAAAAAAAAAAOWGOQAAAAD+5YY5YQAAAAQAAACdAAAA9AAAAPQAAACdAAAABOWGOWIAAAD/5YY5AAAAAAAAAAAA+yVtBA+LUxoAAAAASUVORK5CYII=";
-  getSelectorInsertionTagetOfKawpaaLink = function() {
-    var hostname, result;
-    result = null;
+  KawpaaLinkInserter = (function() {
+    function KawpaaLinkInserter(hostname1) {
+      this.hostname = hostname1;
+      this.selector = null;
+      this.html = null;
+    }
+
+    KawpaaLinkInserter.prototype.insert = function() {
+      return $(document).find(this.selector).append(this.html);
+    };
+
+    KawpaaLinkInserter.prototype.getParamsToServer = function() {};
+
+    KawpaaLinkInserter.prototype.bindClickEvent = function() {
+      return $(document).on('click', '.kawpaa-save-link', (function(_this) {
+        return function(e) {
+          e.preventDefault();
+          return _this.getParamsToServer().then(function(params) {
+            return _this.sendBackground(params);
+          });
+        };
+      })(this));
+    };
+
+    KawpaaLinkInserter.prototype.sendBackground = function(params) {
+      return chrome.runtime.sendMessage(params, function(response) {
+        return console.log(response);
+      });
+    };
+
+    return KawpaaLinkInserter;
+
+  })();
+  DanbooruKawpaaLinkInserter = (function(superClass) {
+    extend(DanbooruKawpaaLinkInserter, superClass);
+
+    function DanbooruKawpaaLinkInserter() {
+      DanbooruKawpaaLinkInserter.__super__.constructor.call(this, DANBOORU_HOSTNAME);
+      this.selector = '#post-sections';
+      this.html = "<li><a class=\"kawpaa-save-link\" href=\"#\">Save to Kawpaa</a></li>";
+    }
+
+    DanbooruKawpaaLinkInserter.prototype.getParamsToServer = function() {
+      return new Promise((function(_this) {
+        return function(resolve, reject) {
+          var imgUrl, originalImageSrc, params, srcUrl;
+          params = {
+            info: {
+              type: 'image'
+            }
+          };
+          imgUrl = $('#image-resize-link').attr('href') || $('#image').attr('src');
+          originalImageSrc = imgUrl.replace('sample/sample-', '');
+          srcUrl = "https://danbooru.donmai.us" + originalImageSrc;
+          params.name = DANBOORU_HOSTNAME;
+          params.info.srcUrl = srcUrl;
+          return resolve(params);
+        };
+      })(this));
+    };
+
+    return DanbooruKawpaaLinkInserter;
+
+  })(KawpaaLinkInserter);
+  GelbooruKawpaaLinkInserter = (function(superClass) {
+    extend(GelbooruKawpaaLinkInserter, superClass);
+
+    function GelbooruKawpaaLinkInserter() {
+      GelbooruKawpaaLinkInserter.__super__.constructor.call(this, GELBOORU_HOSTNAME);
+      this.selector = '#right-col h4';
+      this.html = " |\n<a class=\"kawpaa-save-link\" href=\"#\">Save to Kawpaa</a>";
+    }
+
+    GelbooruKawpaaLinkInserter.prototype.getParamsToServer = function() {
+      return new Promise((function(_this) {
+        return function(resolve, reject) {
+          var originalImageSrc, params, srcUrl;
+          params = {
+            info: {
+              type: 'image'
+            }
+          };
+          originalImageSrc = $('#image').attr('src');
+          srcUrl = originalImageSrc;
+          params.name = GELBOORU_HOSTNAME;
+          params.info.srcUrl = srcUrl;
+          return resolve(params);
+        };
+      })(this));
+    };
+
+    return GelbooruKawpaaLinkInserter;
+
+  })(KawpaaLinkInserter);
+  KonachanKawpaaLinkInserter = (function(superClass) {
+    extend(KonachanKawpaaLinkInserter, superClass);
+
+    function KonachanKawpaaLinkInserter() {
+      KonachanKawpaaLinkInserter.__super__.constructor.call(this, KONACHAN_HOSTNAME);
+      this.selector = '#right-col h4';
+      this.html = " |\n<a class=\"kawpaa-save-link\" href=\"#\">Save to Kawpaa</a>";
+    }
+
+    KonachanKawpaaLinkInserter.prototype.getParamsToServer = function() {
+      return new Promise((function(_this) {
+        return function(resolve, reject) {
+          var originalImageSrc, params, srcUrl;
+          params = {
+            info: {
+              type: 'image'
+            }
+          };
+          originalImageSrc = $('#image').attr('src');
+          srcUrl = originalImageSrc;
+          params.name = KONACHAN_HOSTNAME;
+          params.info.srcUrl = srcUrl;
+          return resolve(params);
+        };
+      })(this));
+    };
+
+    return KonachanKawpaaLinkInserter;
+
+  })(KawpaaLinkInserter);
+  YandereKawpaaLinkInserter = (function(superClass) {
+    extend(YandereKawpaaLinkInserter, superClass);
+
+    function YandereKawpaaLinkInserter() {
+      YandereKawpaaLinkInserter.__super__.constructor.call(this, YANDE_RE_HOSTNAME);
+      this.selector = '#right-col h4';
+      this.html = " |\n<a class=\"kawpaa-save-link\" href=\"#\">Save to Kawpaa</a>";
+    }
+
+    YandereKawpaaLinkInserter.prototype.getParamsToServer = function() {
+      return new Promise((function(_this) {
+        return function(resolve, reject) {
+          var originalImageSrc, params, srcUrl;
+          params = {
+            info: {
+              type: 'image'
+            }
+          };
+          originalImageSrc = $('#image').attr('src');
+          srcUrl = originalImageSrc;
+          params.name = YANDE_RE_HOSTNAME;
+          params.info.srcUrl = srcUrl;
+          return resolve(params);
+        };
+      })(this));
+    };
+
+    return YandereKawpaaLinkInserter;
+
+  })(KawpaaLinkInserter);
+  PixivKawpaaLinkInserter = (function(superClass) {
+    extend(PixivKawpaaLinkInserter, superClass);
+
+    function PixivKawpaaLinkInserter() {
+      PixivKawpaaLinkInserter.__super__.constructor.call(this, PIXIV_HOSTNAME);
+      this.selector = '.bookmark-container';
+      this.html = "<a href=\"#\" class=\"add-bookmark _button kawpaa-save-link\">Save to Kawpaa</a>";
+    }
+
+    PixivKawpaaLinkInserter.prototype.getParamsToServer = function() {
+      return new Promise((function(_this) {
+        return function(resolve, reject) {
+          var originalImageSrc, params, srcUrl;
+          params = {
+            info: {
+              type: 'image'
+            }
+          };
+          originalImageSrc = $('.original-image').data('src');
+          srcUrl = originalImageSrc;
+          params.name = PIXIV_HOSTNAME;
+          params.info.srcUrl = srcUrl;
+          return resolve(params);
+        };
+      })(this));
+    };
+
+    return PixivKawpaaLinkInserter;
+
+  })(KawpaaLinkInserter);
+  SankakuComplexKawpaaLinkInserter = (function(superClass) {
+    extend(SankakuComplexKawpaaLinkInserter, superClass);
+
+    function SankakuComplexKawpaaLinkInserter() {
+      SankakuComplexKawpaaLinkInserter.__super__.constructor.call(this, SANKAKUCOMPLEX_HOSTNAME);
+      this.selector = '#share';
+      this.html = "<a class=\"kawpaa-save-link\" href=\"#\">Save to Kawpaa</a>";
+    }
+
+    SankakuComplexKawpaaLinkInserter.prototype.getParamsToServer = function() {
+      return new Promise((function(_this) {
+        return function(resolve, reject) {
+          var params;
+          params = {
+            info: {
+              type: 'image'
+            }
+          };
+          $('#image').on('click', function(e) {
+            var originalImageSrc, srcUrl;
+            originalImageSrc = $('#image').attr('src');
+            srcUrl = "https:" + originalImageSrc;
+            params.name = SANKAKUCOMPLEX_HOSTNAME;
+            params.info.srcUrl = srcUrl;
+            return resolve(params);
+          });
+          return $('#image').click();
+        };
+      })(this));
+    };
+
+    return SankakuComplexKawpaaLinkInserter;
+
+  })(KawpaaLinkInserter);
+  DevianArtKawpaaLinkInserter = (function(superClass) {
+    extend(DevianArtKawpaaLinkInserter, superClass);
+
+    function DevianArtKawpaaLinkInserter() {
+      DevianArtKawpaaLinkInserter.__super__.constructor.call(this, DEVIANTART_HOSTNAME);
+      this.selector = '.dev-meta-actions';
+      this.html = "<a class=\"dev-page-button dev-page-button-with-text dev-page-download kawpaa-save-link\" href=\"#\" data-download_url=\"http://www.deviantart.com/download/460347620/gochiusa_by_azizkeybackspace-d7m2uhw.png?token=a6e80ce8b02c8c1dc7762417c29bf3d3b57bd13d&amp;ts=1458132778\">\n <i style=\"background: url(" + DATA_URL_BLUE_16 + "); background-position: none; background-repeat: no-repeat;\"></i>\n <span class=\"label\">Save to Kawpaa</span>\n</a>";
+    }
+
+    DevianArtKawpaaLinkInserter.prototype.getParamsToServer = function() {
+      return new Promise((function(_this) {
+        return function(resolve, reject) {
+          var params, sampleImgUrl, srcUrl;
+          params = {
+            info: {
+              type: 'image'
+            }
+          };
+          sampleImgUrl = $('.dev-content-full').attr('src');
+          srcUrl = sampleImgUrl;
+          params.name = DEVIANTART_HOSTNAME;
+          params.info.srcUrl = srcUrl;
+          return resolve(params);
+        };
+      })(this));
+    };
+
+    return DevianArtKawpaaLinkInserter;
+
+  })(KawpaaLinkInserter);
+  getSaveTokawpaaLinkInserter = function() {
+    var hostname;
     hostname = location.host;
     console.log(hostname);
     switch (hostname) {
       case DANBOORU_HOSTNAME:
-        result = '#post-sections';
-        break;
+        return new DanbooruKawpaaLinkInserter();
       case GELBOORU_HOSTNAME:
+        return new GelbooruKawpaaLinkInserter();
       case KONACHAN_HOSTNAME:
+        return new KonachanKawpaaLinkInserter();
       case YANDE_RE_HOSTNAME:
-        result = '#right-col h4';
-        break;
+        return new YandereKawpaaLinkInserter();
       case PIXIV_HOSTNAME:
-        result = '.bookmark-container';
-        break;
+        return new PixivKawpaaLinkInserter();
       case SANKAKUCOMPLEX_HOSTNAME:
-        result = '#share';
-        break;
+        return new SankakuComplexKawpaaLinkInserter();
       default:
         if (hostname.indexOf(DEVIANTART_HOSTNAME) !== -1) {
-          result = '.dev-meta-actions';
+          return new DevianArtKawpaaLinkInserter();
         }
     }
-    return result;
   };
-  getHtmlToInsert = function() {
-    var hostname, result;
-    result = null;
-    hostname = location.host;
-    switch (hostname) {
-      case DANBOORU_HOSTNAME:
-        result = "<li><a class=\"kawpaa-save-link\" href=\"#\">Save to Kawpaa</a></li>";
-        break;
-      case GELBOORU_HOSTNAME:
-      case KONACHAN_HOSTNAME:
-      case YANDE_RE_HOSTNAME:
-        result = " |\n<a class=\"kawpaa-save-link\" href=\"#\">Save to Kawpaa</a>";
-        break;
-      case PIXIV_HOSTNAME:
-        result = "<a href=\"#\" class=\"add-bookmark _button kawpaa-save-link\">Save to Kawpaa</a>";
-        break;
-      case SANKAKUCOMPLEX_HOSTNAME:
-        result = "<a class=\"kawpaa-save-link\" href=\"#\">Save to Kawpaa</a>";
-        break;
-      default:
-        if (hostname.indexOf(DEVIANTART_HOSTNAME) !== -1) {
-          result = "<a class=\"dev-page-button dev-page-button-with-text dev-page-download kawpaa-save-link\" href=\"#\" data-download_url=\"http://www.deviantart.com/download/460347620/gochiusa_by_azizkeybackspace-d7m2uhw.png?token=a6e80ce8b02c8c1dc7762417c29bf3d3b57bd13d&amp;ts=1458132778\">\n <i style=\"background: url(" + DATA_URL_BLUE_16 + "); background-position: none; background-repeat: no-repeat;\"></i>\n <span class=\"label\">Save to Kawpaa</span>\n</a>";
-        }
-    }
-    return result;
-  };
-  showKawpaaLink = function() {
-    var html, selector;
-    selector = getSelectorInsertionTagetOfKawpaaLink();
-    html = getHtmlToInsert();
-    return $(document).find(selector).append(html);
-  };
-  sendBackground = function(params) {
-    console.log(params);
-    return chrome.runtime.sendMessage(params, function(response) {
-      return console.log(response);
-    });
-  };
-  getParamsToServer = function() {
-    return new Promise(function(resolve, reject) {
-      var hostname, imgUrl, originalImageSrc, result, sampleImgUrl, srcUrl;
-      result = {
-        info: {
-          type: 'image'
-        }
-      };
-      hostname = location.host;
-      switch (hostname) {
-        case DANBOORU_HOSTNAME:
-          imgUrl = $('#image-resize-link').attr('href') || $('#image').attr('src');
-          originalImageSrc = imgUrl.replace('sample/sample-', '');
-          srcUrl = "https://danbooru.donmai.us" + originalImageSrc;
-          result.name = DANBOORU_HOSTNAME;
-          result.info.srcUrl = srcUrl;
-          return resolve(result);
-        case GELBOORU_HOSTNAME:
-          originalImageSrc = $('#image').attr('src');
-          srcUrl = originalImageSrc;
-          result.name = GELBOORU_HOSTNAME;
-          result.info.srcUrl = srcUrl;
-          return resolve(result);
-        case KONACHAN_HOSTNAME:
-          originalImageSrc = $('#image').attr('src');
-          srcUrl = originalImageSrc;
-          result.name = KONACHAN_HOSTNAME;
-          result.info.srcUrl = srcUrl;
-          return resolve(result);
-        case PIXIV_HOSTNAME:
-          originalImageSrc = $('.original-image').data('src');
-          srcUrl = originalImageSrc;
-          result.name = PIXIV_HOSTNAME;
-          result.info.srcUrl = srcUrl;
-          return resolve(result);
-        case SANKAKUCOMPLEX_HOSTNAME:
-          $('#image').on('click', function(e) {
-            originalImageSrc = $('#image').attr('src');
-            srcUrl = "https:" + originalImageSrc;
-            result.name = SANKAKUCOMPLEX_HOSTNAME;
-            result.info.srcUrl = srcUrl;
-            return resolve(result);
-          });
-          $('#image').click();
-          break;
-        case YANDE_RE_HOSTNAME:
-          originalImageSrc = $('#image').attr('src');
-          srcUrl = originalImageSrc;
-          result.name = YANDE_RE_HOSTNAME;
-          result.info.srcUrl = srcUrl;
-          return resolve(result);
-        default:
-          if (hostname.indexOf(DEVIANTART_HOSTNAME) !== -1) {
-            sampleImgUrl = $('.dev-content-full').attr('src');
-            srcUrl = sampleImgUrl;
-            result.name = DEVIANTART_HOSTNAME;
-            result.info.srcUrl = srcUrl;
-            return resolve(result);
-          }
-      }
-    });
-  };
-  $(document).on('click', '.kawpaa-save-link', function(e) {
-    e.preventDefault();
-    return getParamsToServer().then(function(params) {
-      return sendBackground(params);
-    });
-  });
-  return showKawpaaLink();
+  saveToKawpaaLinkInserter = getSaveTokawpaaLinkInserter();
+  saveToKawpaaLinkInserter.insert();
+  return saveToKawpaaLinkInserter.bindClickEvent();
 })();
