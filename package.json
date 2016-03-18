@@ -1,6 +1,6 @@
 {
   "name": "Save_to_Kawpaa",
-  "version": "0.5.0",
+  "version": "0.8.1",
   "description": "",
   "author": "eiurur",
   "license": "MIT",
@@ -41,8 +41,11 @@
     "yargs": "^4.2.0"
   },
   "scripts": {
-    "setup": "npm i & bower i & gulp build",
+    "setup": "npm i && bower i && gulp build",
     "start": "gulp",
     "dist": "gulp zip"
+    "major": "gulp zip --version major"
+    "minor": "gulp zip --version minor"
+    "patch": "gulp zip --version patch"
   }
 }
