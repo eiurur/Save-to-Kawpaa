@@ -38,7 +38,7 @@
     _targetElement = $(this).closest(SELECTOR_POST_WRAPPER);
     permalink = _targetElement.find('.post_permalink').attr('href');
     title = permalink;
-    imageUrl = _targetElement.find('.post_media_photo').attr('src');
+    imageUrl = _targetElement.find('.high_res_link').data('big-photo') || _targetElement.find('.post_media_photo').attr('src');
     params = {
       name: TUMBLR_HOSTNAME,
       info: {

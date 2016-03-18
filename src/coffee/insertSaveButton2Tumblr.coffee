@@ -45,7 +45,7 @@ do ->
 
     permalink = _targetElement.find('.post_permalink').attr('href')
     title = permalink
-    imageUrl = _targetElement.find('.post_media_photo').attr('src')
+    imageUrl = _targetElement.find('.high_res_link').data('big-photo') or _targetElement.find('.post_media_photo').attr('src')
 
     params =
       name: TUMBLR_HOSTNAME
