@@ -43,9 +43,9 @@
   "scripts": {
     "setup": "npm i && bower i && gulp build",
     "start": "gulp",
-    "dist": "gulp zip"
-    "major": "gulp zip --version major"
-    "minor": "gulp zip --version minor"
+    "dist": "gulp zip",
+    "major": "gulp zip --version major",
+    "minor": "gulp zip --version minor",
     "patch": "gulp zip --version patch"
   }
 }
