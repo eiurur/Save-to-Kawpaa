@@ -2,7 +2,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
   hasProp = {}.hasOwnProperty;
 
 (function() {
-  var DANBOORU_HOSTNAME, DATA_URL_BLUE_16, DEVIANTART_HOSTNAME, DanbooruKawpaaLinkInserter, DevianArtKawpaaLinkInserter, GELBOORU_HOSTNAME, GelbooruKawpaaLinkInserter, KONACHAN_HOSTNAME, KawpaaLinkInserter, KonachanKawpaaLinkInserter, PIXIV_HOSTNAME, PixivKawpaaLinkInserter, SANKAKUCOMPLEX_HOSTNAME, SankakuComplexKawpaaLinkInserter, YANDE_RE_HOSTNAME, YandereKawpaaLinkInserter, getSaveTokawpaaLinkInserter, saveToKawpaaLinkInserter;
+  var DANBOORU_HOSTNAME, DATA_URL_BLUE_16, DEVIANTART_HOSTNAME, DanbooruKawpaaLinkInserter, DeviantArtKawpaaLinkInserter, GELBOORU_HOSTNAME, GelbooruKawpaaLinkInserter, KONACHAN_HOSTNAME, KawpaaLinkInserter, KonachanKawpaaLinkInserter, PIXIV_HOSTNAME, PixivKawpaaLinkInserter, SANKAKUCOMPLEX_HOSTNAME, SankakuComplexKawpaaLinkInserter, YANDE_RE_HOSTNAME, YandereKawpaaLinkInserter, getSaveTokawpaaLinkInserter, saveToKawpaaLinkInserter;
   DANBOORU_HOSTNAME = 'danbooru.donmai.us';
   DEVIANTART_HOSTNAME = 'deviantart.com';
   GELBOORU_HOSTNAME = 'gelbooru.com';
@@ -135,36 +135,6 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
     return KonachanKawpaaLinkInserter;
 
   })(KawpaaLinkInserter);
-  YandereKawpaaLinkInserter = (function(superClass) {
-    extend(YandereKawpaaLinkInserter, superClass);
-
-    function YandereKawpaaLinkInserter() {
-      YandereKawpaaLinkInserter.__super__.constructor.call(this, YANDE_RE_HOSTNAME);
-      this.selector = '#right-col h4';
-      this.html = " |\n<a class=\"kawpaa-save-link\" href=\"#\">Save to Kawpaa</a>";
-    }
-
-    YandereKawpaaLinkInserter.prototype.getParamsToServer = function() {
-      return new Promise((function(_this) {
-        return function(resolve, reject) {
-          var originalImageSrc, params, srcUrl;
-          params = {
-            info: {
-              type: 'image'
-            }
-          };
-          originalImageSrc = $('#image').attr('src');
-          srcUrl = originalImageSrc;
-          params.name = YANDE_RE_HOSTNAME;
-          params.info.srcUrl = srcUrl;
-          return resolve(params);
-        };
-      })(this));
-    };
-
-    return YandereKawpaaLinkInserter;
-
-  })(KawpaaLinkInserter);
   PixivKawpaaLinkInserter = (function(superClass) {
     extend(PixivKawpaaLinkInserter, superClass);
 
@@ -229,16 +199,46 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
     return SankakuComplexKawpaaLinkInserter;
 
   })(KawpaaLinkInserter);
-  DevianArtKawpaaLinkInserter = (function(superClass) {
-    extend(DevianArtKawpaaLinkInserter, superClass);
+  YandereKawpaaLinkInserter = (function(superClass) {
+    extend(YandereKawpaaLinkInserter, superClass);
 
-    function DevianArtKawpaaLinkInserter() {
-      DevianArtKawpaaLinkInserter.__super__.constructor.call(this, DEVIANTART_HOSTNAME);
+    function YandereKawpaaLinkInserter() {
+      YandereKawpaaLinkInserter.__super__.constructor.call(this, YANDE_RE_HOSTNAME);
+      this.selector = '#right-col h4';
+      this.html = " |\n<a class=\"kawpaa-save-link\" href=\"#\">Save to Kawpaa</a>";
+    }
+
+    YandereKawpaaLinkInserter.prototype.getParamsToServer = function() {
+      return new Promise((function(_this) {
+        return function(resolve, reject) {
+          var originalImageSrc, params, srcUrl;
+          params = {
+            info: {
+              type: 'image'
+            }
+          };
+          originalImageSrc = $('#image').attr('src');
+          srcUrl = originalImageSrc;
+          params.name = YANDE_RE_HOSTNAME;
+          params.info.srcUrl = srcUrl;
+          return resolve(params);
+        };
+      })(this));
+    };
+
+    return YandereKawpaaLinkInserter;
+
+  })(KawpaaLinkInserter);
+  DeviantArtKawpaaLinkInserter = (function(superClass) {
+    extend(DeviantArtKawpaaLinkInserter, superClass);
+
+    function DeviantArtKawpaaLinkInserter() {
+      DeviantArtKawpaaLinkInserter.__super__.constructor.call(this, DEVIANTART_HOSTNAME);
       this.selector = '.dev-meta-actions';
       this.html = "<a class=\"dev-page-button dev-page-button-with-text dev-page-download kawpaa-save-link\" href=\"#\" data-download_url=\"http://www.deviantart.com/download/460347620/gochiusa_by_azizkeybackspace-d7m2uhw.png?token=a6e80ce8b02c8c1dc7762417c29bf3d3b57bd13d&amp;ts=1458132778\">\n <i style=\"background: url(" + DATA_URL_BLUE_16 + "); background-position: none; background-repeat: no-repeat;\"></i>\n <span class=\"label\">Save to Kawpaa</span>\n</a>";
     }
 
-    DevianArtKawpaaLinkInserter.prototype.getParamsToServer = function() {
+    DeviantArtKawpaaLinkInserter.prototype.getParamsToServer = function() {
       return new Promise((function(_this) {
         return function(resolve, reject) {
           var params, sampleImgUrl, srcUrl;
@@ -256,7 +256,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
       })(this));
     };
 
-    return DevianArtKawpaaLinkInserter;
+    return DeviantArtKawpaaLinkInserter;
 
   })(KawpaaLinkInserter);
   getSaveTokawpaaLinkInserter = function() {
@@ -270,15 +270,15 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
         return new GelbooruKawpaaLinkInserter();
       case KONACHAN_HOSTNAME:
         return new KonachanKawpaaLinkInserter();
-      case YANDE_RE_HOSTNAME:
-        return new YandereKawpaaLinkInserter();
       case PIXIV_HOSTNAME:
         return new PixivKawpaaLinkInserter();
       case SANKAKUCOMPLEX_HOSTNAME:
         return new SankakuComplexKawpaaLinkInserter();
+      case YANDE_RE_HOSTNAME:
+        return new YandereKawpaaLinkInserter();
       default:
         if (hostname.indexOf(DEVIANTART_HOSTNAME) !== -1) {
-          return new DevianArtKawpaaLinkInserter();
+          return new DeviantArtKawpaaLinkInserter();
         }
     }
   };
