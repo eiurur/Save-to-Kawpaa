@@ -30,13 +30,13 @@ Go to Site
 # Support Service
 
 - [x] Danbooru
-- [x] DevianART
+- [x] DeviantART
 - [x] Gelbooru
 - [x] Konachan
 - [ ] pixiv
   - x_x unsupport multi-illustrations
 - [x] yande.re
-- [ ] Tumblr
+- [ ] tumblr
   - x_x unsupport multi-illustrations
 - [ ] Twitter
   - x_x unsupport multi-illustrations
