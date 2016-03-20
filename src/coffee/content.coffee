@@ -40,6 +40,7 @@ $ ->
 
     getURL: ->
       return @data.srcUrl if @getType() is 'image'
+
       siteURL = @getSiteURL()
 
       # デフォ値の設定
@@ -169,6 +170,7 @@ $ ->
       # Base64に変換をかますときとかにこけた
       if err.statusCode then alertify.error "Error: #{err.statusCode} #{err.statusMessage}"
       else alertify.error "Error: トークンに誤りがあります。\nもう一度確認してみてください。"
+
 
   do ->
     alertify.log "保存中 ......"
