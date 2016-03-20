@@ -5,8 +5,8 @@ do ->
   SELECTOR_POST_WRAPPER = '.post_wrapper'
 
   showKawpaaButton = (_$) ->
-    hasPhoto = _$.find('.post_media_photo').length > 0
     existKawpaaButton = _$.find('.kawpaa-save-link').length isnt 0
+    hasPhoto = _$.find('.post_media_photo').length > 0
 
     return if existKawpaaButton
     return unless hasPhoto
@@ -22,23 +22,16 @@ do ->
       console.log response
 
 
-  # Individual tweet page
+  # dashboard
   $(document).on
     'mouseenter': (e) -> showKawpaaButton($(this))
   , SELECTOR_POST_WRAPPER
 
 
-  # Home timeline
-  $(document).on
-    'mouseenter': (e) -> showKawpaaButton($(this))
-  , SELECTOR_POST_WRAPPER
-
-
-  # Click
   $(document).on 'click', '.kawpaa-save-link', (e) ->
     e.preventDefault()
 
-    # 画像の差し替え
+    # Kawpaaボタンを灰色から青色の画像の差し替え
     $(this).css('background-image', "url(#{DATA_URL_BLUE_24})")
 
     _targetElement = $(this).closest(SELECTOR_POST_WRAPPER)

@@ -9,8 +9,8 @@
   SELECTOR_ACTION_KAWPAA_CONTAINER = '.action-kawpaa-container';
   showKawpaaButton = function(_$) {
     var existKawpaaButton, hasPhoto, html;
-    hasPhoto = _$.find(SELECTOR_JS_ADAPTIVE_PHOTO).length > 0;
     existKawpaaButton = _$.find(SELECTOR_ACTION_KAWPAA_CONTAINER).length !== 0;
+    hasPhoto = _$.find(SELECTOR_JS_ADAPTIVE_PHOTO).length > 0;
     if (existKawpaaButton) {
       return;
     }

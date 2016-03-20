@@ -4,8 +4,8 @@
   SELECTOR_POST_WRAPPER = '.post_wrapper';
   showKawpaaButton = function(_$) {
     var existKawpaaButton, hasPhoto, html;
-    hasPhoto = _$.find('.post_media_photo').length > 0;
     existKawpaaButton = _$.find('.kawpaa-save-link').length !== 0;
+    hasPhoto = _$.find('.post_media_photo').length > 0;
     if (existKawpaaButton) {
       return;
     }
@@ -21,11 +21,6 @@
       return console.log(response);
     });
   };
-  $(document).on({
-    'mouseenter': function(e) {
-      return showKawpaaButton($(this));
-    }
-  }, SELECTOR_POST_WRAPPER);
   $(document).on({
     'mouseenter': function(e) {
       return showKawpaaButton($(this));

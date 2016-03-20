@@ -10,8 +10,8 @@ do ->
   SELECTOR_ACTION_KAWPAA_CONTAINER   = '.action-kawpaa-container'
 
   showKawpaaButton = (_$) ->
-    hasPhoto = _$.find(SELECTOR_JS_ADAPTIVE_PHOTO).length > 0
     existKawpaaButton = _$.find(SELECTOR_ACTION_KAWPAA_CONTAINER).length isnt 0
+    hasPhoto = _$.find(SELECTOR_JS_ADAPTIVE_PHOTO).length > 0
 
     return if existKawpaaButton
     return unless hasPhoto
@@ -42,14 +42,12 @@ do ->
   # Individual tweet page
   $(document).on
     'mouseenter': (e) -> showKawpaaButton($(this))
-    # 'mouseleave': (e) -> removeKawpaaButton($(this))
   , SELECTOR_PERMALINK_TWEET_CONTAINER
 
 
   # Home timeline
   $(document).on
     'mouseenter': (e) -> showKawpaaButton($(this))
-    # 'mouseleave': (e) -> removeKawpaaButton($(this))
   , SELECTOR_JS_STREAM_TWEET
 
 
@@ -98,7 +96,6 @@ do ->
     #   # console.log this
     #   console.log $(this).attr('data-image-url')
     #   imageUrl = $(this).attr('data-image-url')
-
     #   params =
     #     name: 'twitter'
     #     info:
@@ -106,7 +103,6 @@ do ->
     #       type: 'image'
     #       srcUrl: "#{imageUrl}:orig"
     #       title: title
-
     #   sendBackground(params)
 
 
