@@ -2,7 +2,7 @@ gulp = require 'gulp'
 $    = do require 'gulp-load-plugins'
 argv = require('yargs').argv
 
-ManifestVersionManager = require './ManifestVersionManager'
+ManifestVersionManager = require '../lib/ManifestVersionManager'
 
 
 gulp.task 'update_manifest_version', ->

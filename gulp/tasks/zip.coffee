@@ -3,7 +3,7 @@ $    = do require 'gulp-load-plugins'
 path = require 'path'
 argv = require('yargs').argv
 
-ManifestVersionManager = require './ManifestVersionManager'
+ManifestVersionManager = require '../lib/ManifestVersionManager'
 
 gulp.task 'zip', [
   'build'
