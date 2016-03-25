@@ -38,8 +38,7 @@ Go to Site
 - [x] yande.re
 - [ ] tumblr
   - x_x unsupport multi-illustrations
-- [ ] Twitter
-  - x_x unsupport multi-illustrations
+- [x] Twitter
 
 # Status
 
