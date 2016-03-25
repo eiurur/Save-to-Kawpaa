@@ -1,32 +1,37 @@
 $ ->
 
+  executeScript = (params) ->
+    return new Promise (resolve) ->
+      chrome.tabs.executeScript null, params, -> return resolve 'ok'
 
+  insertCSS = (params) ->
+    return new Promise (resolve) ->
+      chrome.tabs.insertCSS null, params, -> return resolve 'ok'
 
   get = (key) ->
     return new Promise (resolve, reject) ->
       chrome.storage.sync.get key, (item) -> return resolve item[key]
 
   executeKawpaaScript = (infoStr) ->
-    Promise.all [
-      get "token"
-    ]
-    .then (itemList) ->
-      token = itemList[0]
+    get("token")
+    .then (token) ->
       if token is undefined or token is ''
         alert 'トークンが入力されていません。オプションページからトークンを入力してください'
         return
-      # info = JSON.parse infoStr
+
       console.log 'executeKawpaaScript = infoStr = ', infoStr
-      chrome.tabs.executeScript null, { file: 'build/js/vendors/lib.min.js' }, ->
-        chrome.tabs.insertCSS null, { file: 'build/css/vendors/lib.min.css' }, ->
+      tasks = [
+        executeScript(file: 'build/js/vendors/lib.min.js')
+        insertCSS(file: 'build/css/vendors/lib.min.css')
+        executeScript(code: "var info = #{infoStr};")
+      ]
+      Promise.all tasks
+      .then (results) ->
+        # chrome.tabs.executeScript null, { file: 'build/js/content.js' }, ->
+        chrome.tabs.executeScript null, { file: 'build/js/content.min.js' }, ->
+          console.log 'Script injected.'
+          return
 
-          # 文字列で渡しても、content.jsではobjectとして受け取る。なので名前もinfo
-          chrome.tabs.executeScript null, { code: "var info = #{infoStr};" }, ->
-
-            # chrome.tabs.executeScript null, { file: 'build/js/content.js' }, ->
-            chrome.tabs.executeScript null, { file: 'build/js/content.min.js' }, ->
-              console.log 'Script injected.'
-              return
 
   ###
   Browser Action
