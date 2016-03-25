@@ -157,6 +157,12 @@ do ->
          <span class="label">Save to Kawpaa</span>
         </a>
       """
+      do @onChangeURL
+
+    onChangeURL: ->
+      $(document).on 'change', 'data-deviationid', =>
+        sampleImgUrl = $(this).attr('src')
+        console.log 'sampleImgUrl = ', sampleImgUrl
 
     getParamsToServer: ->
       return new Promise (resolve, reject) =>

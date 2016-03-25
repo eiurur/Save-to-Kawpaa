@@ -67,11 +67,11 @@
   },
   "background": {
     "persistent": false,
-    "scripts": [
+    "//": [
       "build/js/vendors/lib.js",
       "build/js/background.js"
     ],
-    "//": [
+    "scripts": [
       "build/js/vendors/lib.min.js",
       "build/js/background.min.js"
     ]

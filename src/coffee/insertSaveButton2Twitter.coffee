@@ -1,10 +1,12 @@
 do ->
 
+  TWITTER_HOSTNAME = 'twitter.com'
 
   SELECTOR_JS_STREAM_TWEET           = '.js-stream-tweet'
   SELECTOR_JS_TWEET_TEXT             = '.js-tweet-text'
   SELECTOR_PERMALINK_TWEET_CONTAINER = '.permalink-tweet-container'
   SELECTOR_JS_ADAPTIVE_PHOTO         = '.js-adaptive-photo'
+  SELECTOR_MEDIA_IMAGE               = '.media-image'
   SELECTOR_JS_PERMALINK              = '.js-permalink'
   SELECTOR_JS_ACTION_PROFILE_NAME    = '.js-action-profile-name'
   SELECTOR_ACTION_KAWPAA_CONTAINER   = '.action-kawpaa-container'
@@ -26,17 +28,10 @@ do ->
     _$.find('.ProfileTweet-actionList').append html
 
 
-  # removeKawpaaButton = (_$) ->
-  #   existKawpaaButton = _$.find(SELECTOR_ACTION_KAWPAA_CONTAINER).length isnt 0
-  #   return unless existKawpaaButton
-  #   _$.find(SELECTOR_ACTION_KAWPAA_CONTAINER).remove()
-
-
   sendBackground = (params) ->
     console.log params
     chrome.runtime.sendMessage params, (response) ->
       console.log response
-
 
 
   # Individual tweet page
@@ -75,12 +70,11 @@ do ->
     imageUrl = _targetElement.find(SELECTOR_JS_ADAPTIVE_PHOTO).attr('data-image-url')
 
     # 複数枚のときは今見ている画像を保存する。
-    imageUrl = $('.media-image').first().attr('src') or imageUrl
+    imageUrl = $(SELECTOR_MEDIA_IMAGE).first().attr('src') or imageUrl
     imageUrl = imageUrl.replace(':large', '')
-    console.log imageUrl
 
     params =
-      name: 'twitter'
+      name: TWITTER_HOSTNAME
       info:
         siteUrl: "https://twitter.com#{tweetUrl}"
         type: 'image'
@@ -93,23 +87,6 @@ do ->
       #   type: 'link'
       #   siteImage: "#{imageUrl}:orig"
     sendBackground(params)
-
-    # 複数枚画像に対応ver
-    # FIX: 同時に違うパラメータをBackgroundに渡すのはいいのだけど、ページ上のデータをスクレイピングしてサーバに送信する実行するスクリプト(content.js)で上書きされてしまう。
-    # _targetElement.find(SELECTOR_JS_ADAPTIVE_PHOTO).each ->
-    #   # sendBackground(getParamsToServer(tweetUrl, $(this).attr('data-image-url'), title))
-    #   # _this = $(this)
-    #   # console.log this
-    #   console.log $(this).attr('data-image-url')
-    #   imageUrl = $(this).attr('data-image-url')
-    #   params =
-    #     name: 'twitter'
-    #     info:
-    #       siteUrl: "https://twitter.com#{tweetUrl}"
-    #       type: 'image'
-    #       srcUrl: "#{imageUrl}:orig"
-    #       title: title
-    #   sendBackground(params)
 
 
 
