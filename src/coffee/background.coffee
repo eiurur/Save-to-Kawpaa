@@ -92,14 +92,18 @@ $ ->
     return hostnameList.includes(name)
 
   chrome.runtime.onMessage.addListener (request, sender, sendResponse) ->
-    if isRequestFromSpecificService(request.name)
+    console.log 'onMessage request = ', request
+    if request.newIconPath
+      console.log 'new Icon Path'
+      chrome.browserAction.setIcon
+        path: request.newIconPath
+        tabId: sender.tab.id
+    else if isRequestFromSpecificService(request.name)
       infoStr = JSON.stringify request.info
       executeKawpaaScript(infoStr)
       sendResponse "ok #{infoStr}"
       return
-    chrome.browserAction.setIcon
-      path: request.newIconPath
-      tabId: sender.tab.id
+    sendResponse "ok setIcon #{infoStr}"
 
 
   ###

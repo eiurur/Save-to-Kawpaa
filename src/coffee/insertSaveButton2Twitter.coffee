@@ -74,6 +74,11 @@ do ->
     title = "#{_targetElement.find(SELECTOR_JS_ACTION_PROFILE_NAME).text()} / #{_targetElement.find(SELECTOR_JS_TWEET_TEXT).text()}"
     imageUrl = _targetElement.find(SELECTOR_JS_ADAPTIVE_PHOTO).attr('data-image-url')
 
+    # 複数枚のときは今見ている画像を保存する。
+    imageUrl = $('.media-image').first().attr('src') or imageUrl
+    imageUrl = imageUrl.replace(':large', '')
+    console.log imageUrl
+
     params =
       name: 'twitter'
       info:
@@ -81,6 +86,7 @@ do ->
         type: 'image'
         srcUrl: "#{imageUrl}:orig"
         title: title
+    console.log 'Twitter params = ', params
       # TODO: linkにも対応。
       # info:
       #   url: "https://twitter.com#{tweetUrl}"
