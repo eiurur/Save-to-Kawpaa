@@ -33,8 +33,7 @@ Go to Site
 - [x] DeviantART
 - [x] Gelbooru
 - [x] Konachan
-- [ ] pixiv
-  - x_x unsupport multi-illustrations
+- [x] pixiv
 - [x] yande.re
 - [ ] tumblr
   - x_x unsupport multi-illustrations
