@@ -2,9 +2,13 @@ do ->
 
   TUMBLR_HOSTNAME       = 'www.tumblr.com'
 
+  # SELECTOR
+  # For dashboard
   SELECTOR_POST_WRAPPER = '.post_wrapper'
+  # For sidebar
+  SELECTOR_POST         = '.post'
 
-  showKawpaaButton = (_$) ->
+  showKawpaaButton = (_$, _targetSelector) ->
     existKawpaaButton = _$.find('.kawpaa-save-link').length isnt 0
     hasPhoto = _$.find('.post_media_photo').length > 0
 
@@ -14,7 +18,7 @@ do ->
     html = """
       <div class="post_control post-control-icon icon-kawpaa kawpaa-save-link" title="Save to Kawpaa" data-subview="Save to Kawpaa" style="background-image: url(#{DATA_URL_GRAY_24});"></div>
     """
-    _$.find('.post_controls_inner').append html
+    _$.find(_targetSelector).append html
 
   sendBackground = (params) ->
     console.log params
@@ -24,8 +28,13 @@ do ->
 
   # dashboard
   $(document).on
-    'mouseenter': (e) -> showKawpaaButton($(this))
+    'mouseenter': (e) -> showKawpaaButton($(this), '.post_controls_inner')
   , SELECTOR_POST_WRAPPER
+
+  # Sidebar
+  $(document).on
+    'mouseenter': (e) -> showKawpaaButton($(this), '.post_controls')
+  , SELECTOR_POST
 
 
   $(document).on 'click', '.kawpaa-save-link', (e) ->
@@ -34,11 +43,21 @@ do ->
     # Kawpaaボタンを灰色から青色の画像の差し替え
     $(this).css('background-image', "url(#{DATA_URL_BLUE_24})")
 
-    _targetElement = $(this).closest(SELECTOR_POST_WRAPPER)
+    $postWrapper = $(this).closest(SELECTOR_POST_WRAPPER)
+    $post = $(this).closest(SELECTOR_POST)
+
+    # Hack: 拡張性なし
+    nowPageVariable = if $postWrapper.length > 0 then 'dashboard'
+
+    switch nowPageVariable
+      when 'dashboard'
+        _targetElement = $postWrapper
+      else # sidebar
+        _targetElement = $post
 
     permalink = _targetElement.find('.post_permalink').attr('href')
-    title = permalink
-    imageUrl = _targetElement.find('.high_res_link').data('big-photo') or _targetElement.find('.post_media_photo').attr('src')
+    imageUrl  = _targetElement.find('.high_res_link').data('big-photo') or _targetElement.find('.post_media_photo').attr('src')
+    title     = permalink
 
     params =
       name: TUMBLR_HOSTNAME
