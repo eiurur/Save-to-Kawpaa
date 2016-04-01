@@ -8,6 +8,8 @@ do ->
   SANKAKUCOMPLEX_HOSTNAME = 'chan.sankakucomplex.com'
   YANDE_RE_HOSTNAME       = 'yande.re'
 
+  PIXIV_MANGA_URL         = 'http://www.pixiv.net/member_illust.php?mode=manga'
+
   DATA_URL_BLUE_16 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3wYYBzM05cEJigAABBtJREFUOBEBEATv+wEAAAAAAAAAAAAAAAAbescA5YY5ABt6xwQAAABOAAAAKAAAAAAAAADYAAAAseWGOf0bescA5YY5AAAAAAAAAAAAAQAAAAAAAAAAG3rHAAAAAAIAAACeAAAAXwAAALYAAADRAAAAAAAAAC8AAABKAAAAoAAAAGMAAAD+5YY5AAAAAAAEAAAAABt6xwAAAAAXAAAA4wAAAITlhjkBAAAAAAAAAAAAAAAAAAAAAAAAAAAbesd/AAAA+AAAABwbesfq5YY5AAEbescAAAAAAgAAAPgAAABE5YY5wgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbesc/AAAAuwAAAAgAAAD+AAAAAAAbesegG3rHfgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbesd/G3rHnwAAAAABG3rHBAAAAPvlhjkBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbesf/AAAABAIAAABOAAAAtgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALcAAABOAgAAACgAAADRAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA0QAAACgCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAADYAAAALwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC8AAADYAgAAALIAAABKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASQAAALIAAAAAABt6x58besd+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABt6x4AbeseeAAAAAAEbescAAAAAAgAAAPgAAABE5YY5wgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbesc/AAAAuwAAAAcAAAD/AuWGOQAAAAD+AAAAHQAAALwbesd+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAG3rHgAAAALsAAAAcAAAA/+WGOQABAAAAAAAAAAAbescAAAAAAgAAAJ0AAABgAAAAtgAAANEAAAAAAAAALwAAAEoAAACfAAAAYwAAAP/lhjkAAAAAAAIAAAAAAAAAAOWGOQAAAAD+5YY5YQAAAAQAAACdAAAA9AAAAPQAAACdAAAABOWGOWIAAAD/5YY5AAAAAAAAAAAA+yVtBA+LUxoAAAAASUVORK5CYII="
 
 
@@ -106,6 +108,30 @@ do ->
         params.info.srcUrl = srcUrl
         return resolve params
 
+  class PixivKawpaaMultipleLinkInserter extends KawpaaLinkInserter
+    constructor: ->
+      super(PIXIV_HOSTNAME)
+      @selector = '.item-container'
+      @html = """
+        <div style="font-size: 2em;">
+          <a href="#" class="kawpaa-save-link">Save to Kawpaa</a>
+        </div>
+      """
+
+    bindClickEvent: ->
+      _this = @
+      $(document).on 'click', '.kawpaa-save-link', (e) ->
+        e.preventDefault()
+        _this.getParamsToServer($(this)).then (params) -> _this.sendBackground(params)
+
+    getParamsToServer: (_$) ->
+      return new Promise (resolve, reject) =>
+        params = info: type: 'image'
+        srcUrl = _$.closest('.item-container').find('.image').data('src')
+        params.name = PIXIV_HOSTNAME
+        params.info.srcUrl = srcUrl
+        return resolve params
+
 
   class SankakuComplexKawpaaLinkInserter extends KawpaaLinkInserter
     constructor: ->
@@ -176,7 +202,12 @@ do ->
 
   getSaveTokawpaaLinkInserter = ->
     hostname = location.host
+    href     = location.href
     console.log hostname
+    console.log href
+
+    if href.indexOf(PIXIV_MANGA_URL) isnt -1 then return new PixivKawpaaMultipleLinkInserter()
+
     switch hostname
       when DANBOORU_HOSTNAME then return new DanbooruKawpaaLinkInserter()
       when GELBOORU_HOSTNAME then return new GelbooruKawpaaLinkInserter()
