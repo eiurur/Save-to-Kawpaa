@@ -27,6 +27,19 @@
     "run_at": "document_end"
   }, {
     "matches": [
+      "https://tweetdeck.twitter.com/*"
+    ],
+    "//": [
+      "build/js/vendors/lib.js",
+      "build/js/insertSaveButton2TweetDeck.js"
+    ],
+    "js": [
+      "build/js/vendors/lib.min.js",
+      "build/js/insertSaveButton2TweetDeck.min.js"
+    ],
+    "run_at": "document_end"
+  }, {
+    "matches": [
       "https://www.tumblr.com/*"
     ],
     "//": [
@@ -48,11 +61,11 @@
       "http://www.pixiv.net/member_illust.php*",
       "https://yande.re/post/show/*"
     ],
-    "//": [
+    "js": [
       "build/js/vendors/lib.js",
       "build/js/insertSaveLink.js"
     ],
-    "js": [
+    "//": [
       "build/js/vendors/lib.min.js",
       "build/js/insertSaveLink.min.js"
     ],
@@ -67,11 +80,11 @@
   },
   "background": {
     "persistent": false,
-    "//": [
+    "scripts": [
       "build/js/vendors/lib.js",
       "build/js/background.js"
     ],
-    "scripts": [
+    "//": [
       "build/js/vendors/lib.min.js",
       "build/js/background.min.js"
     ]

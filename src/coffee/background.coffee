@@ -36,7 +36,6 @@ $ ->
   ###
   Browser Action
   ###
-  # chrome.browserActionはbackgroundでしか動作しねーぞ
   chrome.browserAction.onClicked.addListener (tab) -> executeKawpaaScript(null)
 
 
@@ -91,10 +90,11 @@ $ ->
   SANKAKUCOMPLEX_HOSTNAME = 'chan.sankakucomplex.com'
   TUMBLR_HOSTNAME         = 'www.tumblr.com'
   TWITTER_HOSTNAME        = 'twitter.com'
+  TWEETDECK_HOSTNAME      = 'tweetdeck.twitter.com'
   YANDE_RE_HOSTNAME       = 'yande.re'
 
   isRequestFromSpecificService = (name) ->
-    hostnameList = [TWITTER_HOSTNAME, DANBOORU_HOSTNAME, GELBOORU_HOSTNAME, KONACHAN_HOSTNAME, PIXIV_HOSTNAME, SANKAKUCOMPLEX_HOSTNAME, TUMBLR_HOSTNAME, YANDE_RE_HOSTNAME]
+    hostnameList = [DANBOORU_HOSTNAME, GELBOORU_HOSTNAME, KONACHAN_HOSTNAME, PIXIV_HOSTNAME, SANKAKUCOMPLEX_HOSTNAME, TUMBLR_HOSTNAME, TWEETDECK_HOSTNAME, TWITTER_HOSTNAME, YANDE_RE_HOSTNAME]
     return true if name.indexOf(DEVIANTART_HOSTNAME) isnt -1
     return hostnameList.includes(name)
 
@@ -113,3 +113,4 @@ $ ->
       return
     else
       sendResponse "ok #{infoStr}"
+
