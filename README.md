@@ -38,6 +38,8 @@ Go to Site
 - [ ] tumblr
   - x_x unsupport multi-illustrations
 - [x] Twitter
+- [x] TweetDeck
+  - tweet with images only
 
 # Status
 
