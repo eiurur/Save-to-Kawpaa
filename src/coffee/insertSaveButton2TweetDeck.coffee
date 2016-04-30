@@ -17,7 +17,7 @@ do ->
     return unless hasPhoto
 
     html = """
-      <li class="tweet-action-item action-kawpaa-container">
+      <li class="tweet-action-item action-kawpaa-container pull-left margin-r--13">
         <a class="js-show-tip tweet-action kawpaa-save-link" href="#" title="" data-original-title="Save to Kawpaa">
           <span class="icon icon-kawpaa txt-right" style="display: block; height: 16px; position: relative; top: 3px; width: 16px; background-image: url(#{DATA_URL_GRAY_16});"></span>
         </a>
@@ -28,7 +28,8 @@ do ->
 
   sendBackground = (params) ->
     console.log params
-    chrome.runtime.sendMessage params, (response) -> console.log response
+    chrome.runtime.sendMessage params, (response) ->
+      console.log response
 
 
   # Individual tweet page
