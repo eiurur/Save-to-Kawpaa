@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Save to Kawpaa",
   "description": "あとで抜く",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "permissions": [
     "tabs",
     "storage",
@@ -12,8 +12,7 @@
     "https://*/*",
     "chrome://favicon/"
   ],
-  "content_scripts": [
-  {
+  "content_scripts": [{
     "matches": [
       "https://kawpaa.eiurur.xyz/"
     ],
@@ -22,8 +21,7 @@
       "build/js/retrieveToken.min.js"
     ],
     "run_at": "document_end"
-  },
-  {
+  }, {
     "matches": [
       "https://kawpaa.eiurur.xyz/account"
     ],
@@ -32,8 +30,7 @@
       "build/js/retrieveToken.min.js"
     ],
     "run_at": "document_end"
-  },
-  {
+  }, {
     "matches": [
       "https://twitter.com/*"
     ],
@@ -46,8 +43,7 @@
       "build/js/insertSaveButton2Twitter.min.js"
     ],
     "run_at": "document_end"
-  },
-  {
+  }, {
     "matches": [
       "https://tweetdeck.twitter.com/*"
     ],
@@ -60,8 +56,7 @@
       "build/js/insertSaveButton2TweetDeck.min.js"
     ],
     "run_at": "document_end"
-  },
-  {
+  }, {
     "matches": [
       "https://www.tumblr.com/*"
     ],
@@ -74,8 +69,7 @@
       "build/js/insertSaveButton2Tumblr.min.js"
     ],
     "run_at": "document_end"
-  },
-  {
+  }, {
     "matches": [
       "https://chan.sankakucomplex.com/*/post/show/*",
       "https://danbooru.donmai.us/posts/*",
