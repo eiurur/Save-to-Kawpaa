@@ -44,6 +44,12 @@ $ ->
   ###
   chrome.commands.onCommand.addListener (command) -> executeKawpaaScript(null)
 
+  chrome.tabs.onActivated.addListener (tabInfo) ->
+    chrome.tabs.get tabInfo.tabId, (tab) ->
+      existTokenDOMURL = tab.url is 'https://kawpaa.eiurur.xyz' or tab.url is 'https://kawpaa.eiurur.xyz/account'
+      return unless existTokenDOMURL
+      executeScript file: 'build/js/retrieveToken.min.js'
+      .then (r) -> return
 
   ###
   Context Menu

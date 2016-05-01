@@ -1,7 +1,11 @@
-$ ->
-  token_in_top_page = $(".user-info__container code").text()
-  token_in_account_page = $(".dashboard code").text()
-  token = token_in_top_page or token_in_account_page
+do ->
+  codeDOM = document.querySelector('.user-info__container code') or document.querySelector('.dashboard code')
+  console.log codeDOM
+
+  token = if codeDOM then codeDOM.textContent else ''
+  console.log token
+
+  return unless token
   item  = token: token
 
   # inboxが空でないときは保存されない。(両方とも空だから失敗する？)

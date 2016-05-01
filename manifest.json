@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Save to Kawpaa",
   "description": "あとで抜く",
-  "version": "0.9.1",
+  "version": "0.9.3",
   "permissions": [
     "tabs",
     "storage",
@@ -13,24 +13,6 @@
     "chrome://favicon/"
   ],
   "content_scripts": [{
-    "matches": [
-      "https://kawpaa.eiurur.xyz/"
-    ],
-    "js": [
-      "build/js/vendors/lib.min.js",
-      "build/js/retrieveToken.min.js"
-    ],
-    "run_at": "document_end"
-  }, {
-    "matches": [
-      "https://kawpaa.eiurur.xyz/account"
-    ],
-    "js": [
-      "build/js/vendors/lib.min.js",
-      "build/js/retrieveToken.min.js"
-    ],
-    "run_at": "document_end"
-  }, {
     "matches": [
       "https://twitter.com/*"
     ],
