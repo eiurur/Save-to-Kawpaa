@@ -6,6 +6,7 @@ config = require('../config').coffee
 gulp.task 'coffee', ->
   gulp.src config.src
     .pipe $.plumber()
+    .pipe $.cached 'coffee'
     .pipe $.coffeelint()
     .pipe $.coffeelint.reporter()
     .pipe $.coffee(bare: true)
