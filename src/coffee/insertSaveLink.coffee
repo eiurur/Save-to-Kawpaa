@@ -7,6 +7,7 @@ do ->
   PIXIV_HOSTNAME          = 'www.pixiv.net'
   SANKAKUCOMPLEX_HOSTNAME = 'chan.sankakucomplex.com'
   YANDE_RE_HOSTNAME       = 'yande.re'
+  YOUTUBE_HOSTNAME        = 'www.youtube.com'
 
   PIXIV_MANGA_URL         = 'http://www.pixiv.net/member_illust.php?mode=manga'
 
@@ -172,6 +173,28 @@ do ->
         params.info.srcUrl = srcUrl
         return resolve params
 
+  # TODO
+  # class YouTubeKawpaaLinkInserter extends KawpaaLinkInserter
+  #   constructor: ->
+  #     super(YOUTUBE_HOSTNAME)
+  #     @selector = '#watch8-action-buttons'
+  #     @html = """
+  #       <div class="yt-uix-menu ">
+  #         <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-opacity yt-uix-button-has-icon no-icon-markup pause-resume-autoplay yt-uix-menu-trigger yt-uix-tooltip kawpaa-save-link" type="button" onclick=";return false;" title="Save to Kawpaa" role="button" aria-haspopup="true" aria-label="Action menu." aria-pressed="false"><span class="yt-uix-button-content">Save to Kawpaa</span>
+  #         </button>
+  #       </div>
+  #     """
+
+  #   getParamsToServer: ->
+  #     return new Promise (resolve, reject) =>
+  #       params = info: type: 'link'
+  #       # 個人的にsampleサイズでも十分に感じるため大きいサイズに変換する処理は行わない。
+  #       originalImageSrc = $('#image').attr('src')
+  #       srcUrl = originalImageSrc
+  #       params.name = YANDE_RE_HOSTNAME
+  #       params.info.srcUrl = srcUrl
+  #       return resolve params
+
 
   class DeviantArtKawpaaLinkInserter extends KawpaaLinkInserter
     constructor: ->
@@ -215,6 +238,7 @@ do ->
       when PIXIV_HOSTNAME then return new PixivKawpaaLinkInserter()
       when SANKAKUCOMPLEX_HOSTNAME then return new SankakuComplexKawpaaLinkInserter()
       when YANDE_RE_HOSTNAME then return new YandereKawpaaLinkInserter()
+      # when YOUTUBE_HOSTNAME then return new YouTubeKawpaaLinkInserter()
       else
         # DevianArtは個人ページをサブドメインで管理する方法をとっているので判定方法をちょっと変える
         if hostname.indexOf(DEVIANTART_HOSTNAME) isnt -1 then return new DeviantArtKawpaaLinkInserter()

@@ -98,6 +98,7 @@ $ ->
   TWITTER_HOSTNAME        = 'twitter.com'
   TWEETDECK_HOSTNAME      = 'tweetdeck.twitter.com'
   YANDE_RE_HOSTNAME       = 'yande.re'
+  # YOUTUBE_HOSTNAME        = 'www.youtube.com'
 
   isRequestFromSpecificService = (name) ->
     hostnameList = [DANBOORU_HOSTNAME, GELBOORU_HOSTNAME, KONACHAN_HOSTNAME, PIXIV_HOSTNAME, SANKAKUCOMPLEX_HOSTNAME, TUMBLR_HOSTNAME, TWEETDECK_HOSTNAME, TWITTER_HOSTNAME, YANDE_RE_HOSTNAME]

@@ -11,6 +11,34 @@ $ ->
   class HTMLMetaDataScraper
     constructor: (@data) ->
 
+    ###
+    linkなら本文や、動画の埋め込みリンク
+    imageならnull
+    ###
+    getContent: ->
+      content = null
+
+      # youtube
+      if location.href.indexOf("www.youtube.com/watch?v=") > -1
+        vNumber = location.search.split('&').shift().split('=').pop()
+        console.log 'vNumber = ', vNumber
+        content = """
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/#{vNumber}" frameborder="0" allowfullscreen></iframe>
+        """
+
+      # ニコニコなら動画のサムネを指定
+      # # ニコニコはhttpsに対応していないのでiframeがブロックされます。どうしようもないので待ちましょう。
+      if location.href.indexOf("www.nicovideo.jp/watch/sm") > -1
+        title = document.title
+        smNumber =  location.href.split('/').pop()
+        console.log 'title = ', title
+        console.log 'smNumber = ', smNumber
+        content = """
+          <iframe width="312" height="176" src="//ext.nicovideo.jp/thumb/#{smNumber}" scrolling="no" style="border:solid 1px #CCC;" frameborder="0"><a href="//www.nicovideo.jp/watch/#{smNumber}">#{title}</a></iframe>
+        """
+      return content
+
+
     getTitle: ->
       t1 = $('head title').text()
       t2 = $('meta[property="og:title"]').attr('content')
@@ -69,9 +97,15 @@ $ ->
       if siteURL.indexOf("www.nicovideo.jp/watch/sm") > -1
         u = $('.videoThumbnailImage').attr('src')
 
+      # youtube
+      # TODO: 別の動画に移動しても$('meta[property="og:image"]').attr('content')に変化なし。分からん。
+      # if siteURL.indexOf("www.youtube.com/watch?v=") > -1
+      #   u = $('meta[property="og:image"]').attr('content')
+
       # XVIDEOSなら動画のサムネを指定
       if siteURL.indexOf("xvideos.com/video") > -1
         u = $('img.thumb').attr('src')
+
 
       return u
 
@@ -85,6 +119,7 @@ $ ->
       return f
 
     get: ->
+      content: @getContent()
       title: @getTitle()
       siteName: @getSiteName()
       siteUrl: @getSiteURL()
