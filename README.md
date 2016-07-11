@@ -41,6 +41,16 @@ Go to Site
 - [x] TweetDeck
   - tweet with images only
 
+# Shortcut
+
+you can save the link with shortcut
+
+- Windows
+-- `Ctrl` + `I`
+
+- Mac
+-- `Command` + `I`
+
 # Status
 
 WIP
