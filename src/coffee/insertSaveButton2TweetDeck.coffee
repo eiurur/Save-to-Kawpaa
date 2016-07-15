@@ -56,7 +56,7 @@ do ->
     params =
       name: TWEETDECK_HOSTNAME
       info:
-        siteUrl: "https://twitter.com#{tweetUrl}"
+        siteUrl: tweetUrl
         type: 'image'
         srcUrl: "#{imageUrl}:orig"
         title: title
