@@ -11,11 +11,20 @@ $ ->
   class HTMLMetaDataScraper
     constructor: (@data) ->
 
+    removeScriptTag: (html) ->
+      SCRIPT_REGEX = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi
+      while (SCRIPT_REGEX.test(html))
+        html = html.replace(SCRIPT_REGEX, "")
+      return html
+
     ###
     linkなら本文や、動画の埋め込みリンク
     imageならnull
     ###
     getContent: ->
+
+      return null if @getType() is 'image'
+
       content = null
 
       # youtube
@@ -28,7 +37,7 @@ $ ->
 
       # ニコニコなら動画のサムネを指定
       # # ニコニコはhttpsに対応していないのでiframeがブロックされます。どうしようもないので待ちましょう。
-      if location.href.indexOf("www.nicovideo.jp/watch/sm") > -1
+      else if location.href.indexOf("www.nicovideo.jp/watch/sm") > -1
         title = document.title
         smNumber =  location.href.split('/').pop()
         console.log 'title = ', title
@@ -36,6 +45,10 @@ $ ->
         content = """
           <iframe width="312" height="176" src="//ext.nicovideo.jp/thumb/#{smNumber}" scrolling="no" style="border:solid 1px #CCC;" frameborder="0"><a href="//www.nicovideo.jp/watch/#{smNumber}">#{title}</a></iframe>
         """
+      else
+        content = @removeScriptTag　$('section').html()
+        console.log content
+
       return content
 
 
