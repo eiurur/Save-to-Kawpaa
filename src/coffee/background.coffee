@@ -1,5 +1,8 @@
 $ ->
 
+  CHROME_RUNTIME_ID = 'dghanpofbgihidnoofloojkpbkgjkfgg'
+  FILE_TYPE = if chrome.runtime.id is CHROME_RUNTIME_ID then 'min.' else ''
+
   executeScript = (params) ->
     return new Promise (resolve) ->
       chrome.tabs.executeScript null, params, -> return resolve 'ok'
@@ -21,14 +24,13 @@ $ ->
 
       console.log 'executeKawpaaScript = infoStr = ', infoStr
       tasks = [
-        executeScript(file: 'build/js/vendors/lib.min.js')
-        insertCSS(file: 'build/css/vendors/lib.min.css')
+        executeScript(file: "build/js/vendors/lib.#{FILE_TYPE}js")
+        insertCSS(file: "build/css/vendors/lib.#{FILE_TYPE}bcss")
         executeScript(code: "var info = #{infoStr};")
       ]
       Promise.all tasks
       .then (results) ->
-        # chrome.tabs.executeScript null, { file: 'build/js/content.js' }, ->
-        chrome.tabs.executeScript null, { file: 'build/js/content.min.js' }, ->
+        chrome.tabs.executeScript null, { file:"build/js/content.#{FILE_TYPE}js" }, ->
           console.log 'Script injected.'
           return
 
@@ -48,7 +50,7 @@ $ ->
     chrome.tabs.get tabInfo.tabId, (tab) ->
       existTokenDOMURL = tab.url is 'https://kawpaa.eiurur.xyz' or tab.url is 'https://kawpaa.eiurur.xyz/account'
       return unless existTokenDOMURL
-      executeScript file: 'build/js/retrieveToken.min.js'
+      executeScript file: "build/js/retrieveToken.#{FILE_TYPE}js"
       .then (r) -> return
 
   ###

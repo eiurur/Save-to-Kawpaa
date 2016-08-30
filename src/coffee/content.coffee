@@ -45,6 +45,15 @@ $ ->
         content = """
           <iframe width="312" height="176" src="//ext.nicovideo.jp/thumb/#{smNumber}" scrolling="no" style="border:solid 1px #CCC;" frameborder="0"><a href="//www.nicovideo.jp/watch/#{smNumber}">#{title}</a></iframe>
         """
+
+      # 2ch
+      else if location.href.indexOf("bbspink.com") > -1 || location.href.indexOf("2ch.net") > -1
+        content = @removeScriptTag　$('.thread').html()
+
+      # ふたば
+      else if location.href.indexOf("2chan.net") > -1
+        content = @removeScriptTag　$('.thre').html()
+
       else
         content = @removeScriptTag　$('section').html()
         console.log content
@@ -112,8 +121,8 @@ $ ->
 
       # youtube
       # TODO: 別の動画に移動しても$('meta[property="og:image"]').attr('content')に変化なし。分からん。
-      # if siteURL.indexOf("www.youtube.com/watch?v=") > -1
-      #   u = $('meta[property="og:image"]').attr('content')
+      if siteURL.indexOf("www.youtube.com/watch?v=") > -1
+        u = $('meta[property="og:image"]')?.attr('content')
 
       # XVIDEOSなら動画のサムネを指定
       if siteURL.indexOf("xvideos.com/video") > -1
@@ -146,19 +155,14 @@ $ ->
 
   class KawpaaDataPoster
 
-    # 開発用(Win)
-    # DEST_URL: 'https://127.0.0.1:9021/api/posts'
-
-    # 開発用(Vagrant)
-    # DEST_URL: 'https://192.168.33.10:9021/api/posts'
-
-    # 本番用(VPS)
-    DEST_URL: 'https://kawpaa.eiurur.xyz/api/posts'
-
     constructor: (@data = {}) ->
       htmlMetaDataScraper = new HTMLMetaDataScraper(info)
       htmlMetaData = htmlMetaDataScraper.get()
       console.log htmlMetaData
+
+      CHROME_RUNTIME_ID = 'dghanpofbgihidnoofloojkpbkgjkfgg'
+      isProduction = chrome.runtime.id is CHROME_RUNTIME_ID
+      @DEST_URL = if isProduction then 'https://kawpaa.eiurur.xyz/api/posts' else 'https://127.0.0.1:9021/api/posts'
 
       console.log 'before = ', @data
       @data.isPrivate = true
