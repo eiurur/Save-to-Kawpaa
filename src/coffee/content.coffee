@@ -11,11 +11,27 @@ $ ->
   class HTMLMetaDataScraper
     constructor: (@data) ->
 
+    removeHrefInATag: (html) ->
+      TAG_REGEX = /href=".*"/gi
+      return html.replace(TAG_REGEX, '');
+
+    removeTag: (tagName, html) ->
+      TAG_REGEX = new RegExp("<#{tagName}\\b[^<]*(?:(?!<\\/#{tagName}>)<[^<]*)*<\\/#{tagName}>", 'gi')
+      while (TAG_REGEX.test(html))
+        html = html.replace(TAG_REGEX, "")
+      return html
+
+    # あとで消す？
     removeScriptTag: (html) ->
       SCRIPT_REGEX = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi
       while (SCRIPT_REGEX.test(html))
         html = html.replace(SCRIPT_REGEX, "")
       return html
+
+    searchIframeSrc: ->
+      return $('iframe')?.src
+
+    # getIframe
 
     ###
     linkなら本文や、動画の埋め込みリンク
@@ -54,7 +70,14 @@ $ ->
       else if location.href.indexOf("2chan.net") > -1
         content = @removeScriptTag　$('.thre').html()
 
+      # Just for me
+      else if location.href.indexOf("mannanoeroetaiken.blog.fc2.com") > -1
+        content = @removeTag('iframe', @removeHrefInATag(@removeScriptTag($('.content').html())))
+
       else
+        # iframe_src = @searchIframeSrc()
+        # if iframe_src
+
         content = @removeScriptTag　$('section').html()
         console.log content
 
