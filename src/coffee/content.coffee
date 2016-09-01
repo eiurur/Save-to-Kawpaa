@@ -72,7 +72,7 @@ $ ->
 
       # Just for me
       else if location.href.indexOf("mannanoeroetaiken.blog.fc2.com") > -1
-        content = @removeTag('iframe', @removeHrefInATag(@removeScriptTag($('.content').html())))
+        content = @removeTag 'img', @removeTag('iframe', @removeHrefInATag(@removeScriptTag($('.content').html())))
 
       else
         # iframe_src = @searchIframeSrc()

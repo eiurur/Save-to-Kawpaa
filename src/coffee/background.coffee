@@ -25,7 +25,7 @@ $ ->
       console.log 'executeKawpaaScript = infoStr = ', infoStr
       tasks = [
         executeScript(file: "build/js/vendors/lib.#{FILE_TYPE}js")
-        insertCSS(file: "build/css/vendors/lib.#{FILE_TYPE}bcss")
+        insertCSS(file: "build/css/vendors/lib.#{FILE_TYPE}css")
         executeScript(code: "var info = #{infoStr};")
       ]
       Promise.all tasks
