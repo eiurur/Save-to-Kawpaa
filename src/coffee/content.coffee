@@ -12,7 +12,7 @@ $ ->
     constructor: (@data) ->
 
     removeHrefInATag: (html) ->
-      TAG_REGEX = /href=".*"/gi
+      TAG_REGEX = /(href=".*?")/gi
       return html.replace(TAG_REGEX, '');
 
     removeTag: (tagName, html) ->
