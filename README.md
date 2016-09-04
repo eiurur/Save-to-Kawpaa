@@ -46,10 +46,10 @@ Go to Site
 you can save the link with shortcut
 
 - Windows
--- `Ctrl` + `I`
+-- `Ctrl + Shift + Period`
 
 - Mac
--- `Command` + `I`
+-- `Command + Shift + Period`
 
 # Status
 
