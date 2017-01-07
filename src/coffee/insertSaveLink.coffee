@@ -1,4 +1,4 @@
-do ->
+$ ->
 
   DANBOORU_HOSTNAME       = 'danbooru.donmai.us'
   DEVIANTART_HOSTNAME     = 'deviantart.com'

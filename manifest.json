@@ -54,7 +54,7 @@
   }, {
     "matches": [
       "https://chan.sankakucomplex.com/*/post/show/*",
-      "https://danbooru.donmai.us/posts/*",
+      "*://danbooru.donmai.us/posts/*",
       "http://*.deviantart.com/art/*",
       "http://gelbooru.com/index.php*",
       "https://konachan.com/post/show/*",
