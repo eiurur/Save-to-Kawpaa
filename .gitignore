@@ -1,9 +1,7 @@
 manifest-dep.json
 temp
 node_modules
-bower_components
-.sass-cache/**
-dist/**
 test/*
 package/*
 build/**
+dist/**
