@@ -14,6 +14,16 @@ module.exports = {
     path: path.resolve(__dirname, './build/js'),
     filename: '[name].bundle.js'
   },
+  // plugins: [
+  //   new webpack.optimize.UglifyJsPlugin({
+  //     compress: {
+  //       warning: false
+  //     },
+  //     mangle: {
+  //       keep_fnames: true // Don't mangle function names
+  //     }
+  //   }),
+  // ],
   module: {
     rules: [
       {
@@ -21,8 +31,6 @@ module.exports = {
         use: [{
           loader: 'babel-loader',
           options: {
-            comments: false,
-            compact: true,
             presets: ['es2015', 'stage-3']
           },
         }],

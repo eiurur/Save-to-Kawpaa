@@ -18,10 +18,11 @@ chrome.commands.onCommand.addListener( (command) => new KawpaaScriptExecuter(nul
  */
 chrome.tabs.onActivated.addListener( (tabInfo) => {
   chrome.tabs.get( (tabInfo.tabId), (tab) => {
-    // TODO
+      let existTokenDOMURL = (tab.url === 'https://kawpaa.eiurur.xyz') || (tab.url === 'https://kawpaa.eiurur.xyz/account');
+      if (!existTokenDOMURL) { return; }
+      ChromeExecuter.executeScript({file: `build/js/retrieveToken.${FILE_TYPE}js`}).then((res) => console.log(res) );
   })
 })
-
 
 /**
  * コンテキストメニュー
@@ -30,15 +31,8 @@ const contextMennu = new ContextMenuExtension();
 chrome.contextMenus.onClicked.addListener(contextMennu.onClick)
 
 /**
- * 
+ * メッセージング
  */
-var isRequestFromSpecificService = function(hostname) {
-  var hostnameList = Object.values(targets);
-  if (hostname.indexOf(targets.DEVIANTART_HOSTNAME) !== -1) { return true; }
-  return hostnameList.includes(hostname);
-};
-
-
 chrome.runtime.onMessage.addListener( (request, sender, sendResponse) => {
   var infoStr;
 
@@ -63,3 +57,8 @@ chrome.runtime.onMessage.addListener( (request, sender, sendResponse) => {
   return sendResponse(`ok ${infoStr}`);
 });
 
+function isRequestFromSpecificService(hostname) {
+  var hostnameList = Object.values(targets);
+  if (hostname.indexOf(targets.DEVIANTART_HOSTNAME) !== -1) { return true; }
+  return hostnameList.includes(hostname);
+};

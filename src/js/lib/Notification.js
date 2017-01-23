@@ -1,4 +1,4 @@
-// const alertify = require('alertifyjs');
+const alertify = require('alertifyjs');
 
 module.exports = class Notification {
 

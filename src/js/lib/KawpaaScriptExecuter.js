@@ -4,7 +4,6 @@ const ChromeSyncStorageManager = require('./ChromeSyncStorageManager');
 module.exports = class KawpaaScriptExecuter {
   constructor(info) {
     this.tasks = [
-      ChromeExecuter.executeScript({file: `build/js/vendors/lib.js`}),
       ChromeExecuter.insertCSS({file: `build/css/vendors/lib.css`}),
       ChromeExecuter.executeScript({code: `var info = ${info};`}),
     ];

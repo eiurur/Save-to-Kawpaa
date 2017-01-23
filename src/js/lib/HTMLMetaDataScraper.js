@@ -52,8 +52,8 @@ module.exports = class HTMLMetaDataScraper {
       let vNumber = location.search.split('&').shift().split('=').pop();
       console.log('vNumber = ', vNumber);
       content = `\
-<iframe width="560" height="315" src="https://www.youtube.com/embed/${vNumber}" frameborder="0" allowfullscreen></iframe>\
-`;
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/${vNumber}" frameborder="0" allowfullscreen></iframe>\
+      `;
 
     // ニコニコなら動画のサムネを指定
     // # ニコニコはhttpsに対応していないのでiframeがブロックされます。どうしようもないので待ちましょう。
@@ -63,8 +63,8 @@ module.exports = class HTMLMetaDataScraper {
       console.log('title = ', title);
       console.log('smNumber = ', smNumber);
       content = `\
-<iframe width="312" height="176" src="//ext.nicovideo.jp/thumb/${smNumber}" scrolling="no" style="border:solid 1px #CCC;" frameborder="0"><a href="//www.nicovideo.jp/watch/${smNumber}">${title}</a></iframe>\
-`;
+        <iframe width="312" height="176" src="//ext.nicovideo.jp/thumb/${smNumber}" scrolling="no" style="border:solid 1px #CCC;" frameborder="0"><a href="//www.nicovideo.jp/watch/${smNumber}">${title}</a></iframe>\
+      `;
 
     // 2ch
     } else if ((location.href.indexOf("bbspink.com") > -1) || (location.href.indexOf("2ch.net") > -1)) {

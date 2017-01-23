@@ -2,12 +2,5 @@
   "presets": [
     "es2015",
     "stage-3"
-  ],
-  "env": {
-    "development": {
-      "presets": [
-        "power-assert"
-      ]
-    }
-  }
+  ]
 }
