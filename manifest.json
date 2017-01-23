@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Save to Kawpaa",
   "description": "あとで抜く",
-  "version": "0.10.7",
+  "version": "0.11.0",
   "permissions": [
     "tabs",
     "storage",
@@ -14,45 +14,9 @@
   ],
   "content_scripts": [{
     "matches": [
-      "https://twitter.com/*"
-    ],
-    "//": [
-      "build/js/vendors/lib.js",
-      "build/js/insertSaveButton2Twitter.js"
-    ],
-    "js": [
-      "build/js/vendors/lib.min.js",
-      "build/js/insertSaveButton2Twitter.min.js"
-    ],
-    "run_at": "document_end"
-  }, {
-    "matches": [
-      "https://tweetdeck.twitter.com/*"
-    ],
-    "//": [
-      "build/js/vendors/lib.js",
-      "build/js/insertSaveButton2TweetDeck.js"
-    ],
-    "js": [
-      "build/js/vendors/lib.min.js",
-      "build/js/insertSaveButton2TweetDeck.min.js"
-    ],
-    "run_at": "document_end"
-  }, {
-    "matches": [
-      "https://www.tumblr.com/*"
-    ],
-    "//": [
-      "build/js/vendors/lib.js",
-      "build/js/insertSaveButton2Tumblr.js"
-    ],
-    "js": [
-      "build/js/vendors/lib.min.js",
-      "build/js/insertSaveButton2Tumblr.min.js"
-    ],
-    "run_at": "document_end"
-  }, {
-    "matches": [
+      "https://twitter.com/*",
+      "https://tweetdeck.twitter.com/*",
+      "https://www.tumblr.com/*",
       "https://chan.sankakucomplex.com/*/post/show/*",
       "*://danbooru.donmai.us/posts/*",
       "http://*.deviantart.com/art/*",
@@ -61,13 +25,9 @@
       "http://www.pixiv.net/member_illust.php*",
       "https://yande.re/post/show/*"
     ],
-    "//": [
-      "build/js/vendors/lib.js",
-      "build/js/insertSaveLink.js"
-    ],
     "js": [
       "build/js/vendors/lib.min.js",
-      "build/js/insertSaveLink.min.js"
+      "build/js/insert.bundle.js"
     ],
     "run_at": "document_end"
   }],
@@ -81,15 +41,11 @@
   "background": {
     "persistent": false,
     "scripts": [
-      "build/js/vendors/lib.js",
-      "build/js/background.js"
-    ],
-    "//": [
       "build/js/vendors/lib.min.js",
-      "build/js/background.min.js"
+      "build/js/background.bundle.js"
     ]
   },
-  "options_page": "build/views/views/options.html",
+  "options_page": "build/views/options.html",
   "icons": {
     "16": "build/images/blue/icon19.png",
     "48": "build/images/blue/icon48.png",
