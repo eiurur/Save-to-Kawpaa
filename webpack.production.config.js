@@ -23,10 +23,7 @@ module.exports = {
           warnings: false
         },
         comments: false
-    }),
-    new webpack.LoaderOptionsPlugin({
-      minimize: true
-    }),
+    })
   ],
   module: {
     rules: [

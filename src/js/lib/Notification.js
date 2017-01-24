@@ -13,22 +13,28 @@ module.exports = class Notification {
   }
 
   static fail(err) {
-    console.log('displatyFailedResult err = ', err);
+    console.log(err);
+    // console.log(err.status);
 
-    // res.status(err.statusCode).json statusCode: err.statusCode, message: err.messageのとき
-    if (err.responseJSON != null) {
-      err.statusCode = err.responseJSON.statusCode;
-      err.statusMessage = err.responseJSON.message;
-    } else if (err.status != null) { // Ajaxに失敗したとき
-      err.statusCode = err.status;
-      err.statusMessage = err.statusText;
-    }
-
-    // Base64に変換をかますときとかにこけた
-    if (err.statusCode) { 
+    // // res.status(err.statusCode).json statusCode: err.statusCode, message: err.messageのとき
+    // if (err.responseJSON != null) {
+    //   err.statusCode = err.responseJSON.statusCode;
+    //   err.statusMessage = err.responseJSON.message;
+    // } else if (err.status != null) { // Ajaxに失敗したとき
+    //   err.statusCode = err.status;
+    //   err.statusMessage = err.statusText;
+    // }
+    // if(err.statusCode === 412) {
+    //   alertify.error(err.statusMessage); 
+    // }
+    if (err.statusCode) { // Base64に変換をかますときとかにこけた
       alertify.error(`Error: ${err.statusCode} ${err.statusMessage}`);
-    } else { 
-      alertify.error("Error: トークンに誤りがあります。\nもう一度確認してみてください。"); 
+    } 
+    else if (err.message) {
+      alertify.error(err.message); 
+    }
+    else { 
+      alertify.error(err.toString()); 
     }
   }
 }
