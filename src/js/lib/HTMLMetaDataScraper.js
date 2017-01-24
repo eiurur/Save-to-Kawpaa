@@ -10,12 +10,12 @@ module.exports = class HTMLMetaDataScraper {
   }
 
   removeHrefInATag(html) {
-    let TAG_REGEX = /(href=".*?")/gi;
+    const TAG_REGEX = /(href=".*?")/gi;
     return html.replace(TAG_REGEX, '');
   }
 
   removeTag(tagName, html) {
-    let TAG_REGEX = new RegExp(`<${tagName}\\b[^<]*(?:(?!<\\/${tagName}>)<[^<]*)*<\\/${tagName}>`, 'gi');
+    const TAG_REGEX = new RegExp(`<${tagName}\\b[^<]*(?:(?!<\\/${tagName}>)<[^<]*)*<\\/${tagName}>`, 'gi');
     while (TAG_REGEX.test(html)) {
       html = html.replace(TAG_REGEX, "");
     }
@@ -24,7 +24,7 @@ module.exports = class HTMLMetaDataScraper {
 
   // あとで消す？
   removeScriptTag(html) {
-    let SCRIPT_REGEX = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
+    const SCRIPT_REGEX = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
     while (SCRIPT_REGEX.test(html)) {
       html = html.replace(SCRIPT_REGEX, "");
     }
@@ -131,7 +131,7 @@ module.exports = class HTMLMetaDataScraper {
 
     // デフォ値の設定
     let $img = $('img');
-    let DEFUALT_URL = 'https://36.media.tumblr.com/9086462174c34becaf8b3e59de8f5800/tumblr_nzek2kWNNJ1ukgdjoo2_1280.jpg';
+    let DEFUALT_URL = 'https://68.media.tumblr.com/9086462174c34becaf8b3e59de8f5800/tumblr_nzek2kWNNJ1ukgdjoo2_1280.jpg';
 
     if (($img != null) && ($img.length > 0)) { // bodyタグ内で一番最初の画像を引っ張ってくる
       console.log('画像ファイル発見', $img);

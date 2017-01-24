@@ -3,14 +3,14 @@ const HTMLMetaDataScraper = require('./lib/HTMLMetaDataScraper');
 const KawpaaSender = require('./lib/KawpaaSender');
 const Notification = require('./lib/Notification');
 
+(async () => {
 
-Notification.log();
-const scraper = new HTMLMetaDataScraper(info);
-const htmlMetaData = scraper.scrape();
-console.log(htmlMetaData);
+  Notification.log();
+  const scraper = new HTMLMetaDataScraper(info);
+  const htmlMetaData = scraper.scrape();
+  console.log(htmlMetaData);
 
-ChromeSyncStorageManager.get('token')
-.then( (token) => {
+  const token = await ChromeSyncStorageManager.get('token')
   info = info || {};
   if(token === undefined || token === '') throw new Error('トークンが空です');
   const payload = {
@@ -18,7 +18,8 @@ ChromeSyncStorageManager.get('token')
     post: Object.assign(htmlMetaData, info),
   };
   const sender = new KawpaaSender(payload);
-  return sender.save()
+  sender.save()
+  .then(data => Notification.success())
+  .catch(err => Notification.fail(err));
+  
 })
-.then(data => Notification.success())
-.catch(err => Notification.fail(err));

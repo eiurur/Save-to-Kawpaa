@@ -8,7 +8,8 @@
     "alertifyjs": "^1.8.0",
     "axios": "^0.15.3",
     "bootstrap": "^3.3.7",
-    "jquery": "^3.1.1"
+    "jquery": "^3.1.1",
+    "require-all": "^2.1.0"
   },
   "devDependencies": {
     "babel-core": "^6.21.0",
@@ -17,7 +18,6 @@
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-stage-3": "^6.17.0",
     "babili": "0.0.10",
-    "cross-env": "^3.1.4",
     "eslint": "^3.13.1",
     "eslint-config-airbnb": "^14.0.0",
     "eslint-plugin-react": "^6.9.0",
@@ -56,11 +56,12 @@
   },
   "scripts": {
     "setup": "npm i && npm run build",
-    "start": "node node_modules\\gulp\\bin\\gulp",
-    "build": "node node_modules\\gulp\\bin\\gulp build",
-    "zip": "cross-env NODE_ENV=production node node_modules\\gulp\\bin\\gulp zip",
-    "major": "cross-env NODE_ENV=production node node_modules\\gulp\\bin\\gulp zip --version major",
-    "minor": "cross-env NODE_ENV=production node node_modules\\gulp\\bin\\gulp zip --version minor",
-    "patch": "cross-env NODE_ENV=production node node_modules\\gulp\\bin\\gulp zip --version patch"
+    "start": "concurrently \"node node_modules\\gulp\\bin\\gulp\" \"webpack --progress --colors --watch\"",
+    "build": "node node_modules\\gulp\\bin\\gulp build && webpack -p ",
+    "zip": "node node_modules\\gulp\\bin\\gulp zip",
+    "version:remain": "npm run build && npm run zip",
+    "version:major": "npm run build && npm run zip --version major",
+    "version:minor": "npm run build && npm run zip --version minor",
+    "version:patch": "npm run build && npm run zip --version patch"
   }
 }

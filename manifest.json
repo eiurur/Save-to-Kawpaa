@@ -26,7 +26,6 @@
       "https://yande.re/post/show/*"
     ],
     "js": [
-      "build/js/vendors/lib.min.js",
       "build/js/insert.bundle.js"
     ],
     "run_at": "document_end"
