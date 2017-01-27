@@ -56,12 +56,11 @@
   },
   "scripts": {
     "setup": "npm i && npm run build",
-    "start": "concurrently \"node node_modules\\gulp\\bin\\gulp\" \"webpack --progress --colors --watch\"",
-    "build": "node node_modules\\gulp\\bin\\gulp build && webpack -p ",
-    "zip": "node node_modules\\gulp\\bin\\gulp zip",
-    "version:remain": "npm run build && npm run zip",
-    "version:major": "npm run build && npm run zip --version major",
-    "version:minor": "npm run build && npm run zip --version minor",
-    "version:patch": "npm run build && npm run zip --version patch"
+    "start": "concurrently \"gulp\" \"webpack --progress --colors --watch\"",
+    "build": "gulp build && webpack --config webpack.production.config.js ",
+    "version:remain": "npm run build && gulp zip",
+    "version:major": "npm run build && gulp zip --version major",
+    "version:minor": "npm run build && gulp zip --version minor",
+    "version:patch": "npm run build && gulp zip --version patch"
   }
 }

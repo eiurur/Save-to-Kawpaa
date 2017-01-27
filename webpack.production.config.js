@@ -20,8 +20,10 @@ module.exports = {
     }),
     new webpack.optimize.UglifyJsPlugin({
         compress: {
-          warnings: false
+          warnings: false,
+          drop_console: true,
         },
+        mangle : false,
         comments: false
     })
   ],
@@ -33,7 +35,6 @@ module.exports = {
           loader: 'babel-loader',
           options: {
             presets: ['es2015', 'stage-3'],
-            module: true
           },
         }],
         exclude: /node_modules/
