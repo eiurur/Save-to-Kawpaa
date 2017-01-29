@@ -169,6 +169,10 @@ module.exports = class HTMLMetaDataScraper {
       u = $('img.thumb').attr('src');
     }
 
+    // TODO: komifloかつ、readならhttpcliでタイトルページにアクセスし、タイトルと画像データをスクレイピングする。
+    // TODO: async-await使おうな。
+    // https://komiflo.com/comics/920/read -> https://komiflo.com/comics/920/
+    
 
     return u;
   }

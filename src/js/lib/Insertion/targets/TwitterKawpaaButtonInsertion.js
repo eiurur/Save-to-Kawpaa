@@ -9,6 +9,7 @@ module.exports = class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertio
     this.container = '.permalink-tweet-container';
     this.stream_tweet = '.js-stream-tweet';
     this.tweet_container = '.permalink-tweet';
+    this.tweet_url = '.tweet-timestamp';
     this.twitter_name = '.js-action-profile-name';
     this.tweet_text = '.js-tweet-text';
     this.tweet_image = '.js-adaptive-photo';
@@ -19,7 +20,9 @@ module.exports = class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertio
 
   getInfo(targetElement) {
     return new Promise((resolve) => {
-      var tweetUrl = targetElement.find(this.tweet_container).attr('href')
+      var tweetUrl =
+        targetElement.find(this.tweet_url).attr('href') ||
+        targetElement.find(this.tweet_container).data('permalink-path')
       var title = `${targetElement.find(this.twitter_name).text()} / ${targetElement.find(this.tweet_text).text()}`
       var imageUrl = targetElement.find(this.tweet_image).attr('data-image-url')
 
@@ -59,10 +62,10 @@ module.exports = class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertio
     const _this = this;
     $(document).on('click', this.onClickElement, function(e) {
       e.preventDefault();
-      
+
       // 画像の差し替え
       $(this).find('.icon-kawpaa').css('background-image', "url(" + icons.BLUE_16 + ")");
-      
+
 
       const $jsStreamTweet = $(this).closest(_this.stream_tweet);
       const $permalinkTweetContaner = $(this).closest(_this.tweet_container);
@@ -75,7 +78,7 @@ module.exports = class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertio
         default:
           targetElement = $permalinkTweetContaner;
       }
-      
+
       _this.getInfo(targetElement).then(info => _this.getParamsToServer(info)).then((params) => _this.send(params) )
     })
   }
@@ -87,7 +90,7 @@ module.exports = class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertio
         _this.show($(this))
       }
     }, _this.container);
-    
+
     $(document).on({
       'mouseenter': function(e) {
         _this.show($(this))

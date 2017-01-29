@@ -5,7 +5,7 @@ module.exports = class Notification {
   static log() {
     alertify.message('保存中 ...... ');
   }
-
+  
   // アイコンに色をつけて、完了したことをわかるようにする。通知もする。
   static success() {
     chrome.runtime.sendMessage({ "newIconPath" : 'build/images/blue/icon19.png' });
