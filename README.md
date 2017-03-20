@@ -13,13 +13,13 @@ This is to be used in conjunction with the web service (<a href="https://kawpaa.
 
 if you want to save the image, open context menu on the image and click "Save to Kawpaa with Image".
 
-![](https://dl.dropboxusercontent.com/u/31717228/ShareX/2016/03/chrome_2016-03-17_00-48-32.png)
+![](https://github.com/eiurur/Save-to-Kawpaa/raw/master/images/image.png)
 
 **Link**
 
 if you want to save like Pocket the URL for the page you're seeing, click this icon.
 
-![](https://dl.dropboxusercontent.com/u/31717228/ShareX/2016/03/chrome_2016-03-17_00-52-43.png)
+![](https://github.com/eiurur/Save-to-Kawpaa/raw/master/images/link.png)
 
 ## Browse
 
