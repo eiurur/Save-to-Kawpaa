@@ -1,4 +1,5 @@
 const $ = require('jquery');
+const QueryStringParser = require('./QueryStringParser');
 
 module.exports = class HTMLMetaDataScraper {
   constructor(data) {
@@ -37,10 +38,10 @@ module.exports = class HTMLMetaDataScraper {
 
   // getIframe
 
-  /*
-  linkなら本文や、動画の埋め込みリンク
-  imageならnull
-  */
+  /**
+   * linkなら本文や、動画の埋め込みリンク
+   * imageならnull
+   */
   getContent() {
 
     if (this.getType() === 'image') { return null; }
@@ -78,6 +79,10 @@ module.exports = class HTMLMetaDataScraper {
     } else if (location.href.indexOf("mannanoeroetaiken.blog.fc2.com") > -1) {
       content = this.removeTag('img', this.removeTag('iframe', this.removeHrefInATag(this.removeScriptTag($('.content').html()))));
 
+    // Pornhub
+    } else if (location.href.indexOf("pornhub.com") > -1) {
+      var params = QueryStringParser.parse();
+      content = `<iframe src="https://jp.pornhub.com/embed/${params.viewkey}" frameborder="0" width="560" height="340" scrolling="no" allowfullscreen></iframe>`
     } else {
       // iframe_src = @searchIframeSrc()
       // if iframe_src
@@ -132,8 +137,11 @@ module.exports = class HTMLMetaDataScraper {
     // デフォ値の設定
     let $img = $('img');
     let DEFUALT_URL = 'https://68.media.tumblr.com/9086462174c34becaf8b3e59de8f5800/tumblr_nzek2kWNNJ1ukgdjoo2_1280.jpg';
+    let ogImage = this.getSiteImage();
 
-    if (($img != null) && ($img.length > 0)) { // bodyタグ内で一番最初の画像を引っ張ってくる
+    if(ogImage) {
+      return ogImage;
+    } else if (($img != null) && ($img.length > 0)) { // bodyタグ内で一番最初の画像を引っ張ってくる
       console.log('画像ファイル発見', $img);
       let firstImgUrlInBody = $img.get(0).src;
       // 存在しないなら初期値を設定する
@@ -168,11 +176,6 @@ module.exports = class HTMLMetaDataScraper {
     if (siteURL.indexOf("xvideos.com/video") > -1) {
       u = $('img.thumb').attr('src');
     }
-
-    // TODO: komifloかつ、readならhttpcliでタイトルページにアクセスし、タイトルと画像データをスクレイピングする。
-    // TODO: async-await使おうな。
-    // https://komiflo.com/comics/920/read -> https://komiflo.com/comics/920/
-    
 
     return u;
   }
