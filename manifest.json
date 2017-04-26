@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Save to Kawpaa",
   "description": "あとで抜く",
-  "version": "0.11.5",
+  "version": "0.11.6",
   "permissions": [
     "tabs",
     "storage",
@@ -22,7 +22,7 @@
       "http://*.deviantart.com/art/*",
       "http://gelbooru.com/index.php*",
       "https://konachan.com/post/show/*",
-      "http://www.pixiv.net/member_illust.php*",
+      "https://www.pixiv.net/member_illust.php*",
       "https://yande.re/post/show/*"
     ],
     "js": [

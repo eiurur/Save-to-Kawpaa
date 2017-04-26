@@ -9,7 +9,7 @@ const targets = {
   TWITTER_HOSTNAME:        'twitter.com',
   TWEETDECK_HOSTNAME:      'tweetdeck.twitter.com',
   YANDE_RE_HOSTNAME:       'yande.re',
-  PIXIV_MANGA_URL:         'http://www.pixiv.net/member_illust.php?mode=manga',
+  PIXIV_MANGA_URL:         'https://www.pixiv.net/member_illust.php?mode=manga',
 };
 
 const icons = {

@@ -6,7 +6,7 @@ module.exports = class PixivKawpaaLinkInsertion extends KawpaaLinkInsertion {
   constructor() {
     super(targets.PIXIV_HOSTNAME);
     this.selector = '.bookmark-container';
-    this.html = `<a href="#" class="add-bookmark _button kawpaa-save-link">Save to Kawpaa</a>`;
+    this.html = `<a href="#" class="_bookmark-toggle-button add-bookmark kawpaa-save-link">Save to Kawpaa</a>`;
   }
   
   getSrc() {
