@@ -2,7 +2,7 @@ const ChromeExecuter = require("./ChromeExecuter");
 
 module.exports = class TabActivateListener {
   constructor() {
-    this.CAN_RETRIEVE_PATTERN = /^https:\/\/kawpaa.eiurur.xyz(|\/account)$/;
+    this.CAN_RETRIEVE_PATTERN = /^https:\/\/kawpaa.eiurur.xyz(|\/|\/account)$/;
   }
 
   isAllowedRetrieving(tab) {
@@ -15,6 +15,7 @@ module.exports = class TabActivateListener {
         if (!this.isAllowedRetrieving(tab)) {
           return;
         }
+
         ChromeExecuter.executeScript({
           file: "build/js/retrieveToken.bundle.js"
         }).then(res => console.log(res));
