@@ -1,7 +1,7 @@
 /**
  * ボタンやリンクをHTMLに挿入するスクリプト
  */
-const InsertionFactory = require('./lib/Insertion/InsertionFactory');
+const InsertionFactory = require("./lib/Insertion/InsertionFactory");
 
 const currentHostname = location.host;
 const currentUrl = location.href;
