@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Save to Kawpaa",
   "description": "あとで抜く",
-  "version": "0.11.7",
+  "version": "0.11.8",
   "permissions": [
     "tabs",
     "storage",
@@ -53,10 +53,12 @@
   "commands": {
     "_execute_browser_action": {
       "suggested_key": {
-        "default": "Ctrl+Shift+Period",
-        "windows": "Ctrl+Shift+Period",
-        "mac": "Command+Shift+Period"
-      }
+        "windows": "Ctrl+Shift+U",
+        "mac": "Command+Shift+U",
+        "chromeos": "Ctrl+Shift+U",
+        "linux": "Ctrl+Shift+U"
+      },
+      "description": "save to a current link"
     }
   }
 }

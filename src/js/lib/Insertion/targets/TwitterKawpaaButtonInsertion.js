@@ -53,13 +53,13 @@ module.exports = class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertio
     }
 
     const html = `\
-      <div class="ProfileTweet-action action-kawpaa-container" style="display: inline-block; padding-left: 84px;">
+      <div class="ProfileTweet-action action-kawpaa-container" style="display: inline-block; min-width:80px;">
         <a class="js-tooltip kawpaa-save-link" href="#" data-original-title="Save to Kawpaa" style="display: inline-block; float: left;">
           <span class="icon icon-kawpaa" style="display: block; height: 16px; position: relative; top: 3px; width: 16px; background-image: url(${icons.GRAY_16});">a</span>
         </a>
       </div>\
     `;
-    return _$.find(this.kawpaa_button).append(html);
+    return _$.find(".ProfileTweet-action--dm").after(html);
   }
 
   onClick() {

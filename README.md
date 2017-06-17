@@ -35,7 +35,7 @@ Go to Site
 - [x] Konachan
 - [x] pixiv
 - [x] yande.re
-- [ ] tumblr
+- [x] tumblr
   - x_x unsupport multi-illustrations
 - [x] Twitter
 - [x] TweetDeck
@@ -46,14 +46,19 @@ Go to Site
 you can save the link with shortcut
 
 - Windows
--- `Ctrl + Shift + Period`
+-- `Ctrl + Shift + U`
 
 - Mac
--- `Command + Shift + Period`
+-- `Command + Shift + U`
 
-# Status
+# Development
 
-WIP
+    $ git clone https://github.com/eiurur/Save-to-Kawpaa
+    $ cd Save-to-Kawpaa
+    $ npm i 
+    $ npm run build
+    $ npm run start
+
 
 # Memo
 
