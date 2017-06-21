@@ -1,6 +1,6 @@
-const KawpaaScriptExecuter = require("./KawpaaScriptExecuter");
+import KawpaaScriptExecuter from "./KawpaaScriptExecuter";
 
-module.exports = class ShortcutListener {
+export default class ShortcutListener {
   constructor() {
     return this;
   }
@@ -10,4 +10,4 @@ module.exports = class ShortcutListener {
       console.log("Command:", command)
     );
   }
-};
+}

@@ -1,14 +1,13 @@
-const alertify = require('alertifyjs');
+import alertify from "alertifyjs";
 
-module.exports = class Notification {
-
+export default class Notification {
   static log() {
-    alertify.message('保存中 ...... ');
+    alertify.message("保存中 ...... ");
   }
-  
+
   // アイコンに色をつけて、完了したことをわかるようにする。通知もする。
   static success() {
-    chrome.runtime.sendMessage({ "newIconPath" : 'build/images/blue/icon19.png' });
+    chrome.runtime.sendMessage({ newIconPath: "build/images/blue/icon19.png" });
     alertify.success("保存しました。");
   }
 
@@ -25,17 +24,15 @@ module.exports = class Notification {
     //   err.statusMessage = err.statusText;
     // }
     // if(err.statusCode === 412) {
-    //   alertify.error(err.statusMessage); 
+    //   alertify.error(err.statusMessage);
     // }
-    if (err.statusCode) { // Base64に変換をかますときとかにこけた
+    if (err.statusCode) {
+      // Base64に変換をかますときとかにこけた
       alertify.error(`Error: ${err.statusCode} ${err.statusMessage}`);
-    } 
-    else if (err.message) {
-      alertify.error(err.message); 
-    }
-    else { 
-      alertify.error(err.toString()); 
+    } else if (err.message) {
+      alertify.error(err.message);
+    } else {
+      alertify.error(err.toString());
     }
   }
 }
-

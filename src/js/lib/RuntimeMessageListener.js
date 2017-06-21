@@ -1,7 +1,7 @@
-const { targets } = require("./config");
-const KawpaaScriptExecuter = require("./KawpaaScriptExecuter");
+import { targets } from "./config";
+import KawpaaScriptExecuter from "./KawpaaScriptExecuter";
 
-module.exports = class RuntimeMessageListener {
+export default class RuntimeMessageListener {
   constructor() {
     return this;
   }
@@ -39,4 +39,4 @@ module.exports = class RuntimeMessageListener {
     }
     return hostnameList.includes(hostname);
   }
-};
+}

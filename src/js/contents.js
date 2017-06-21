@@ -1,7 +1,7 @@
-const ChromeSyncStorageManager = require("./lib/ChromeSyncStorageManager");
-const HTMLMetaDataScraper = require("./lib/HTMLMetaDataScraper");
-const KawpaaSender = require("./lib/KawpaaSender");
-const Notification = require("./lib/Notification");
+import ChromeSyncStorageManager from "./lib/ChromeSyncStorageManager";
+import HTMLMetaDataScraper from "./lib/HTMLMetaDataScraper";
+import KawpaaSender from "./lib/KawpaaSender";
+import Notification from "./lib/Notification";
 
 Notification.log();
 ChromeSyncStorageManager.get("token")

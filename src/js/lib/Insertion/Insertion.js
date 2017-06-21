@@ -1,3 +1,3 @@
-module.exports = class Insertion {
+export default class Insertion {
   insert() {}
 }

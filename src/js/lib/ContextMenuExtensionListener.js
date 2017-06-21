@@ -1,6 +1,6 @@
-const KawpaaScriptExecuter = require("./KawpaaScriptExecuter");
+import KawpaaScriptExecuter from "./KawpaaScriptExecuter";
 
-module.exports = class ContextMenuExtensionListener {
+export default class ContextMenuExtensionListener {
   constructor() {
     this.contexts = [
       "page",
@@ -45,4 +45,4 @@ module.exports = class ContextMenuExtensionListener {
     let infoStr = JSON.stringify(info);
     new KawpaaScriptExecuter(infoStr).execute();
   }
-};
+}

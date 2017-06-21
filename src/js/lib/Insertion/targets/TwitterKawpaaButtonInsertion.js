@@ -1,8 +1,8 @@
-const $ = require("jquery");
-const { targets, icons } = require("../../config");
-const KawpaaButtonInsertion = require("../KawpaaButtonInsertion");
+import $ from "jquery";
+import { targets, icons } from "../../config";
+import KawpaaButtonInsertion from "../KawpaaButtonInsertion";
 
-module.exports = class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion {
+export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion {
   constructor() {
     super(targets.TWITTER_HOSTNAME);
 
@@ -113,4 +113,4 @@ module.exports = class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertio
       _this.stream_tweet
     );
   }
-};
+}

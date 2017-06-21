@@ -1,6 +1,6 @@
-const KawpaaScriptExecuter = require("./KawpaaScriptExecuter");
+import KawpaaScriptExecuter from "./KawpaaScriptExecuter";
 
-module.exports = class BroswerIconClickListener {
+export default class BroswerIconClickListener {
   constructor() {
     return this;
   }
@@ -10,4 +10,4 @@ module.exports = class BroswerIconClickListener {
       new KawpaaScriptExecuter(null).execute()
     );
   }
-};
+}

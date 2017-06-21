@@ -1,6 +1,6 @@
-const ChromeExecuter = require("./ChromeExecuter");
+import ChromeExecuter from "./ChromeExecuter";
 
-module.exports = class TabActivateListener {
+export default class TabActivateListener {
   constructor() {
     this.CAN_RETRIEVE_PATTERN = /^https:\/\/kawpaa.eiurur.xyz(|\/|\/account)$/;
   }
@@ -22,4 +22,4 @@ module.exports = class TabActivateListener {
       });
     });
   }
-};
+}

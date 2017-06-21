@@ -1,11 +1,11 @@
-const $ = require('jquery');
-const Link = require('./Link');
+import $ from "jquery";
+import Link from "./Link";
 
-module.exports = class KawpaaLinkInsertion extends Link {
+export default class KawpaaLinkInsertion extends Link {
   constructor(hostname) {
     super();
     this.hostname = hostname;
-    this.onClickElement = '.kawpaa-save-link';
+    this.onClickElement = ".kawpaa-save-link";
   }
 
   insert() {
@@ -17,16 +17,14 @@ module.exports = class KawpaaLinkInsertion extends Link {
     this.onClick();
   }
 
-  getSrc() {
-    
-  }
+  getSrc() {}
 
   getParamsToServer(src) {
     return new Promise((resolve, reject) => {
       const params = {
         name: this.hostname,
         info: {
-          type: 'image',
+          type: "image",
           srcUrl: src
         }
       };
@@ -35,14 +33,15 @@ module.exports = class KawpaaLinkInsertion extends Link {
   }
 
   onClick() {
-    $(document).on('click', this.onClickElement, (e) => {
+    $(document).on("click", this.onClickElement, e => {
       e.preventDefault();
-      this.getSrc().then(src => this.getParamsToServer(src)).then((params) => this.send(params) )
-    })
+      this.getSrc()
+        .then(src => this.getParamsToServer(src))
+        .then(params => this.send(params));
+    });
   }
 
   send(params) {
-    chrome.runtime.sendMessage(params, (response) => console.log(response) )
+    chrome.runtime.sendMessage(params, response => console.log(response));
   }
-
 }

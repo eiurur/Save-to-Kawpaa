@@ -1,8 +1,8 @@
-const BrowserIconClickListener = require("./lib/BrowserIconClickListener");
-const ShortcutListener = require("./lib/ShortcutListener");
-const ContextMenuExtensionListener = require("./lib/ContextMenuExtensionListener");
-const RuntimeMessageListener = require("./lib/RuntimeMessageListener");
-const TabActivateListener = require("./lib/TabActivateListener");
+import BrowserIconClickListener from "./lib/BrowserIconClickListener";
+import ShortcutListener from "./lib/ShortcutListener";
+import ContextMenuExtensionListener from "./lib/ContextMenuExtensionListener";
+import RuntimeMessageListener from "./lib/RuntimeMessageListener";
+import TabActivateListener from "./lib/TabActivateListener";
 
 [
   new ShortcutListener(),

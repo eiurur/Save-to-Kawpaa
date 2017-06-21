@@ -1,9 +1,8 @@
-const axios = require('axios');
+import axios from "axios";
 
-module.exports = class KawpaaSender {
-
+export default class KawpaaSender {
   constructor(payload) {
-    this.payload = (payload === null) ? {} : payload;
+    this.payload = payload === null ? {} : payload;
     this.instance = this.getAxios();
     this.format();
   }
@@ -14,9 +13,11 @@ module.exports = class KawpaaSender {
   }
 
   getBaseURL() {
-    const CHROME_RUNTIME_ID = 'dghanpofbgihidnoofloojkpbkgjkfgg';
+    const CHROME_RUNTIME_ID = "dghanpofbgihidnoofloojkpbkgjkfgg";
     const isProduction = chrome.runtime.id === CHROME_RUNTIME_ID;
-    return (isProduction) ? 'https://kawpaa.eiurur.xyz/' : 'https://127.0.0.1:9021/';
+    return isProduction
+      ? "https://kawpaa.eiurur.xyz/"
+      : "https://127.0.0.1:9021/";
   }
 
   getAxios() {
@@ -30,10 +31,10 @@ module.exports = class KawpaaSender {
 
   save() {
     return new Promise((resolve, reject) => {
-      this.instance.post('/api/posts', this.payload)
-      .then( (response) => resolve(response) )
-      .catch( err => reject(err) );
+      this.instance
+        .post("/api/posts", this.payload)
+        .then(response => resolve(response))
+        .catch(err => reject(err));
     });
   }
 }
-

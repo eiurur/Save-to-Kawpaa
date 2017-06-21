@@ -1,6 +1,6 @@
-const Insertion = require('./Insertion');
+import Insertion from "./Insertion";
 
-module.exports = class Link extends Insertion {
+export default class Link extends Insertion {
   constructor() {
     super();
     this.selector = null;

@@ -1,8 +1,7 @@
-const Insertion = require('./Insertion');
+import Insertion from "./Insertion";
 
-module.exports = class Button extends Insertion {
-  constructor(){
+export default class Button extends Insertion {
+  constructor() {
     super();
   }
-
 }
