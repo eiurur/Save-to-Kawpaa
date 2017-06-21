@@ -1,3 +1,6 @@
+const { targets } = require("./config");
+const KawpaaScriptExecuter = require("./KawpaaScriptExecuter");
+
 module.exports = class RuntimeMessageListener {
   constructor() {
     return this;
