@@ -12,7 +12,11 @@ export default class KonachanKawpaaLinkInsertion extends KawpaaLinkInsertion {
   getSrc() {
     return new Promise(resolve => {
       const srcUrl = $("#image").attr("src");
-      return resolve(srcUrl);
+      return resolve(this.normalize(srcUrl));
     });
+  }
+
+  normalize(src) {
+    return `https:${src}`;
   }
 }
