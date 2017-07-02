@@ -10,7 +10,8 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
     this.stream_tweet = ".js-stream-tweet";
     this.tweet_container = ".permalink-tweet";
     this.tweet_url = ".tweet-timestamp";
-    this.twitter_name = ".js-action-profile-name";
+    this.twitter_fullname = ".fullname"; // ぴゃー
+    this.twitter_username = ".username"; // @puaa
     this.tweet_text = ".js-tweet-text";
     this.tweet_image = ".js-adaptive-photo";
     this.tweet_media = ".media-image";
@@ -23,9 +24,12 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
       var tweetUrl =
         targetElement.find(this.tweet_url).attr("href") ||
         targetElement.find(this.tweet_container).data("permalink-path");
-      var title = `${targetElement
-        .find(this.twitter_name)
-        .text()} / ${targetElement.find(this.tweet_text).text()}`;
+      var fullname = targetElement.find(this.twitter_fullname).text();
+      var username = targetElement.find(this.twitter_username).text();
+      var monoUsername = /^@(\w)*/.exec(username)[0]; // ツイート詳細モーダルだと複数の@usernameが取得されるので単一にする。
+
+      var text = targetElement.find(this.tweet_text).text();
+      var title = `${fullname} ${monoUsername} / ${text}}`;
       var imageUrl = targetElement
         .find(this.tweet_image)
         .attr("data-image-url");
@@ -74,9 +78,8 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
 
       const $jsStreamTweet = $(this).closest(_this.stream_tweet);
       const $permalinkTweetContaner = $(this).closest(_this.tweet_container);
-      const nowPageVariable = $jsStreamTweet.length > 0
-        ? "homeTImeline"
-        : void 0;
+      const nowPageVariable =
+        $jsStreamTweet.length > 0 ? "homeTImeline" : void 0;
       var targetElement = null;
       switch (nowPageVariable) {
         case "homeTImeline":
