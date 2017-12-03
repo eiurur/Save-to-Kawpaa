@@ -2,6 +2,7 @@ const targets = {
   DANBOORU_HOSTNAME: 'danbooru.donmai.us',
   DEVIANTART_HOSTNAME: 'deviantart.com',
   GELBOORU_HOSTNAME: 'gelbooru.com',
+  IWARA_HOSTNAME: 'iwara.tv',
   KOMIFLO_HOSTNAME: 'komiflo.com',
   KONACHAN_HOSTNAME: 'konachan.com',
   PIXIV_HOSTNAME: 'www.pixiv.net',

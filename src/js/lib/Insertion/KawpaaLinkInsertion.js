@@ -1,11 +1,11 @@
-import $ from "jquery";
-import Link from "./Link";
+import $ from 'jquery';
+import Link from './Link';
 
 export default class KawpaaLinkInsertion extends Link {
   constructor(hostname) {
     super();
     this.hostname = hostname;
-    this.onClickElement = ".kawpaa-save-link";
+    this.onClickElement = '.kawpaa-save-link';
     console.log(this);
   }
 
@@ -20,26 +20,54 @@ export default class KawpaaLinkInsertion extends Link {
     this.onClick();
   }
 
-  getSrc() {}
+  getType() {
+    return 'image';
+  }
 
-  getParamsToServer(src) {
+  getContent() {
+    return null;
+  }
+
+  getSrc() {
+    return null;
+  }
+
+  getUrl() {
+    return null;
+  }
+
+  getParamsToServer({ type, content, src, url }) {
     return new Promise((resolve, reject) => {
       const params = {
         name: this.hostname,
         info: {
-          type: "image",
-          srcUrl: src
-        }
+          type: type,
+          content: content,
+          srcUrl: src,
+          url: url,
+        },
       };
       return resolve(params);
     });
   }
 
   onClick() {
-    $(document).on("click", this.onClickElement, e => {
+    $(document).on('click', this.onClickElement, e => {
       e.preventDefault();
-      this.getSrc()
-        .then(src => this.getParamsToServer(src))
+      Promise.all([
+        this.getType(),
+        this.getContent(),
+        this.getSrc(),
+        this.getUrl(),
+      ])
+        .then(getedData =>
+          this.getParamsToServer({
+            type: getedData[0],
+            content: getedData[1],
+            src: getedData[2],
+            url: getedData[3],
+          }),
+        )
         .then(params => this.send(params));
     });
   }

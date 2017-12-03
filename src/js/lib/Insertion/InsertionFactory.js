@@ -4,6 +4,7 @@ import DeviantArtKawpaaLinkInsertion from './targets/DeviantArtKawpaaLinkInserti
 import GelbooruKawpaaLinkInsertion from './targets/GelbooruKawpaaLinkInsertion';
 // import KomifloKawpaaLinkInsertion from "./targets/KomifloKawpaaLinkInsertion";
 import KonachanKawpaaLinkInsertion from './targets/KonachanKawpaaLinkInsertion';
+import IwaraKawpaaLinkInsertion from './targets/IwaraKawpaaLinkInsertion';
 import YandereKawpaaLinkInsertion from './targets/YandereKawpaaLinkInsertion';
 import SankakuComplexKawpaaLinkInsertion from './targets/SankakuComplexKawpaaLinkInsertion';
 import PixivKawpaaLinkInsertion from './targets/PixivKawpaaLinkInsertion';
@@ -15,10 +16,12 @@ import TumblrKawpaaButtonInsertion from './targets/TumblrKawpaaButtonInsertion';
 export default class InsertionFactory {
   static create(hostname, url) {
     // 例外
-    if (url.indexOf(targets.PIXIV_MANGA_URL) !== -1)
+    if (url.includes(targets.PIXIV_MANGA_URL))
       return new PixivMultipleKawpaaLinkInsertion();
-    if (hostname.indexOf(targets.DEVIANTART_HOSTNAME) !== -1)
+    if (hostname.includes(targets.DEVIANTART_HOSTNAME))
       return new DeviantArtKawpaaLinkInsertion();
+    if (hostname.includes(targets.IWARA_HOSTNAME))
+      return new IwaraKawpaaLinkInsertion();
 
     switch (hostname) {
       case targets.DANBOORU_HOSTNAME:
@@ -29,6 +32,8 @@ export default class InsertionFactory {
       //   return new KomifloKawpaaLinkInsertion();
       case targets.KONACHAN_HOSTNAME:
         return new KonachanKawpaaLinkInsertion();
+      // case targets.IWARA_HOSTNAME:
+      //   return new IwaraKawpaaLinkInsertion();
       case targets.YANDE_RE_HOSTNAME:
         return new YandereKawpaaLinkInsertion();
       case targets.SANKAKUCOMPLEX_HOSTNAME:
