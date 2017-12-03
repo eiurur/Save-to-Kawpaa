@@ -46,6 +46,8 @@
     "gulp-watch": "^4.3.11",
     "gulp-webpack": "^1.5.0",
     "gulp-zip": "^4.0.0",
+    "handlebars": "~> 4.0.0",
+    "uglify-js": "~> 2.6.0",
     "require-dir": "^0.3.2",
     "rimraf": "^2.6.1",
     "vinyl-source-stream": "^1.1.0",
