@@ -1,13 +1,13 @@
-import BrowserIconClickListener from "./lib/BrowserIconClickListener";
-import ShortcutListener from "./lib/ShortcutListener";
-import ContextMenuExtensionListener from "./lib/ContextMenuExtensionListener";
-import RuntimeMessageListener from "./lib/RuntimeMessageListener";
-import TabActivateListener from "./lib/TabActivateListener";
+import BrowserIconClickListener from './listener/BrowserIconClickListener';
+import ShortcutListener from './listener/ShortcutListener';
+import ContextMenuExtensionListener from './listener/ContextMenuExtensionListener';
+import RuntimeMessageListener from './listener/RuntimeMessageListener';
+import TabActivateListener from './listener/TabActivateListener';
 
 [
   new ShortcutListener(),
   new BrowserIconClickListener(),
   new ContextMenuExtensionListener(),
   new RuntimeMessageListener(),
-  new TabActivateListener()
+  new TabActivateListener(),
 ].map(listener => listener.activate());
