@@ -9,7 +9,8 @@
     "axios": "^0.17.1",
     "bootstrap": "^3.3.7",
     "jquery": "^3.2.1",
-    "require-all": "^2.2.0"
+    "require-all": "^2.2.0",
+    "handlebars": "~> 4.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.25.0",
@@ -46,7 +47,6 @@
     "gulp-watch": "^4.3.11",
     "gulp-webpack": "^1.5.0",
     "gulp-zip": "^4.0.0",
-    "handlebars": "~> 4.0.0",
     "uglify-js": "~> 2.6.0",
     "require-dir": "^0.3.2",
     "rimraf": "^2.6.1",
