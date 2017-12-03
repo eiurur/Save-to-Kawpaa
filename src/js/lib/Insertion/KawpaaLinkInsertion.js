@@ -6,10 +6,13 @@ export default class KawpaaLinkInsertion extends Link {
     super();
     this.hostname = hostname;
     this.onClickElement = ".kawpaa-save-link";
+    console.log(this);
   }
 
   insert() {
-    $(document).find(this.selector).append(this.html);
+    $(document)
+      .find(this.selector)
+      .append(this.html);
     return this;
   }
 

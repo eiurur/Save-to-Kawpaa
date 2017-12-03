@@ -1,29 +1,29 @@
-import $ from "jquery";
-import { targets, icons } from "../../config";
-import KawpaaButtonInsertion from "../KawpaaButtonInsertion";
+import $ from 'jquery';
+import { targets, icons } from '../../../config/config';
+import KawpaaButtonInsertion from '../KawpaaButtonInsertion';
 
 export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion {
   constructor() {
     super(targets.TWITTER_HOSTNAME);
 
-    this.container = ".permalink-tweet-container";
-    this.stream_tweet = ".js-stream-tweet";
-    this.tweet_container = ".permalink-tweet";
-    this.tweet_url = ".tweet-timestamp";
-    this.twitter_fullname = ".fullname"; // ぴゃー
-    this.twitter_username = ".username"; // @puaa
-    this.tweet_text = ".js-tweet-text";
-    this.tweet_image = ".js-adaptive-photo";
-    this.tweet_media = ".media-image";
-    this.kawpaa_button_container = ".action-kawpaa-container";
-    this.kawpaa_button = ".ProfileTweet-actionList";
+    this.container = '.permalink-tweet-container';
+    this.stream_tweet = '.js-stream-tweet';
+    this.tweet_container = '.permalink-tweet';
+    this.tweet_url = '.tweet-timestamp';
+    this.twitter_fullname = '.fullname'; // ぴゃー
+    this.twitter_username = '.username'; // @puaa
+    this.tweet_text = '.js-tweet-text';
+    this.tweet_image = '.js-adaptive-photo';
+    this.tweet_media = '.media-image';
+    this.kawpaa_button_container = '.action-kawpaa-container';
+    this.kawpaa_button = '.ProfileTweet-actionList';
   }
 
   getInfo(targetElement) {
     return new Promise(resolve => {
       var tweetUrl =
-        targetElement.find(this.tweet_url).attr("href") ||
-        targetElement.find(this.tweet_container).data("permalink-path");
+        targetElement.find(this.tweet_url).attr('href') ||
+        targetElement.find(this.tweet_container).data('permalink-path');
       var fullname = targetElement.find(this.twitter_fullname).text();
       var username = targetElement.find(this.twitter_username).text();
       var monoUsername = /^@(\w)*/.exec(username)[0]; // ツイート詳細モーダルだと複数の@usernameが取得されるので単一にする。
@@ -32,16 +32,19 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
       var title = `${fullname} ${monoUsername} / ${text}}`;
       var imageUrl = targetElement
         .find(this.tweet_image)
-        .attr("data-image-url");
+        .attr('data-image-url');
 
       // 複数枚のときは今見ている画像を保存する。
-      imageUrl = $(this.tweet_media).first().attr("src") || imageUrl;
-      imageUrl = imageUrl.replace(":large", "");
+      imageUrl =
+        $(this.tweet_media)
+          .first()
+          .attr('src') || imageUrl;
+      imageUrl = imageUrl.replace(':large', '');
 
       const info = {
         siteUrl: `https://twitter.com${tweetUrl}`,
         title: title,
-        srcUrl: `${imageUrl}:orig`
+        srcUrl: `${imageUrl}:orig`,
       };
       console.log(info);
       return resolve(info);
@@ -59,30 +62,32 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
     const html = `\
       <div class="ProfileTweet-action action-kawpaa-container" style="display: inline-block; min-width:80px;">
         <a class="js-tooltip kawpaa-save-link" href="#" data-original-title="Save to Kawpaa" style="display: inline-block; float: left;">
-          <span class="icon icon-kawpaa" style="display: block; height: 16px; position: relative; top: 3px; width: 16px; background-image: url(${icons.GRAY_16});">a</span>
+          <span class="icon icon-kawpaa" style="display: block; height: 16px; position: relative; top: 3px; width: 16px; background-image: url(${
+            icons.GRAY_16
+          });">a</span>
         </a>
       </div>\
     `;
-    return _$.find(".ProfileTweet-action--dm").after(html);
+    return _$.find('.ProfileTweet-action--dm').after(html);
   }
 
   onClick() {
     const _this = this;
-    $(document).on("click", this.onClickElement, function(e) {
+    $(document).on('click', this.onClickElement, function(e) {
       e.preventDefault();
 
       // 画像の差し替え
       $(this)
-        .find(".icon-kawpaa")
-        .css("background-image", "url(" + icons.BLUE_16 + ")");
+        .find('.icon-kawpaa')
+        .css('background-image', 'url(' + icons.BLUE_16 + ')');
 
       const $jsStreamTweet = $(this).closest(_this.stream_tweet);
       const $permalinkTweetContaner = $(this).closest(_this.tweet_container);
       const nowPageVariable =
-        $jsStreamTweet.length > 0 ? "homeTImeline" : void 0;
+        $jsStreamTweet.length > 0 ? 'homeTImeline' : void 0;
       var targetElement = null;
       switch (nowPageVariable) {
-        case "homeTImeline":
+        case 'homeTImeline':
           targetElement = $jsStreamTweet;
           break;
         default:
@@ -102,18 +107,18 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
       {
         mouseenter: function(e) {
           _this.show($(this));
-        }
+        },
       },
-      _this.container
+      _this.container,
     );
 
     $(document).on(
       {
         mouseenter: function(e) {
           _this.show($(this));
-        }
+        },
       },
-      _this.stream_tweet
+      _this.stream_tweet,
     );
   }
 }

@@ -1,15 +1,16 @@
-import { targets } from "../config";
-import DanbooruKawpaaLinkInsertion from "./targets/DanbooruKawpaaLinkInsertion";
-import DeviantArtKawpaaLinkInsertion from "./targets/DeviantArtKawpaaLinkInsertion";
-import GelbooruKawpaaLinkInsertion from "./targets/GelbooruKawpaaLinkInsertion";
-import KonachanKawpaaLinkInsertion from "./targets/KonachanKawpaaLinkInsertion";
-import YandereKawpaaLinkInsertion from "./targets/YandereKawpaaLinkInsertion";
-import SankakuComplexKawpaaLinkInsertion from "./targets/SankakuComplexKawpaaLinkInsertion";
-import PixivKawpaaLinkInsertion from "./targets/PixivKawpaaLinkInsertion";
-import PixivMultipleKawpaaLinkInsertion from "./targets/PixivMultipleKawpaaLinkInsertion";
-import TweetDeckKawpaaButtonInsertion from "./targets/TweetDeckKawpaaButtonInsertion";
-import TwitterKawpaaButtonInsertion from "./targets/TwitterKawpaaButtonInsertion";
-import TumblrKawpaaButtonInsertion from "./targets/TumblrKawpaaButtonInsertion";
+import { targets } from '../../config/config';
+import DanbooruKawpaaLinkInsertion from './targets/DanbooruKawpaaLinkInsertion';
+import DeviantArtKawpaaLinkInsertion from './targets/DeviantArtKawpaaLinkInsertion';
+import GelbooruKawpaaLinkInsertion from './targets/GelbooruKawpaaLinkInsertion';
+// import KomifloKawpaaLinkInsertion from "./targets/KomifloKawpaaLinkInsertion";
+import KonachanKawpaaLinkInsertion from './targets/KonachanKawpaaLinkInsertion';
+import YandereKawpaaLinkInsertion from './targets/YandereKawpaaLinkInsertion';
+import SankakuComplexKawpaaLinkInsertion from './targets/SankakuComplexKawpaaLinkInsertion';
+import PixivKawpaaLinkInsertion from './targets/PixivKawpaaLinkInsertion';
+import PixivMultipleKawpaaLinkInsertion from './targets/PixivMultipleKawpaaLinkInsertion';
+import TweetDeckKawpaaButtonInsertion from './targets/TweetDeckKawpaaButtonInsertion';
+import TwitterKawpaaButtonInsertion from './targets/TwitterKawpaaButtonInsertion';
+import TumblrKawpaaButtonInsertion from './targets/TumblrKawpaaButtonInsertion';
 
 export default class InsertionFactory {
   static create(hostname, url) {
@@ -24,6 +25,8 @@ export default class InsertionFactory {
         return new DanbooruKawpaaLinkInsertion();
       case targets.GELBOORU_HOSTNAME:
         return new GelbooruKawpaaLinkInsertion();
+      // case targets.KOMIFLO_HOSTNAME:
+      //   return new KomifloKawpaaLinkInsertion();
       case targets.KONACHAN_HOSTNAME:
         return new KonachanKawpaaLinkInsertion();
       case targets.YANDE_RE_HOSTNAME:
