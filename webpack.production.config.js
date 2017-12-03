@@ -1,32 +1,32 @@
-const path = require("path");
-const webpack = require("webpack");
+const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   context: `${__dirname}/src/js`,
   entry: {
-    background: "./background.js",
-    contents: "./contents.js",
-    options: "./options.js",
-    insert: "./insert.js",
-    retrieveToken: "./retrieveToken.js"
+    background: './background.js',
+    contents: './contents.js',
+    options: './options.js',
+    insert: './insert.js',
+    retrieveToken: './retrieveToken.js',
   },
   output: {
-    path: path.resolve(__dirname, "./build/js"),
-    filename: "[name].bundle.js"
+    path: path.resolve(__dirname, './build/js'),
+    filename: '[name].bundle.js',
   },
   plugins: [
     new webpack.DefinePlugin({
-      "process.env.NODE_ENV": JSON.stringify("production")
+      'process.env.NODE_ENV': JSON.stringify('production'),
     }),
     new webpack.optimize.ModuleConcatenationPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false,
-        drop_console: true
+        drop_console: true,
       },
       mangle: false,
-      comments: false
-    })
+      comments: false,
+    }),
   ],
   module: {
     rules: [
@@ -34,14 +34,14 @@ module.exports = {
         test: /\.js$/,
         use: [
           {
-            loader: "babel-loader",
+            loader: 'babel-loader',
             options: {
-              presets: [["es2015", { modules: false }], "stage-3"]
-            }
-          }
+              presets: [['es2015', { modules: false }], 'stage-3'],
+            },
+          },
         ],
-        exclude: /node_modules/
-      }
-    ]
-  }
+        exclude: /node_modules/,
+      },
+    ],
+  },
 };

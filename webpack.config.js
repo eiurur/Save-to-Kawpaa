@@ -8,24 +8,26 @@ module.exports = {
     contents: './contents.js',
     options: './options.js',
     insert: './insert.js',
-    retrieveToken: './retrieveToken.js'
+    retrieveToken: './retrieveToken.js',
   },
   output: {
     path: path.resolve(__dirname, './build/js'),
-    filename: '[name].bundle.js'
+    filename: '[name].bundle.js',
   },
   module: {
     rules: [
       {
         test: /\.js$/,
-        use: [{
-          loader: 'babel-loader',
-          options: {
-            presets: ['es2015', 'stage-3']
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: ['es2015', 'stage-3'],
+            },
           },
-        }],
-        exclude: /node_modules/
-      }
-    ]
-  }
-}
+        ],
+        exclude: /node_modules/,
+      },
+    ],
+  },
+};
