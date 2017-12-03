@@ -6,7 +6,7 @@
   "license": "MIT",
   "dependencies": {
     "alertifyjs": "^1.10.0",
-    "axios": "^0.16.2",
+    "axios": "^0.17.1",
     "bootstrap": "^3.3.7",
     "jquery": "^3.2.1",
     "require-all": "^2.2.0"
@@ -20,14 +20,14 @@
     "babili": "0.1.4",
     "concurrently": "^3.4.0",
     "eslint": "^4.0.0",
-    "eslint-config-airbnb": "^15.0.1",
+    "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-react": "^7.1.0",
     "gulp": "^3.9.1",
-    "gulp-babel": "^6.1.2",
+    "gulp-babel": "^7.0.0",
     "gulp-cached": "^1.1.1",
     "gulp-changed": "^3.1.0",
     "gulp-concat": "^2.6.1",
-    "gulp-copy": "1.0.0",
+    "gulp-copy": "1.0.1",
     "gulp-csslint": "^1.0.0",
     "gulp-cssmin": "^0.2.0",
     "gulp-json-editor": "^2.2.1",
@@ -50,7 +50,7 @@
     "rimraf": "^2.6.1",
     "vinyl-source-stream": "^1.1.0",
     "webpack": "^3.0.0",
-    "yargs": "^8.0.2"
+    "yargs": "^10.0.3"
   },
   "scripts": {
     "setup": "npm i && npm run build",
