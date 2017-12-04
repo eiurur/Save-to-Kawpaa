@@ -38,7 +38,7 @@ export default class IwaraKawpaaLinkInsertion extends KawpaaLinkInsertion {
     return new Promise(resolve => {
       if (location.href.includes('ecchi.iwara.tv/videos')) {
         const videoThumbnailImage = $('#video-player').attr('poster');
-        const srcUrl = `http:${thumbnailImage}`;
+        const srcUrl = `http:${videoThumbnailImage}`;
         return resolve(srcUrl);
       } else if (location.href.includes('www.iwara.tv/videos')) {
         const profileImage = $('.node-info .user-picture img').attr('src');
