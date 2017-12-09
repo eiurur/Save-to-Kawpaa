@@ -28,10 +28,6 @@ export default class KawpaaLinkInsertion extends Link {
     return null;
   }
 
-  getSrc() {
-    return null;
-  }
-
   getUrl() {
     return null;
   }
@@ -54,18 +50,13 @@ export default class KawpaaLinkInsertion extends Link {
   onClick() {
     $(document).on('click', this.onClickElement, e => {
       e.preventDefault();
-      Promise.all([
-        this.getType(),
-        this.getContent(),
-        this.getSrc(),
-        this.getUrl(),
-      ])
+      Promise.all([this.getType(), this.getContent(), this.getUrl()])
         .then(getedData =>
           this.getParamsToServer({
             type: getedData[0],
             content: getedData[1],
-            src: getedData[2],
-            url: getedData[3],
+            srcUrl: getedData[2], // TODO: urlだけに統一できない？
+            url: getedData[2],
           }),
         )
         .then(params => this.send(params));

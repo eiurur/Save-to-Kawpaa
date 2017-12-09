@@ -18,13 +18,13 @@ export default class PixivMultipleKawpaaLinkInsertion extends KawpaaLinkInsertio
     $(document).on('click', _this.onClickElement, function(e) {
       e.preventDefault();
       _this
-        .getSrc($(this))
+        .getUrl($(this))
         .then(src => _this.getParamsToServer(src))
         .then(params => _this.send(params));
     });
   }
 
-  getSrc(_$) {
+  getUrl(_$) {
     return new Promise(resolve => {
       const srcUrl = _$.closest(this.selector)
         .find('.image')

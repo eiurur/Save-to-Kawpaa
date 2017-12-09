@@ -9,7 +9,7 @@ export default class DanbooruKawpaaLinkInsertion extends KawpaaLinkInsertion {
     this.html = `<li><a class="kawpaa-save-link" href="#">Save to Kawpaa</a></li>`;
   }
 
-  getSrc() {
+  getUrl() {
     return new Promise(resolve => {
       const imgUrl =
         $('#image-resize-link').attr('href') || $('#image').attr('src');

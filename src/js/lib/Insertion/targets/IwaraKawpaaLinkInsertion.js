@@ -34,7 +34,7 @@ export default class IwaraKawpaaLinkInsertion extends KawpaaLinkInsertion {
     }
   }
 
-  getSrc() {
+  getUrl() {
     return new Promise(resolve => {
       if (location.href.includes('ecchi.iwara.tv/videos')) {
         const videoThumbnailImage = $('#video-player').attr('poster');
@@ -48,9 +48,5 @@ export default class IwaraKawpaaLinkInsertion extends KawpaaLinkInsertion {
         return null;
       }
     });
-  }
-
-  getUrl() {
-    return this.getSrc();
   }
 }

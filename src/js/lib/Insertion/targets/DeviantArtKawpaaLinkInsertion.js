@@ -25,7 +25,7 @@ export default class DeviantArtKawpaaLinkInsertion extends KawpaaLinkInsertion {
     });
   }
 
-  getSrc() {
+  getUrl() {
     return new Promise(resolve => {
       const srcUrl = $('.dev-content-full').attr('src');
       return resolve(srcUrl);

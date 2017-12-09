@@ -9,7 +9,7 @@ export default class SankakuComplexKawpaaLinkInsertion extends KawpaaLinkInserti
     this.html = `<a class="kawpaa-save-link" href="#">Save to Kawpaa</a>`;
   }
 
-  getSrc() {
+  getUrl() {
     return new Promise(resolve => {
       $('#image').on('click', function(e) {
         const originalImageSrc = $('#image').attr('src');
