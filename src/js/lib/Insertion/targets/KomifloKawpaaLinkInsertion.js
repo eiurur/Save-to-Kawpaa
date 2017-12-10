@@ -9,7 +9,7 @@ export default class KomifloKawpaaLinkInsertion extends KawpaaLinkInsertion {
     this.html = `<a class="kawpaa-save-link" href="#">Save to Kawpaa</a>`;
   }
 
-  getSrc() {
+  getUrl() {
     return new Promise(resolve => {
       const srcUrl = $('.comic-cover img').attr('src');
       return resolve(srcUrl);

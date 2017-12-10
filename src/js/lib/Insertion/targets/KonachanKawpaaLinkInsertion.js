@@ -9,7 +9,7 @@ export default class KonachanKawpaaLinkInsertion extends KawpaaLinkInsertion {
     this.html = `| <a class="kawpaa-save-link" href="#">Save to Kawpaa</a>`;
   }
 
-  getSrc() {
+  getUrl() {
     return new Promise(resolve => {
       const srcUrl = $('#image').attr('src');
       return resolve(this.normalize(srcUrl));

@@ -9,7 +9,7 @@ export default class YandereKawpaaLinkInsertion extends KawpaaLinkInsertion {
     this.html = `| <a class="kawpaa-save-link" href="#">Save to Kawpaa</a>`;
   }
 
-  getSrc() {
+  getUrl() {
     return new Promise(resolve => {
       // 個人的にsampleサイズでも十分に感じるため大きいサイズに変換する処理は行わない。
       const originalImageSrc = $('#image').attr('src');
