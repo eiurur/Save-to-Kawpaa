@@ -1,4 +1,4 @@
-import ChromeExecuter from '../lib/ChromeExecuter';
+import ChromeExecuter from '../lib/utils/ChromeExecuter';
 
 export default class TabActivateListener {
   constructor() {

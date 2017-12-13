@@ -1,10 +1,10 @@
 import $ from 'jquery';
-import { targets } from '../../../config/config';
+import { SUPPORT_SERVICE } from '../../../config/config';
 import KawpaaLinkInsertion from '../KawpaaLinkInsertion';
 
 export default class SankakuComplexKawpaaLinkInsertion extends KawpaaLinkInsertion {
   constructor() {
-    super(targets.SANKAKUCOMPLEX_HOSTNAME);
+    super(SUPPORT_SERVICE.SANKAKUCOMPLEX_HOSTNAME);
     this.selector = '#share';
     this.html = `<a class="kawpaa-save-link" href="#">Save to Kawpaa</a>`;
   }

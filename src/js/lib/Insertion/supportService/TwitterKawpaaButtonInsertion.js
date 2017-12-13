@@ -1,10 +1,10 @@
 import $ from 'jquery';
-import { targets, icons } from '../../../config/config';
+import { SUPPORT_SERVICE, ICONS } from '../../../config/config';
 import KawpaaButtonInsertion from '../KawpaaButtonInsertion';
 
 export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion {
   constructor() {
-    super(targets.TWITTER_HOSTNAME);
+    super(SUPPORT_SERVICE.TWITTER_HOSTNAME);
 
     this.container = '.permalink-tweet-container';
     this.stream_tweet = '.js-stream-tweet';
@@ -63,7 +63,7 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
       <div class="ProfileTweet-action action-kawpaa-container" style="display: inline-block; min-width:80px;">
         <a class="js-tooltip kawpaa-save-link" href="#" data-original-title="Save to Kawpaa" style="display: inline-block; float: left;">
           <span class="icon icon-kawpaa" style="display: block; height: 16px; position: relative; top: 3px; width: 16px; background-image: url(${
-            icons.GRAY_16
+            ICONS.GRAY_16
           });">a</span>
         </a>
       </div>\
@@ -79,7 +79,7 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
       // 画像の差し替え
       $(this)
         .find('.icon-kawpaa')
-        .css('background-image', 'url(' + icons.BLUE_16 + ')');
+        .css('background-image', 'url(' + ICONS.BLUE_16 + ')');
 
       const $jsStreamTweet = $(this).closest(_this.stream_tweet);
       const $permalinkTweetContaner = $(this).closest(_this.tweet_container);

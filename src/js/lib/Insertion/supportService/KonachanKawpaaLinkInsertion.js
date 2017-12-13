@@ -1,10 +1,10 @@
 import $ from 'jquery';
-import { targets } from '../../../config/config';
+import { SUPPORT_SERVICE } from '../../../config/config';
 import KawpaaLinkInsertion from '../KawpaaLinkInsertion';
 
 export default class KonachanKawpaaLinkInsertion extends KawpaaLinkInsertion {
   constructor() {
-    super(targets.KONACHAN_HOSTNAME);
+    super(SUPPORT_SERVICE.KONACHAN_HOSTNAME);
     this.selector = '#right-col h4';
     this.html = `| <a class="kawpaa-save-link" href="#">Save to Kawpaa</a>`;
   }

@@ -1,10 +1,10 @@
 import $ from 'jquery';
-import { targets } from '../../../config/config';
+import { SUPPORT_SERVICE } from '../../../config/config';
 import KawpaaLinkInsertion from '../KawpaaLinkInsertion';
 
 export default class PixivMultipleKawpaaLinkInsertion extends KawpaaLinkInsertion {
   constructor() {
-    super(targets.PIXIV_HOSTNAME);
+    super(SUPPORT_SERVICE.PIXIV_HOSTNAME);
     this.selector = '.item-container';
     this.html = `\
       <div style="font-size: 2em;">

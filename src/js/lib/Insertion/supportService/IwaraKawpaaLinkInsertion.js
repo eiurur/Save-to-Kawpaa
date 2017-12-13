@@ -1,10 +1,10 @@
 import $ from 'jquery';
-import { targets } from '../../../config/config';
+import { SUPPORT_SERVICE } from '../../../config/config';
 import KawpaaLinkInsertion from '../KawpaaLinkInsertion';
 
 export default class IwaraKawpaaLinkInsertion extends KawpaaLinkInsertion {
   constructor() {
-    super(targets.IWARA_HOSTNAME);
+    super(SUPPORT_SERVICE.IWARA_HOSTNAME);
     this.selector = '.node-buttons';
     this.html = `
       <a id="kawpaa-save-button" href="#" target="_blank" class="btn btn-info kawpaa-save-link">

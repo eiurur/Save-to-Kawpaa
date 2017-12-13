@@ -1,40 +1,44 @@
-import $ from "jquery";
-import Button from "./Button";
+import $ from 'jquery';
+import Button from './Button';
 
 export default class KawpaaButtonInsertion extends Button {
   constructor(hostname) {
     super();
     this.hostname = hostname;
-    this.onClickElement = ".kawpaa-save-link";
-  }
-
-  insert() {
-    return this;
-  }
-
-  on() {
-    this.onClick();
-    this.onMouseEnter();
+    this.onClickElement = '.kawpaa-save-link';
   }
 
   getInfo() {}
-
-  show() {}
 
   getParamsToServer(info) {
     return new Promise((resolve, reject) => {
       const params = {
         name: this.hostname,
         info: Object.assign(info, {
-          type: "image"
-        })
+          type: 'image',
+        }),
       };
       return resolve(params);
     });
   }
 
+  insert() {
+    return this;
+  }
+
+  send(params) {
+    chrome.runtime.sendMessage(params, response => console.log(response));
+  }
+
+  show() {}
+
+  on() {
+    this.onClick();
+    this.onMouseEnter();
+  }
+
   onClick() {
-    $(document).on("click", this.onClickElement, function(e) {
+    $(document).on('click', this.onClickElement, function(e) {
       e.preventDefault();
     });
   }
@@ -45,13 +49,9 @@ export default class KawpaaButtonInsertion extends Button {
       {
         mouseenter: function(e) {
           _this.show($(this));
-        }
+        },
       },
-      _this.container
+      _this.container,
     );
-  }
-
-  send(params) {
-    chrome.runtime.sendMessage(params, response => console.log(response));
   }
 }

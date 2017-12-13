@@ -1,4 +1,4 @@
-import { targets } from '../config/config';
+import { SUPPORT_SERVICE } from '../config/config';
 import KawpaaScriptExecuter from '../lib/KawpaaScriptExecuter';
 
 export default class RuntimeMessageListener {
@@ -33,8 +33,8 @@ export default class RuntimeMessageListener {
   }
 
   isRequestFromSpecificService(hostname) {
-    var hostnameList = Object.values(targets);
-    if (hostname.indexOf(targets.DEVIANTART_HOSTNAME) !== -1) {
+    var hostnameList = Object.values(SUPPORT_SERVICE);
+    if (hostname.indexOf(SUPPORT_SERVICE.DEVIANTART_HOSTNAME) !== -1) {
       return true;
     }
     return hostnameList.includes(hostname);

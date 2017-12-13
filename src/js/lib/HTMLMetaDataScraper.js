@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import QueryStringParser from './QueryStringParser';
+import QueryStringParser from './utils/QueryStringParser';
 
 export default class HTMLMetaDataScraper {
   constructor(data) {
@@ -83,9 +83,7 @@ export default class HTMLMetaDataScraper {
           .pop();
         console.log('vNumber = ', vNumber);
         content = `\
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/${
-            vNumber
-          }" frameborder="0" allowfullscreen></iframe>\
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/${vNumber}" frameborder="0" allowfullscreen></iframe>\
         `;
 
         // ニコニコなら動画のサムネを指定
@@ -96,11 +94,7 @@ export default class HTMLMetaDataScraper {
         console.log('title = ', title);
         console.log('smNumber = ', smNumber);
         content = `\
-          <iframe width="312" height="176" src="//ext.nicovideo.jp/thumb/${
-            smNumber
-          }" scrolling="no" style="border:solid 1px #CCC;" frameborder="0"><a href="//www.nicovideo.jp/watch/${
-          smNumber
-        }">${title}</a></iframe>\
+          <iframe width="312" height="176" src="//ext.nicovideo.jp/thumb/${smNumber}" scrolling="no" style="border:solid 1px #CCC;" frameborder="0"><a href="//www.nicovideo.jp/watch/${smNumber}">${title}</a></iframe>\
         `;
 
         // 2ch

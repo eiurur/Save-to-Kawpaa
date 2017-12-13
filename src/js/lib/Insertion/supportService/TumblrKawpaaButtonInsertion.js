@@ -1,10 +1,10 @@
 import $ from 'jquery';
-import { targets, icons } from '../../../config/config';
+import { SUPPORT_SERVICE, ICONS } from '../../../config/config';
 import KawpaaButtonInsertion from '../KawpaaButtonInsertion';
 
 export default class TumblrKawpaaButtonInsertion extends KawpaaButtonInsertion {
   constructor() {
-    super(targets.TUMBLR_HOSTNAME);
+    super(SUPPORT_SERVICE.TUMBLR_HOSTNAME);
 
     this.container = '.post_wrapper';
     this.post_container = '.post';
@@ -26,7 +26,7 @@ export default class TumblrKawpaaButtonInsertion extends KawpaaButtonInsertion {
     });
   }
 
-  show(_$, targetSelector) {
+  show(_$, SUPPORT_SERVICEelector) {
     const existKawpaaButton = _$.find(this.onClickElement).length !== 0;
     const hasPhoto = _$.find(this.imageElement).length > 0;
     if (existKawpaaButton || !hasPhoto) {
@@ -34,9 +34,9 @@ export default class TumblrKawpaaButtonInsertion extends KawpaaButtonInsertion {
     }
 
     const html = `<div class="post_control post-control-icon icon-kawpaa kawpaa-save-link" title="Save to Kawpaa" data-subview="Save to Kawpaa" style="background-image: url(${
-      icons.GRAY_24
+      ICONS.GRAY_24
     });"></div>`;
-    _$.find(targetSelector).append(html);
+    _$.find(SUPPORT_SERVICEelector).append(html);
   }
 
   onClick() {
@@ -45,7 +45,7 @@ export default class TumblrKawpaaButtonInsertion extends KawpaaButtonInsertion {
       e.preventDefault();
 
       // 画像の差し替え
-      $(this).css('background-image', `url(${icons.BLUE_24})`);
+      $(this).css('background-image', `url(${ICONS.BLUE_24})`);
 
       let $postWrapper = $(this).closest(_this.container);
       let $post = $(this).closest(_this.post_container);

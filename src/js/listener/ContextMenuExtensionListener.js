@@ -1,4 +1,5 @@
 import KawpaaScriptExecuter from '../lib/KawpaaScriptExecuter';
+import { ENDPOINT } from '../config/config';
 
 export default class ContextMenuExtensionListener {
   constructor() {
@@ -30,8 +31,7 @@ export default class ContextMenuExtensionListener {
 
   onClick(info, tab) {
     if (info.menuItemId === 'browser_action_open_kawpaa') {
-      const KAWPAA_URL = 'https://kawpaa.eiurur.xyz/';
-      chrome.tabs.create({ url: KAWPAA_URL, active: true }, tab =>
+      chrome.tabs.create({ url: ENDPOINT.PROD, active: true }, tab =>
         console.log('open Kawpaa'),
       );
       return;

@@ -1,10 +1,10 @@
 import $ from 'jquery';
-import { targets, icons } from '../../../config/config';
+import { SUPPORT_SERVICE, ICONS } from '../../../config/config';
 import KawpaaButtonInsertion from '../KawpaaButtonInsertion';
 
 export default class TweetDeckKawpaaButtonInsertion extends KawpaaButtonInsertion {
   constructor() {
-    super(targets.TWEETDECK_HOSTNAME);
+    super(SUPPORT_SERVICE.TWEETDECK_HOSTNAME);
 
     this.container = '.s-full';
     this.twitter_name = '.account-inline';
@@ -43,7 +43,7 @@ export default class TweetDeckKawpaaButtonInsertion extends KawpaaButtonInsertio
       <li class="tweet-action-item action-kawpaa-container pull-left margin-r--13">
         <a class="js-show-tip tweet-action kawpaa-save-link" href="#" title="" data-original-title="Save to Kawpaa">
           <span class="icon icon-kawpaa txt-right" style="display: block; height: 16px; position: relative; top: 3px; width: 16px; background-image: url(${
-            icons.GRAY_16
+            ICONS.GRAY_16
           });"></span>
         </a>
       </li>\
@@ -59,7 +59,7 @@ export default class TweetDeckKawpaaButtonInsertion extends KawpaaButtonInsertio
       // 画像の差し替え
       $(this)
         .find('.icon-kawpaa')
-        .css('background-image', 'url(' + icons.BLUE_16 + ')');
+        .css('background-image', 'url(' + ICONS.BLUE_16 + ')');
 
       const targetElement = $(this).closest(_this.container);
       _this
