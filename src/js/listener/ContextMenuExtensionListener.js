@@ -13,19 +13,21 @@ export default class ContextMenuExtensionListener {
   }
 
   create() {
-    this.contexts.forEach(context => {
-      const title = `Save to Kawpaa with ${context}`;
-      chrome.contextMenus.create({
-        title: title,
-        contexts: [context],
-        id: context,
+    chrome.contextMenus.removeAll(() => {
+      this.contexts.forEach(context => {
+        const title = `Save to Kawpaa with ${context}`;
+        chrome.contextMenus.create({
+          title: title,
+          contexts: [context],
+          id: context,
+        });
       });
-    });
 
-    chrome.contextMenus.create({
-      title: 'Open Kawpaa',
-      contexts: ['browser_action'],
-      id: 'browser_action_open_kawpaa',
+      chrome.contextMenus.create({
+        title: 'Open Kawpaa',
+        contexts: ['browser_action'],
+        id: 'browser_action_open_kawpaa',
+      });
     });
   }
 

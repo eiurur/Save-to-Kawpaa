@@ -17,9 +17,18 @@ export default class PixivMultipleKawpaaLinkInsertion extends KawpaaLinkInsertio
     const _this = this;
     $(document).on('click', _this.onClickElement, function(e) {
       e.preventDefault();
-      _this
-        .getUrl($(this))
-        .then(src => _this.getParamsToServer(src))
+
+      // FIXME: suprt.onClick()が使えない！
+      // KawpaaLinkInsertion.jsを再利用
+      Promise.all([_this.getType(), _this.getContent(), _this.getUrl($(this))])
+        .then(getedData =>
+          _this.getParamsToServer({
+            type: getedData[0],
+            content: getedData[1],
+            srcUrl: getedData[2], // TODO: urlだけに統一できない？
+            url: getedData[2],
+          }),
+        )
         .then(params => _this.send(params));
     });
   }
