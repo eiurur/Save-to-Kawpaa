@@ -15,7 +15,7 @@ export default class KawpaaSender {
 
   getBaseURL() {
     const isProduction = chrome.runtime.id === CHROME_RUNTIME_ID;
-    return isProductions ? ENDPOINT.PROD : ENDPOINT.ENV;
+    return isProduction ? ENDPOINT.PROD : ENDPOINT.ENV;
   }
 
   getAxios() {
