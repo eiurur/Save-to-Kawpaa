@@ -1,23 +1,31 @@
-import { SUPPORT_SERVICE } from '../../config/config';
-import DanbooruKawpaaLinkInsertion from './supportService/DanbooruKawpaaLinkInsertion';
-import DeviantArtKawpaaLinkInsertion from './supportService/DeviantArtKawpaaLinkInsertion';
-import GelbooruKawpaaLinkInsertion from './supportService/GelbooruKawpaaLinkInsertion';
-// import KomifloKawpaaLinkInsertion from "./supportService/KomifloKawpaaLinkInsertion";
-import KonachanKawpaaLinkInsertion from './supportService/KonachanKawpaaLinkInsertion';
-import IwaraKawpaaLinkInsertion from './supportService/IwaraKawpaaLinkInsertion';
-import YandereKawpaaLinkInsertion from './supportService/YandereKawpaaLinkInsertion';
-import SankakuComplexKawpaaLinkInsertion from './supportService/SankakuComplexKawpaaLinkInsertion';
-import PixivKawpaaLinkInsertion from './supportService/PixivKawpaaLinkInsertion';
-import PixivMultipleKawpaaLinkInsertion from './supportService/PixivMultipleKawpaaLinkInsertion';
-import TweetDeckKawpaaButtonInsertion from './supportService/TweetDeckKawpaaButtonInsertion';
-import TwitterKawpaaButtonInsertion from './supportService/TwitterKawpaaButtonInsertion';
-import TumblrKawpaaButtonInsertion from './supportService/TumblrKawpaaButtonInsertion';
+import { SUPPORT_SERVICE, SUPPORT_URL } from '../../config/config';
+import {
+  DanbooruKawpaaLinkInsertion,
+  DeviantArtKawpaaLinkInsertion,
+  GelbooruKawpaaLinkInsertion,
+  KonachanKawpaaLinkInsertion,
+  IwaraKawpaaLinkInsertion,
+  YandereKawpaaLinkInsertion,
+  SankakuComplexKawpaaLinkInsertion,
+  PixivKawpaaLinkInsertion,
+  PixivMultipleKawpaaLinkInsertion,
+  TweetDeckKawpaaButtonInsertion,
+  TumblrKawpaaButtonInsertion,
+  NijieKawpaaLinkInsertion,
+  NijieMultiKawpaaLinkInsertion,
+} from './supportService/';
 
 export default class InsertionFactory {
   static create(hostname, url) {
     // 例外
-    if (url.includes(SUPPORT_SERVICE.PIXIV_MANGA_URL))
+    if (url.includes(SUPPORT_URL.PIXIV_MANGA_URL))
       return new PixivMultipleKawpaaLinkInsertion();
+    if (url.includes(SUPPORT_URL.NIJIE_URL))
+      return new NijieKawpaaLinkInsertion();
+    if (url.includes(SUPPORT_URL.NIJIE_MULTI_URL))
+      return new NijieMultiKawpaaLinkInsertion();
+
+    // 例外
     if (hostname.includes(SUPPORT_SERVICE.DEVIANTART_HOSTNAME))
       return new DeviantArtKawpaaLinkInsertion();
     if (hostname.includes(SUPPORT_SERVICE.IWARA_HOSTNAME))

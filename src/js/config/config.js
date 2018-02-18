@@ -33,7 +33,19 @@ const SUPPORT_SERVICE = {
   TWITTER_HOSTNAME: 'twitter.com',
   TWEETDECK_HOSTNAME: 'tweetdeck.twitter.com',
   YANDE_RE_HOSTNAME: 'yande.re',
+  NIJIE_HOSTNAME: 'nijie.info',
+};
+const SUPPORT_URL = {
   PIXIV_MANGA_URL: 'https://www.pixiv.net/member_illust.php?mode=manga',
+  NIJIE_URL: 'nijie.info/view.php',
+  NIJIE_MULTI_URL: 'nijie.info/view_popup.php',
 };
 
-export { API, CHROME_RUNTIME_ID, ENDPOINT, ICONS, SUPPORT_SERVICE };
+export {
+  API,
+  CHROME_RUNTIME_ID,
+  ENDPOINT,
+  ICONS,
+  SUPPORT_SERVICE,
+  SUPPORT_URL,
+};

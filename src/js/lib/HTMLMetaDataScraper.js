@@ -137,8 +137,8 @@ export default class HTMLMetaDataScraper {
     let t1 = $('head title').text();
     let t2 = $('meta[property="og:title"]').attr('content');
     let t3 = $('title').text();
-    let default = $(location).attr('href'); // タイトルが得られなければURLをタイトルにする
-    return t1 || t2 || t3 || default;
+    let defaultValue = $(location).attr('href'); // タイトルが得られなければURLをタイトルにする
+    return t1 || t2 || t3 || defaultValue;
   }
 
   getSiteName() {
