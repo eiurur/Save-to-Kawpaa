@@ -1,6 +1,6 @@
 {
   "name": "save-to-kawpaa",
-  "version": "0.11.5",
+  "version": "0.11.19",
   "description": "",
   "author": "eiurur",
   "license": "MIT",
@@ -58,6 +58,7 @@
     "setup": "npm i && npm run build",
     "start": "concurrently \"gulp\" \"webpack --progress --colors --watch\"",
     "build": "gulp build && webpack --config webpack.production.config.js ",
+    "zip": "gulp zip",
     "version:remain": "npm run build && gulp zip",
     "version:major": "npm run build && gulp zip --version major",
     "version:minor": "npm run build && gulp zip --version minor",

@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Save to Kawpaa",
   "description": "あとで抜く",
-  "version": "0.11.18",
+  "version": "0.11.19",
   "permissions": [
     "tabs",
     "storage",
@@ -12,27 +12,27 @@
     "https://*/*",
     "chrome://favicon/"
   ],
-  "content_scripts": [
-    {
-      "matches": [
-        "https://twitter.com/*",
-        "https://tweetdeck.twitter.com/*",
-        "https://www.tumblr.com/*",
-        "https://chan.sankakucomplex.com/*/post/show/*",
-        "*://danbooru.donmai.us/posts/*",
-        "*://*.deviantart.com/art/*",
-        "https://gelbooru.com/*",
-        "*://*.iwara.tv/videos/*",
-        "https://konachan.com/post/show/*",
-        "https://www.pixiv.net/member_illust.php*",
-        "https://yande.re/post/show/*",
-        "*://nijie.info/view.php*",
-        "*://nijie.info/view_popup.php*"
-      ],
-      "js": ["build/js/insert.bundle.js"],
-      "run_at": "document_end"
-    }
-  ],
+  "content_scripts": [{
+    "matches": [
+      "https://twitter.com/*",
+      "https://tweetdeck.twitter.com/*",
+      "https://www.tumblr.com/*",
+      "https://chan.sankakucomplex.com/*/post/show/*",
+      "*://danbooru.donmai.us/posts/*",
+      "*://*.deviantart.com/art/*",
+      "https://gelbooru.com/*",
+      "*://*.iwara.tv/videos/*",
+      "https://konachan.com/post/show/*",
+      "https://www.pixiv.net/member_illust.php*",
+      "https://yande.re/post/show/*",
+      "*://nijie.info/view.php*",
+      "*://nijie.info/view_popup.php*"
+    ],
+    "js": [
+      "build/js/insert.bundle.js"
+    ],
+    "run_at": "document_end"
+  }],
   "browser_action": {
     "default_icon": {
       "19": "build/images/gray/icon19.png",
@@ -42,7 +42,10 @@
   },
   "background": {
     "persistent": false,
-    "scripts": ["build/js/vendors/lib.min.js", "build/js/background.bundle.js"]
+    "scripts": [
+      "build/js/vendors/lib.min.js",
+      "build/js/background.bundle.js"
+    ]
   },
   "options_page": "build/views/options.html",
   "icons": {
