@@ -3,16 +3,17 @@ import {
   DanbooruKawpaaLinkInsertion,
   DeviantArtKawpaaLinkInsertion,
   GelbooruKawpaaLinkInsertion,
-  KonachanKawpaaLinkInsertion,
   IwaraKawpaaLinkInsertion,
-  YandereKawpaaLinkInsertion,
-  SankakuComplexKawpaaLinkInsertion,
-  PixivKawpaaLinkInsertion,
-  PixivMultipleKawpaaLinkInsertion,
-  TweetDeckKawpaaButtonInsertion,
-  TumblrKawpaaButtonInsertion,
+  KonachanKawpaaLinkInsertion,
   NijieKawpaaLinkInsertion,
   NijieMultiKawpaaLinkInsertion,
+  PixivKawpaaLinkInsertion,
+  PixivMultipleKawpaaLinkInsertion,
+  SankakuComplexKawpaaLinkInsertion,
+  TumblrKawpaaButtonInsertion,
+  TwitterKawpaaButtonInsertion,
+  TweetDeckKawpaaButtonInsertion,
+  YandereKawpaaLinkInsertion,
 } from './supportService/';
 
 export default class InsertionFactory {
@@ -42,18 +43,18 @@ export default class InsertionFactory {
         return new KonachanKawpaaLinkInsertion();
       // case SUPPORT_SERVICE.IWARA_HOSTNAME:
       //   return new IwaraKawpaaLinkInsertion();
-      case SUPPORT_SERVICE.YANDE_RE_HOSTNAME:
-        return new YandereKawpaaLinkInsertion();
-      case SUPPORT_SERVICE.SANKAKUCOMPLEX_HOSTNAME:
-        return new SankakuComplexKawpaaLinkInsertion();
       case SUPPORT_SERVICE.PIXIV_HOSTNAME:
         return new PixivKawpaaLinkInsertion();
+      case SUPPORT_SERVICE.SANKAKUCOMPLEX_HOSTNAME:
+        return new SankakuComplexKawpaaLinkInsertion();
+      case SUPPORT_SERVICE.TUMBLR_HOSTNAME:
+        return new TumblrKawpaaButtonInsertion();
       case SUPPORT_SERVICE.TWEETDECK_HOSTNAME:
         return new TweetDeckKawpaaButtonInsertion();
       case SUPPORT_SERVICE.TWITTER_HOSTNAME:
         return new TwitterKawpaaButtonInsertion();
-      case SUPPORT_SERVICE.TUMBLR_HOSTNAME:
-        return new TumblrKawpaaButtonInsertion();
+      case SUPPORT_SERVICE.YANDE_RE_HOSTNAME:
+        return new YandereKawpaaLinkInsertion();
       default:
         return null;
     }
