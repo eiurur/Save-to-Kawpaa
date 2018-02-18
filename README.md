@@ -42,6 +42,7 @@ Go to Site
 * [x] Twitter
 * [x] TweetDeck
 * [x] <a href="http://ecchi.iwara.tv" target="_blank">Iwara</a>
+* [x] ニジエ
 
 # Shortcut
 
@@ -63,8 +64,7 @@ you can save the link with shortcut
 
 以下のページで link を保存した場合、例のような値を抽出してサーバに送信する。
 
-> <a href="https://twitter.com/haruyuki_nijyou/status/687040101721874432" target="_blank">は
-> る雪さんは Twitter を使っています : &quot; 中学生大家さん
+> <a href="https://twitter.com/haruyuki_nijyou/status/687040101721874432" target="_blank">はる雪さんは Twitter を使っています : &quot; 中学生大家さん
 > https://t.co/VP0YdGl1YE&quot;</a>
 
 | プロパティ名 | 説明                                                                                            | 例                                                                              | デフォルトのクエリ                             |
