@@ -8,7 +8,7 @@ export default class TumblrKawpaaButtonInsertion extends KawpaaButtonInsertion {
 
     this.container = '.post_wrapper';
     this.post_container = '.post';
-    this.textElement = '.tweet-text';
+    this.textElement = '.post_body';
     this.imageElement = '.post_media_photo';
   }
 
@@ -16,7 +16,9 @@ export default class TumblrKawpaaButtonInsertion extends KawpaaButtonInsertion {
     return new Promise(resolve => {
       const info = {
         siteUrl: targetElement.find('.post_permalink').attr('href'),
-        title: targetElement.find('.post_permalink').attr('href'),
+        title: `${targetElement
+          .find(this.textElement)
+          .text()} ${targetElement.find('.post_permalink').attr('href')}`,
         srcUrl:
           targetElement.find('.high_res_link').data('big-photo') ||
           targetElement.find('.post_media_photo').attr('src'),
