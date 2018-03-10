@@ -28,9 +28,10 @@ html(lang='ja')
                     a(href='https://github.com/eiurur/Save-to-Kawpaa') Github
 
           .inner.cover
-            form.form-horizontal
-              .form-group
-                label.col-sm-2.control-label(for='token') Token
+            form
+              .form-group.row
+                label.col-sm-2.col-form-label(for='token') Token
                 .col-sm-10
                   input#token.form-control(type='text', placeholder='token を入力してください')
+                      
             #console
