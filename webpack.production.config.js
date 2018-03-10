@@ -14,20 +14,6 @@ module.exports = {
     path: path.resolve(__dirname, './build/js'),
     filename: '[name].bundle.js',
   },
-  plugins: [
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production'),
-    }),
-    new webpack.optimize.ModuleConcatenationPlugin(),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false,
-        drop_console: true,
-      },
-      mangle: false,
-      comments: false,
-    }),
-  ],
   module: {
     rules: [
       {
