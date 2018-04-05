@@ -17,6 +17,6 @@ export default class GelbooruKawpaaLinkInsertion extends KawpaaLinkInsertion {
   }
 
   normalize(src) {
-    return `https:${src}`;
+    return src.includes('https:') ? src : `https:${src}`;
   }
 }
