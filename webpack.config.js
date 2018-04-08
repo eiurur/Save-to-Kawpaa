@@ -14,6 +14,7 @@ module.exports = {
     path: path.resolve(__dirname, './build/js'),
     filename: '[name].bundle.js',
   },
+  devtool: 'cheap-module-source-map',
   module: {
     rules: [
       {
