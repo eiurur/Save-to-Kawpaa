@@ -56,7 +56,8 @@
   },
   "scripts": {
     "setup": "npm i && npm run build",
-    "start": "concurrently \"gulp\" \"webpack --progress --colors --watch\"",
+    "start":
+      "concurrently \"gulp\" \"webpack --mode development --progress --colors --watch\"",
     "build": "gulp build && webpack -p ",
     "zip": "gulp zip",
     "version:remain": "npm run build && gulp zip",
