@@ -14,7 +14,7 @@ export default class DanbooruKawpaaLinkInsertion extends KawpaaLinkInsertion {
       const imgUrl =
         $('#image-resize-link').attr('href') || $('#image').attr('src');
       const originalImageSrc = imgUrl.replace('sample/sample-', '');
-      const url = originalImageSrc.includes('https://')
+      const url = /^https?:\/\//.test(originalImageSrc)
         ? originalImageSrc
         : `https://danbooru.donmai.us${originalImageSrc}`;
       return resolve(url);
