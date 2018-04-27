@@ -13,7 +13,9 @@ export default class SankakuComplexKawpaaLinkInsertion extends KawpaaLinkInserti
     return new Promise(resolve => {
       $('#image').on('click', function(e) {
         const originalImageSrc = $('#image').attr('src');
-        const srcUrl = `https:${originalImageSrc}`;
+        const srcUrl = /^https?:\/\//.test(originalImageSrc)
+          ? originalImageSrc
+          : `https:${originalImageSrc}`;
         return resolve(srcUrl);
       });
       $('#image').click();
