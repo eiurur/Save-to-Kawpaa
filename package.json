@@ -1,6 +1,6 @@
 {
   "name": "save-to-kawpaa",
-  "version": "0.11.23",
+  "version": "0.11.25",
   "description": "",
   "author": "eiurur",
   "license": "MIT",
@@ -61,8 +61,8 @@
     "build": "gulp build && webpack -p ",
     "zip": "gulp zip",
     "version:remain": "npm run build && gulp zip",
-    "version:major": "npm run build && gulp zip --version major",
-    "version:minor": "npm run build && gulp zip --version minor",
-    "version:patch": "npm run build && gulp zip --version patch"
+    "version:major": "npm run build && gulp zip --versions major",
+    "version:minor": "npm run build && gulp zip --versions minor",
+    "version:patch": "npm run build && gulp zip --versions patch"
   }
 }
