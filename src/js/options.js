@@ -1,10 +1,12 @@
 $(function() {
-  chrome.storage.sync.get("token", item => $("#token").val(item.token));
+  const onSavedToken = () => {
+    const token = $('#token').val();
+    chrome.storage.sync.set({ token }, () => {
+      const message = `${new Date().toLocaleString()} : トークンを保存しました`;
+      $('#console').html(message);
+    });
+  };
 
-  $("#token").on("keyup", () => {
-    const token = $("#token").val();
-    chrome.storage.sync.set({ token }, () =>
-      $("#console").html(`${new Date().toLocaleString()} : トークンを保存しました`)
-    );
-  });
+  chrome.storage.sync.get('token', item => $('#token').val(item.token));
+  $('#token').on('keyup', onSavedToken);
 });
