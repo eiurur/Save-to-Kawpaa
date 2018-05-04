@@ -19,14 +19,14 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        use: [
-          {
-            loader: 'babel-loader',
-            options: {
-              presets: ['es2015', 'stage-3'],
-            },
-          },
-        ],
+        // use: [
+        //   {
+        //     loader: 'babel-loader',
+        //     options: {
+        //       presets: ['es2015', 'stage-3'],
+        //     },
+        //   },
+        // ],
         exclude: /node_modules/,
       },
     ],
