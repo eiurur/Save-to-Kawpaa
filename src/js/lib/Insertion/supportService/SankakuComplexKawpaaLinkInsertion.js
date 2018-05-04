@@ -6,12 +6,15 @@ export default class SankakuComplexKawpaaLinkInsertion extends KawpaaLinkInserti
   constructor() {
     super(SUPPORT_SERVICE.SANKAKUCOMPLEX_HOSTNAME);
     this.selector = '#share';
-    this.html = `<a class="kawpaa-save-link" href="#">Save to Kawpaa</a>`;
+    this.html = `<h3><a class="kawpaa-save-link" href="#">Save to Kawpaa</a></h3>`;
   }
 
   getUrl() {
     return new Promise(resolve => {
-      $('#image').on('click', function(e) {
+      // loadイベントだと読み込み待ちが発生する。
+      $('#image').on('click', async e => {
+        // 少し待たないと<img>のsrcがabout:blankでサーバに送信してしまい、データの保存に失敗する。
+        await this.wait(500);
         const originalImageSrc = $('#image').attr('src');
         const srcUrl = /^https?:\/\//.test(originalImageSrc)
           ? originalImageSrc

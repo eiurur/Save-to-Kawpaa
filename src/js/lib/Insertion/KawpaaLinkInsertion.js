@@ -9,6 +9,10 @@ export default class KawpaaLinkInsertion extends Link {
     console.log(this);
   }
 
+  wait(ms = 1000) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
   insert() {
     $(document)
       .find(this.selector)
