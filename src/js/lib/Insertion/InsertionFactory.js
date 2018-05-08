@@ -33,6 +33,7 @@ export default class InsertionFactory {
       return new IwaraKawpaaLinkInsertion();
 
     switch (hostname) {
+      case SUPPORT_SERVICE.DONMAI_HOSTNAME:
       case SUPPORT_SERVICE.DANBOORU_HOSTNAME:
         return new DanbooruKawpaaLinkInsertion();
       case SUPPORT_SERVICE.GELBOORU_HOSTNAME:

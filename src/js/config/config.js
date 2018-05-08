@@ -21,6 +21,7 @@ const ICONS = {
 };
 
 const SUPPORT_SERVICE = {
+  DONMAI_HOSTNAME: 'donmai.us',
   DANBOORU_HOSTNAME: 'danbooru.donmai.us',
   DEVIANTART_HOSTNAME: 'deviantart.com',
   GELBOORU_HOSTNAME: 'gelbooru.com',
