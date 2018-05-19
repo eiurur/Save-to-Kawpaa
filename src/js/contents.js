@@ -31,6 +31,15 @@ import Notification from './lib/Notification';
 
     Notification.success();
   } catch (err) {
-    Notification.fail(err);
+    Notification.build({
+      name: 'report',
+      header: 'Save to Kawpaa',
+      message: '保存に失敗しました。<br><br>問題を報告しますか？',
+      // '保存に失敗しました。<br><br><br><br>原因：<br><br> ' +
+      // err.message +
+      // '<br><br><br><br>問題を報告しますか？',
+    })
+      .then(_ => chrome.runtime.sendMessage({ name: 'REPORT_ERROR' }))
+      .catch(_ => Notification.fail(err));
   }
 })();

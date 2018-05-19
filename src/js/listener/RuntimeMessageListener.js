@@ -18,7 +18,7 @@ export default class RuntimeMessageListener {
           path: request.newIconPath,
           tabId: sender.tab.id,
         });
-        return sendResponse(`ok setIcon ${infoStr}`);
+        return sendResponse(`Done send link`);
       }
 
       if (this.isRequestFromSpecificService(request.name)) {
@@ -28,15 +28,29 @@ export default class RuntimeMessageListener {
         return;
       }
 
+      if (request.name === 'REPORT_ERROR') {
+        chrome.tabs.create({
+          active: true,
+          url: 'https://github.com/eiurur/save-to-kawpaa/issues',
+        });
+      }
+
       return sendResponse(`ok ${infoStr}`);
     });
   }
 
   isRequestFromSpecificService(hostname) {
     var hostnameList = Object.values(SUPPORT_SERVICE);
-    if (hostname.indexOf(SUPPORT_SERVICE.DEVIANTART_HOSTNAME) !== -1) {
+
+    // ページ間でサブドメインが異なるサービス
+    if (hostname.includes(SUPPORT_SERVICE.DEVIANTART_HOSTNAME)) {
       return true;
     }
+    if (hostname.includes(SUPPORT_SERVICE.NIJIURA_HOSTNAME)) {
+      return true;
+    }
+
+    // ページ間でサブドメインが同一のサービス
     return hostnameList.includes(hostname);
   }
 }
