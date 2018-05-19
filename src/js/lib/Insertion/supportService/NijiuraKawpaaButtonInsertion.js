@@ -11,7 +11,7 @@ export default class NijiuraKawpaaButtonInsertion extends KawpaaButtonInsertion 
     this.threadTextElement = 'blockquote:first';
     this.responseElement = '.rtd';
     this.responseTextElement = 'blockquote:first';
-    this.imageElement = 'img';
+    this.imageElement = 'img:first';
   }
 
   getInfo(targetElement) {
@@ -26,7 +26,7 @@ export default class NijiuraKawpaaButtonInsertion extends KawpaaButtonInsertion 
         .attr('href')}`;
       const info = {
         siteUrl: location.href,
-        title: `${threadTitle} / ${responseText}`,
+        title: `${threadTitle} - ${responseText}`,
         srcUrl: imageUrl,
       };
       console.log(info);
@@ -49,18 +49,18 @@ export default class NijiuraKawpaaButtonInsertion extends KawpaaButtonInsertion 
 
   onClick() {
     const _this = this;
-    $(document).on('click', this.onClickElement, function(e) {
+    $(document).on('click', this.onClickElement, async function(e) {
       e.preventDefault();
 
-      const isRepsonse = $(this).closest('td');
+      const isRepsonse = $(this).closest(_this.responseElement).length > 0;
       let targetElement = isRepsonse
         ? $(this).closest(_this.responseElement)
         : $(this).closest(_this.threadElement);
 
-      _this
-        .getInfo(targetElement)
-        .then(info => _this.getParamsToServer(info))
-        .then(params => _this.send(params));
+      const info = await _this.getInfo(targetElement);
+      const paramters = await _this.getParamsToServer(info);
+      console.log(paramters);
+      _this.send(paramters);
     });
   }
 
