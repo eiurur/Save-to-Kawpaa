@@ -35,14 +35,17 @@ Go to Site
 * [x] Danbooru
 * [x] DeviantART
 * [x] Gelbooru
+* [x] <a href="http://ecchi.iwara.tv" target="_blank">Iwara</a>
 * [x] Konachan
+
+- [ ] pinterest
+
 * [x] pixiv
-* [x] yande.re
-* [x] tumblr (x_x unsupport multi-illustrations)
 * [x] Twitter
 * [x] TweetDeck
-* [x] <a href="http://ecchi.iwara.tv" target="_blank">Iwara</a>
-* [x] ニジエ
+* [x] yande.re
+* [x] 2chan.net (二次裏)
+* [x] Nijie (ニジエ)
 
 # Shortcut
 
