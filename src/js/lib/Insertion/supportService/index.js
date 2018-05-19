@@ -6,6 +6,7 @@ import IwaraKawpaaLinkInsertion from './IwaraKawpaaLinkInsertion';
 import KonachanKawpaaLinkInsertion from './KonachanKawpaaLinkInsertion';
 import NijieKawpaaLinkInsertion from './NijieKawpaaLinkInsertion';
 import NijieMultiKawpaaLinkInsertion from './NijieMultiKawpaaLinkInsertion';
+import NijiuraKawpaaButtonInsertion from './NijiuraKawpaaButtonInsertion';
 import PixivKawpaaLinkInsertion from './PixivKawpaaLinkInsertion';
 import PixivMultipleKawpaaLinkInsertion from './PixivMultipleKawpaaLinkInsertion';
 import SankakuComplexKawpaaLinkInsertion from './SankakuComplexKawpaaLinkInsertion';
@@ -22,6 +23,7 @@ export {
   KonachanKawpaaLinkInsertion,
   NijieKawpaaLinkInsertion,
   NijieMultiKawpaaLinkInsertion,
+  NijiuraKawpaaButtonInsertion,
   PixivKawpaaLinkInsertion,
   PixivMultipleKawpaaLinkInsertion,
   SankakuComplexKawpaaLinkInsertion,

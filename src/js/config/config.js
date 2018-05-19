@@ -28,13 +28,14 @@ const SUPPORT_SERVICE = {
   IWARA_HOSTNAME: 'iwara.tv',
   KOMIFLO_HOSTNAME: 'komiflo.com',
   KONACHAN_HOSTNAME: 'konachan.com',
+  NIJIE_HOSTNAME: 'nijie.info',
+  NIJIURA_HOSTNAME: '2chan.net',
   PIXIV_HOSTNAME: 'www.pixiv.net',
   SANKAKUCOMPLEX_HOSTNAME: 'chan.sankakucomplex.com',
   TUMBLR_HOSTNAME: 'www.tumblr.com',
   TWITTER_HOSTNAME: 'twitter.com',
   TWEETDECK_HOSTNAME: 'tweetdeck.twitter.com',
   YANDE_RE_HOSTNAME: 'yande.re',
-  NIJIE_HOSTNAME: 'nijie.info',
 };
 const SUPPORT_URL = {
   PIXIV_MANGA_URL: 'https://www.pixiv.net/member_illust.php?mode=manga',

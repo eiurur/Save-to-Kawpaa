@@ -7,6 +7,7 @@ import {
   KonachanKawpaaLinkInsertion,
   NijieKawpaaLinkInsertion,
   NijieMultiKawpaaLinkInsertion,
+  NijiuraKawpaaButtonInsertion,
   PixivKawpaaLinkInsertion,
   PixivMultipleKawpaaLinkInsertion,
   SankakuComplexKawpaaLinkInsertion,
@@ -18,19 +19,21 @@ import {
 
 export default class InsertionFactory {
   static create(hostname, url) {
-    // 例外
+    // 例外(複数)
     if (url.includes(SUPPORT_URL.PIXIV_MANGA_URL))
       return new PixivMultipleKawpaaLinkInsertion();
-    if (url.includes(SUPPORT_URL.NIJIE_URL))
-      return new NijieKawpaaLinkInsertion();
     if (url.includes(SUPPORT_URL.NIJIE_MULTI_URL))
       return new NijieMultiKawpaaLinkInsertion();
 
-    // 例外
+    // 例外(単数)
     if (hostname.includes(SUPPORT_SERVICE.DEVIANTART_HOSTNAME))
       return new DeviantArtKawpaaLinkInsertion();
     if (hostname.includes(SUPPORT_SERVICE.IWARA_HOSTNAME))
       return new IwaraKawpaaLinkInsertion();
+    if (url.includes(SUPPORT_URL.NIJIE_URL))
+      return new NijieKawpaaLinkInsertion();
+    if (hostname.includes(SUPPORT_SERVICE.NIJIURA_HOSTNAME))
+      return new NijiuraKawpaaButtonInsertion();
 
     switch (hostname) {
       case SUPPORT_SERVICE.DONMAI_HOSTNAME:
