@@ -1,5 +1,5 @@
 import ChromeSyncStorageManager from './lib/utils/ChromeSyncStorageManager';
-import HTMLMetaDataScraper from './lib/HTMLMetaDataScraper';
+import MetaDataScraperFactory from './lib/MetaDataScraperFactory';
 import KawpaaSender from './lib/KawpaaSender';
 import Notification from './lib/Notification';
 
@@ -17,8 +17,8 @@ import Notification from './lib/Notification';
 
     // メタデータの収取
     info = info || {};
-    const scraper = new HTMLMetaDataScraper(info);
-    const htmlMetaData = scraper.scrape();
+    const scraper = MetaDataScraperFactory.create(info);
+    const htmlMetaData = scraper.scrape(info);
     console.log(htmlMetaData);
 
     // メタデータをKawpaaサーバに送信＋保存
