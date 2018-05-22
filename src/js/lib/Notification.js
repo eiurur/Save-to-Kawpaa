@@ -13,24 +13,20 @@ export default class Notification {
 
   static fail(err) {
     console.log(err);
-    // console.log(err.status);
-
-    // // res.status(err.statusCode).json statusCode: err.statusCode, message: err.messageのとき
-    // if (err.responseJSON != null) {
-    //   err.statusCode = err.responseJSON.statusCode;
-    //   err.statusMessage = err.responseJSON.message;
-    // } else if (err.status != null) { // Ajaxに失敗したとき
-    //   err.statusCode = err.status;
-    //   err.statusMessage = err.statusText;
-    // }
-    // if(err.statusCode === 412) {
-    //   alertify.error(err.statusMessage);
-    // }
-    console.log(err);
-    if (err.statusCode) {
+    if (!err) {
+      alertify.error(`statusCode: 500 <br> サーバが落ちているかも？`);
+    } else if (err.statusCode) {
       // Base64に変換をかますときとかにこけた
-      alertify.error(`Error: ${err.statusCode} ${err.statusMessage}`);
+      alertify.error(`statusCode: ${err.statusCode} <br> ${err.statusMessage}`);
+    } else if (err.response) {
+      // axios
+      alertify.error(
+        `statusCode: ${err.response.status} <br> statusText: ${
+          err.response.statusText
+        } <br> ${err.response.data.message}`,
+      );
     } else if (err.message) {
+      // chrome extension内の例外処理
       alertify.error(err.message);
     } else {
       alertify.error(err.toString());
@@ -45,7 +41,6 @@ export default class Notification {
 
   static build({ name, header, message }) {
     if (!alertify[name]) {
-      //define a new errorAlert base on alert
       alertify.dialog(
         name,
         function factory() {

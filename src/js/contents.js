@@ -11,7 +11,7 @@ import Notification from './lib/Notification';
     const token = await ChromeSyncStorageManager.get('token');
     if (!token) {
       throw new Error(
-        'トークンが空です。Kawpaaにアクセスしてトークンを登録してください',
+        'トークンが未登録です。<br> 拡張機能のオプションページでトークンを登録してください',
       );
     }
 
@@ -31,6 +31,7 @@ import Notification from './lib/Notification';
 
     Notification.success();
   } catch (err) {
+    err ? console.log(err.respponse) : console.log(err);
     Notification.build({
       name: 'report',
       header: 'Save to Kawpaa',
