@@ -1,6 +1,7 @@
 import ImageScraper from './metaDataScrapers/ImageScraper';
 import LinkScraper from './metaDataScrapers/LinkScraper';
 import TextScraper from './metaDataScrapers/TextScraper';
+import VideoScraper from './metaDataScrapers/VideoScraper';
 
 export default class MetaDataScraperFactory {
   static create(data) {
@@ -9,6 +10,9 @@ export default class MetaDataScraperFactory {
     }
     if (this.isText(data)) {
       return new TextScraper(data);
+    }
+    if (this.isVideo(data)) {
+      return new VideoScraper(data);
     }
     return new LinkScraper(data);
   }
@@ -22,5 +26,9 @@ export default class MetaDataScraperFactory {
 
   static isText(data) {
     return data && data.menuItemId === 'selection';
+  }
+
+  static isVideo(data) {
+    return data && (data.videoUrl || data.menuItemId === 'video');
   }
 }

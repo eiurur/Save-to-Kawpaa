@@ -44,10 +44,14 @@ export default class HTMLMetaDataScraper {
 
   /**
    * linkなら本文や、動画の埋め込みリンク
-   * imageならnull
+   * image, videoならnull
    */
   getContent() {
     throw new Error('処理を継承しないと違反です。');
+  }
+
+  getURL() {
+    throw new Error('処理を継承しないと違反です！！！');
   }
 
   getDescription() {
@@ -90,14 +94,15 @@ export default class HTMLMetaDataScraper {
     return si;
   }
 
-  getURL() {
-    throw new Error('処理を継承しないと違反です！！！');
+  getVideoURL() {
+    return null;
   }
 
   scrape() {
     return {
       type: this.getType(),
       content: this.getContent(),
+      url: this.getURL(),
       description: this.getDescription(),
       favicon: this.getFavicon(),
       hostName: this.getHostName(),
@@ -105,7 +110,7 @@ export default class HTMLMetaDataScraper {
       siteImage: this.getSiteImage(),
       siteName: this.getSiteName(),
       siteUrl: this.getSiteURL(),
-      url: this.getURL(),
+      videoUrl: this.getVideoURL(),
     };
   }
 }

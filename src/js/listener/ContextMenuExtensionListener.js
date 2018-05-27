@@ -3,7 +3,7 @@ import { ENDPOINT } from '../config/config';
 
 export default class ContextMenuExtensionListener {
   constructor() {
-    this.contexts = ['page', 'image', 'selection'];
+    this.contexts = ['page', 'image', 'selection', 'video'];
     this.create();
     return this;
   }
