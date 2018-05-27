@@ -8,7 +8,11 @@ This is to be used in conjunction with the web service
 
 # Usage
 
-## Save
+## How to setup
+
+To be written
+
+## How to save
 
 **Image**
 
@@ -24,7 +28,15 @@ icon.
 
 ![](https://github.com/eiurur/Save-to-Kawpaa/raw/master/images/link.png)
 
-## Browse
+**Movie**
+
+To be written
+
+**Text**
+
+To be written
+
+## How to browse
 
 Go to Site
 
@@ -37,14 +49,19 @@ Go to Site
 * [x] Gelbooru
 * [x] <a href="http://ecchi.iwara.tv" target="_blank">Iwara.tv</a>
 * [x] Konachan
+* [x] Nijie (ニジエ)
 * [x] pixiv
 * [x] Twitter
 * [x] TweetDeck
+* [x] SankakuComplex
 * [x] yande.re
 * [x] 2chan.net (ふたばちゃんねる)
-* [x] Nijie (ニジエ)
 
+- [ ] DLSite
+- [ ] DMM.com
 - [ ] pinterest
+- [ ] pornhub
+- [ ] youtube
 
 # Shortcut
 
