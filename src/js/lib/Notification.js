@@ -1,4 +1,5 @@
 import alertify from 'alertifyjs';
+import { CHROME_EXTENSION_RESOURCES } from '../config/config';
 
 export default class Notification {
   static log() {
@@ -7,7 +8,9 @@ export default class Notification {
 
   // アイコンに色をつけて、完了したことをわかるようにする。通知もする。
   static success() {
-    chrome.runtime.sendMessage({ newIconPath: 'build/images/blue/icon19.png' });
+    chrome.runtime.sendMessage({
+      newIconPath: CHROME_EXTENSION_RESOURCES.images.BLUE_19,
+    });
     alertify.success('保存しました。');
   }
 

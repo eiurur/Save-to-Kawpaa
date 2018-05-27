@@ -1,4 +1,5 @@
 import ChromeExecuter from '../lib/utils/ChromeExecuter';
+import { CHROME_EXTENSION_RESOURCES } from '../config/config';
 
 export default class TabActivateListener {
   constructor() {
@@ -17,7 +18,7 @@ export default class TabActivateListener {
         }
 
         ChromeExecuter.executeScript({
-          file: 'build/js/retrieveToken.bundle.js',
+          file: CHROME_EXTENSION_RESOURCES.js.retriveToken,
         }).then(res => console.log(res));
       });
     });
