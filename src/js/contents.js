@@ -31,14 +31,19 @@ import Notification from './lib/Notification';
 
     Notification.success();
   } catch (err) {
-    err ? console.log(err.respponse) : console.log(err);
+    !!err.response
+      ? console.log('err.response', err.response)
+      : console.log('err', err);
+    const errorReason =
+      err && err.response ? err.response.data.message : err.message;
     Notification.build({
       name: 'report',
       header: 'Save to Kawpaa',
-      message: '保存に失敗しました。<br><br>問題を報告しますか？',
-      // '保存に失敗しました。<br><br><br><br>原因：<br><br> ' +
-      // err.message +
-      // '<br><br><br><br>問題を報告しますか？',
+      // message: '保存に失敗しました。<br><br>問題を報告しますか？',
+      message:
+        '<b>保存に失敗しました。</b><br><br><br><br><b>原因：</b><br><br> ' +
+        errorReason +
+        '<br><br><br><br><b>問題を報告しますか？</b>',
     })
       .then(_ => chrome.runtime.sendMessage({ name: 'REPORT_ERROR' }))
       .catch(_ => Notification.fail(err));

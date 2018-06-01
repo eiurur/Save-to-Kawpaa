@@ -17,10 +17,9 @@ export default class Notification {
   static fail(err) {
     console.log(err);
     if (!err) {
-      alertify.error(`statusCode: 500 <br> サーバが落ちているかも？`);
-    } else if (err.statusCode) {
-      // Base64に変換をかますときとかにこけた
-      alertify.error(`statusCode: ${err.statusCode} <br> ${err.statusMessage}`);
+      alertify.error(
+        `statusCode: 500 <br> Kawpaaのサーバがダウンしています。しばらくお待ち下さい。`,
+      );
     } else if (err.response) {
       // axios
       alertify.error(
@@ -28,6 +27,9 @@ export default class Notification {
           err.response.statusText
         } <br> ${err.response.data.message}`,
       );
+    } else if (err.statusCode) {
+      // Base64に変換をかますときとかにこけた
+      alertify.error(`statusCode: ${err.statusCode} <br> ${err.statusMessage}`);
     } else if (err.message) {
       // chrome extension内の例外処理
       alertify.error(err.message);
