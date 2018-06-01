@@ -23,10 +23,36 @@ export default class NijieKawpaaLinkInsertion extends KawpaaLinkInsertion {
     $('#view-center-button').css('width', '90%');
   }
 
+  extraxtContentUrl() {
+    const imgUrl = $('#img_filter img').attr('src');
+    const videoUrl = $('#img_filter video').attr('src');
+    const srcUrl = imgUrl || videoUrl;
+    const contentUrl = this.normalize(srcUrl);
+    return contentUrl;
+  }
+
+  getType() {
+    const contentUrl = this.extraxtContentUrl();
+    const pathname = new URL(contentUrl).pathname;
+    const videoPattern = /(.mp4|.webm|.avi)/;
+    const isVideoContents = videoPattern.test(pathname);
+
+    if (isVideoContents) {
+      return 'video';
+    } else {
+      return 'image';
+    }
+  }
+
+  // TODO: いつか不要になる。後で消す。
+  normalize(src) {
+    return src.includes('https:') ? src : `https:${src}`;
+  }
+
   getUrl() {
     return new Promise(resolve => {
-      const srcUrl = $('#img_filter img').attr('src');
-      return resolve(`https:${srcUrl}`);
+      const contentUrl = this.extraxtContentUrl();
+      return resolve(contentUrl);
     });
   }
 }
