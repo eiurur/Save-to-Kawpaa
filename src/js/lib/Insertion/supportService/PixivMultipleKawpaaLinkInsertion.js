@@ -22,7 +22,7 @@ export default class PixivMultipleKawpaaLinkInsertion extends KawpaaLinkInsertio
       // KawpaaLinkInsertion.jsを再利用
       Promise.all([_this.getType(), _this.getContent(), _this.getUrl($(this))])
         .then(getedData => ({
-          name: this.hostname,
+          name: _this.hostname,
           info: {
             type: getedData[0],
             content: getedData[1],
