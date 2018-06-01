@@ -36,34 +36,24 @@ export default class KawpaaLinkInsertion extends Link {
     return null;
   }
 
-  getParamsToServer({ type, content, src, url }) {
-    return new Promise((resolve, reject) => {
-      const params = {
+  getParamsToServer() {
+    return Promise.all([this.getType(), this.getContent(), this.getUrl()]).then(
+      getedData => ({
         name: this.hostname,
         info: {
-          type: type,
-          content: content,
-          srcUrl: src,
-          url: url,
+          type: getedData[0],
+          content: getedData[1],
+          srcUrl: getedData[2], // TODO: urlだけに統一できない？
+          url: getedData[2],
         },
-      };
-      return resolve(params);
-    });
+      }),
+    );
   }
 
   onClick() {
     $(document).on('click', this.onClickElement, e => {
       e.preventDefault();
-      Promise.all([this.getType(), this.getContent(), this.getUrl()])
-        .then(getedData =>
-          this.getParamsToServer({
-            type: getedData[0],
-            content: getedData[1],
-            srcUrl: getedData[2], // TODO: urlだけに統一できない？
-            url: getedData[2],
-          }),
-        )
-        .then(params => this.send(params));
+      this.getParamsToServer().then(params => this.send(params));
     });
   }
 

@@ -19,8 +19,9 @@ export default class MetaDataScraperFactory {
 
   static isImage(data) {
     return (
-      (data && data.type === 'image') ||
-      (data.mediaType !== null && data.menuItemId === 'image')
+      data &&
+      (data.type === 'image' ||
+        (data.mediaType !== null && data.menuItemId === 'image'))
     );
   }
 
@@ -29,6 +30,6 @@ export default class MetaDataScraperFactory {
   }
 
   static isVideo(data) {
-    return data && (data.videoUrl || data.menuItemId === 'video');
+    return data && (data.type === 'video' || data.menuItemId === 'video');
   }
 }

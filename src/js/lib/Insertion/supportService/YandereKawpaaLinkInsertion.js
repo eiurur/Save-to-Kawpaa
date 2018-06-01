@@ -2,6 +2,9 @@ import $ from 'jquery';
 import { SUPPORT_SERVICE } from '../../../config/config';
 import KawpaaLinkInsertion from '../KawpaaLinkInsertion';
 
+/**
+ * yande.reには動画が存在しない
+ */
 export default class YandereKawpaaLinkInsertion extends KawpaaLinkInsertion {
   constructor() {
     super(SUPPORT_SERVICE.YANDE_RE_HOSTNAME);

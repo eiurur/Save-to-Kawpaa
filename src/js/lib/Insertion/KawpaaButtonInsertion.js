@@ -14,23 +14,20 @@ export default class KawpaaButtonInsertion extends Button {
     return new Promise((resolve, reject) => {
       const params = {
         name: this.hostname,
-        info: Object.assign(info, {
-          type: 'image',
-        }),
+        info: Object.assign(
+          {
+            type: 'image',
+          },
+          info,
+        ),
       };
       return resolve(params);
     });
   }
 
-  insert() {
-    return this;
-  }
-
   send(params) {
     chrome.runtime.sendMessage(params, response => console.log(response));
   }
-
-  show() {}
 
   on() {
     this.onClick();

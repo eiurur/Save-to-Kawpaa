@@ -9,15 +9,34 @@ export default class DanbooruKawpaaLinkInsertion extends KawpaaLinkInsertion {
     this.html = `<li><a class="kawpaa-save-link" href="#">Save to Kawpaa</a></li>`;
   }
 
+  extraxtContentUrl() {
+    const sampleUrl = $('#image').attr('src');
+    const originalUrl = sampleUrl.replace('sample/sample-', '');
+    const contentUrl = this.normalize(originalUrl);
+    return contentUrl;
+  }
+
+  getType() {
+    const contentUrl = this.extraxtContentUrl();
+    const pathname = new URL(contentUrl).pathname;
+    const videoPattern = /(.mp4|.webm|.avi)/;
+    const isVideoContents = videoPattern.test(pathname);
+
+    if (isVideoContents) {
+      return 'video';
+    } else {
+      return 'image';
+    }
+  }
+
+  normalize(src) {
+    return /^https?:\/\//.test(src) ? src : `https://danbooru.donmai.us${src}`;
+  }
+
   getUrl() {
     return new Promise(resolve => {
-      const imgUrl =
-        $('#image-resize-link').attr('href') || $('#image').attr('src');
-      const originalImageSrc = imgUrl.replace('sample/sample-', '');
-      const url = /^https?:\/\//.test(originalImageSrc)
-        ? originalImageSrc
-        : `https://danbooru.donmai.us${originalImageSrc}`;
-      return resolve(url);
+      const contentUrl = this.extraxtContentUrl();
+      return resolve(contentUrl);
     });
   }
 }

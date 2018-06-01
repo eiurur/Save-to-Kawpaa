@@ -1,6 +1,6 @@
-import Insertion from "./Insertion";
+import Inserter from './Inserter';
 
-export default class Link extends Insertion {
+export default class Link extends Inserter {
   constructor() {
     super();
     this.selector = null;

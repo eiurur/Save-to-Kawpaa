@@ -9,14 +9,34 @@ export default class KonachanKawpaaLinkInsertion extends KawpaaLinkInsertion {
     this.html = `| <a class="kawpaa-save-link" href="#">Save to Kawpaa</a>`;
   }
 
-  getUrl() {
-    return new Promise(resolve => {
-      const srcUrl = $('#image').attr('src');
-      return resolve(this.normalize(srcUrl));
-    });
+  extraxtContentUrl() {
+    const originalUrl = $('#image').attr('src');
+    const conetntUrl = this.normalize(originalUrl);
+    return originalUrl;
   }
 
+  getType() {
+    const contentUrl = this.extraxtContentUrl();
+    const pathname = new URL(contentUrl).pathname;
+    const videoPattern = /(.mp4|.webm|.avi)/;
+    const isVideoContents = videoPattern.test(pathname);
+
+    if (isVideoContents) {
+      return 'video';
+    } else {
+      return 'image';
+    }
+  }
+
+  // TODO: いつか不要になる。後で消す。
   normalize(src) {
     return src.includes('https:') ? src : `https:${src}`;
+  }
+
+  getUrl() {
+    return new Promise(resolve => {
+      const contentUrl = this.extraxtContentUrl();
+      return resolve(contentUrl);
+    });
   }
 }
