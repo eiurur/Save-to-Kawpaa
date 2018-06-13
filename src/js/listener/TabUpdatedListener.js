@@ -3,17 +3,15 @@ import { CHROME_EXTENSION_RESOURCES } from '../config/config';
 
 export default class TabUpdatedListener {
   constructor() {
-    const manifest = chrome.runtime.getManifest();
-    this.DEVIANTART_URL_PATTERN = /^https:\/\/.*\.deviantart\.com\/art\/.*$/;
+    this.PIXIV_URL_PATTERN = /^https:\/\/www.pixiv.net\/member_illust.*$/;
   }
 
   isAllowedUrl(tab) {
-    return this.DEVIANTART_URL_PATTERN.test(tab.url);
+    return this.PIXIV_URL_PATTERN.test(tab.url);
   }
 
   activate() {
     chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-      console.log(changeInfo.url);
       if (!this.isAllowedUrl(changeInfo)) {
         return;
       }

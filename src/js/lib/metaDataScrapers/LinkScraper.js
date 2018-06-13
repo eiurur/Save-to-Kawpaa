@@ -112,10 +112,12 @@ export default class LinkScraper extends HTMLMetaDataScraper {
       u = $img.get(1).src;
     }
 
-    // ニコニコなら動画のサムネを指定
-    if (siteURL.indexOf('www.nicovideo.jp/watch/sm') > -1) {
-      u = $('.videoThumbnailImage').attr('src');
-    }
+    // // ニコニコなら動画のサムネを指定
+    // if (siteURL.indexOf('www.nicovideo.jp/watch/sm') > -1) {
+    //   u =
+    //     $('.videoThumbnailImage').attr('src') || // Flash版プレイヤー
+    //     $('.is-playing .Image').attr('src'); // HTML5版プレイヤー
+    // }
 
     // youtube
     // TODO: 別の動画に移動しても$('meta[property="og:image"]').attr('content')に変化なし。分からん。

@@ -13,11 +13,11 @@ export default class KawpaaLinkInsertion extends Link {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  insert() {
+  async insert() {
+    await this.wait(1000); // 動的生成サイト対策
     $(document)
       .find(this.selector)
       .append(this.html);
-    return this;
   }
 
   on() {
