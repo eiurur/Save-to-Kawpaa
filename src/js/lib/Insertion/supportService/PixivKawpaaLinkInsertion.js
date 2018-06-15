@@ -7,7 +7,9 @@ export default class PixivKawpaaLinkInsertion extends KawpaaLinkInsertion {
     super(SUPPORT_SERVICE.PIXIV_HOSTNAME);
     this.selector = 'figure .sticky section';
     this.html = `
-    <div style="margin-right: 20px;" class="kawpaa-save-link"><button type="button" style="
+    <div style="margin-right: 20px;" class="${
+      this.kawpaaLinkClassName
+    }"><button type="button" style="
     background: none;
     border: none;
     color: #333;

@@ -8,7 +8,7 @@ export default class PixivMultipleKawpaaLinkInsertion extends KawpaaLinkInsertio
     this.selector = '.item-container';
     this.html = `\
       <div style="font-size: 2em;">
-        <a href="#" class="kawpaa-save-link">Save to Kawpaa</a>
+        <a href="#" class="${this.kawpaaLinkClassName}">Save to Kawpaa</a>
       </div>\
     `;
   }
