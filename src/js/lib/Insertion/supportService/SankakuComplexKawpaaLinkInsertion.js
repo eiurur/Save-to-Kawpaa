@@ -6,7 +6,9 @@ export default class SankakuComplexKawpaaLinkInsertion extends KawpaaLinkInserti
   constructor() {
     super(SUPPORT_SERVICE.SANKAKUCOMPLEX_HOSTNAME);
     this.selector = '#share';
-    this.html = `<h3><a class="kawpaa-save-link" href="#">Save to Kawpaa</a></h3>`;
+    this.html = `<h3><a class="${
+      this.kawpaaLinkClassName
+    }" href="#">Save to Kawpaa</a></h3>`;
   }
 
   expandImage() {

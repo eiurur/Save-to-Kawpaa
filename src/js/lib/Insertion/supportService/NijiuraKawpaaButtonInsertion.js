@@ -41,7 +41,9 @@ export default class NijiuraKawpaaButtonInsertion extends KawpaaButtonInsertion 
       return;
     }
 
-    const html = `<span class="kawpaa-save-link" style="padding-left: 10px;
+    const html = `<span class="${
+      this.kawpaaLinkClassName
+    }" style="padding-left: 10px;
     font-size: 14px;
     cursor: pointer;">Save to Kawpaa</span>`;
     _$.find(kawpaaButtonBasisPositionSelector).after(html);

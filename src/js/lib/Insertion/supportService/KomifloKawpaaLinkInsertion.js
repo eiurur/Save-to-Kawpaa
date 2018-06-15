@@ -6,7 +6,9 @@ export default class KomifloKawpaaLinkInsertion extends KawpaaLinkInsertion {
   constructor() {
     super(SUPPORT_SERVICE.KOMIFLO_HOSTNAME);
     this.selector = '.comic-preview-meta';
-    this.html = `<a class="kawpaa-save-link" href="#">Save to Kawpaa</a>`;
+    this.html = `<a class="${
+      this.kawpaaLinkClassName
+    }" href="#">Save to Kawpaa</a>`;
   }
 
   getUrl() {

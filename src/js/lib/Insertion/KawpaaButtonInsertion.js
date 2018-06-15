@@ -5,7 +5,8 @@ export default class KawpaaButtonInsertion extends Button {
   constructor(hostname) {
     super();
     this.hostname = hostname;
-    this.onClickElement = '.kawpaa-save-link';
+    this.onClickElement = `.kawpaa-save-link_${new Date().getTime()}`;
+    this.kawpaaLinkClassName = this.onClickElement.replace('.', '');
   }
 
   getInfo() {}

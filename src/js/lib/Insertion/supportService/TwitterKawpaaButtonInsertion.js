@@ -5,7 +5,6 @@ import KawpaaButtonInsertion from '../KawpaaButtonInsertion';
 export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion {
   constructor() {
     super(SUPPORT_SERVICE.TWITTER_HOSTNAME);
-
     this.container = '.permalink-tweet-container';
     this.stream_tweet = '.js-stream-tweet';
     this.tweet_container = '.permalink-tweet';
@@ -17,36 +16,74 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
     this.tweet_media = '.media-image';
     this.kawpaa_button_container = '.action-kawpaa-container';
     this.kawpaa_button = '.ProfileTweet-actionList';
+    this.twitter_movie = 'video > source';
+  }
+
+  getTweetType(element) {
+    const hasPhoto = element.find(this.tweet_image).length > 0;
+    const hasMovie = element.find(this.twitter_movie).length > 0;
+
+    if (hasPhoto) {
+      return 'photo';
+    }
+    if (hasMovie) {
+      return 'movie';
+    }
+    return 'text';
   }
 
   getInfo(targetElement) {
     return new Promise(resolve => {
-      var tweetUrl =
+      let tweetUrl =
         targetElement.find(this.tweet_url).attr('href') ||
         targetElement.find(this.tweet_container).data('permalink-path');
-      var fullname = targetElement.find(this.twitter_fullname).text();
-      var username = targetElement.find(this.twitter_username).text();
-      var monoUsername = /^@(\w)*/.exec(username)[0]; // ツイート詳細モーダルだと複数の@usernameが取得されるので単一にする。
+      let fullname = targetElement.find(this.twitter_fullname).text();
+      let username = targetElement.find(this.twitter_username).text();
+      let monoUsername = /^@(\w)*/.exec(username)[0]; // ツイート詳細モーダルだと複数の@usernameが取得されるので単一にする。
+      let text = targetElement.find(this.tweet_text).text();
+      let title = `${fullname} ${monoUsername} / ${text}`;
 
-      var text = targetElement.find(this.tweet_text).text();
-      var title = `${fullname} ${monoUsername} / ${text}}`;
-      var imageUrl = targetElement
-        .find(this.tweet_image)
-        .attr('data-image-url');
+      const tweetType = this.getTweetType(targetElement);
+      const info = (tweetType => {
+        switch (tweetType) {
+          case 'photo': {
+            let imageUrl = targetElement
+              .find(this.tweet_image)
+              .attr('data-image-url');
+            // 複数枚のときは今見ている画像を保存する。
+            imageUrl =
+              $(this.tweet_media)
+                .first()
+                .attr('src') || imageUrl;
+            imageUrl = imageUrl.replace(':large', '');
 
-      // 複数枚のときは今見ている画像を保存する。
-      imageUrl =
-        $(this.tweet_media)
-          .first()
-          .attr('src') || imageUrl;
-      imageUrl = imageUrl.replace(':large', '');
+            const info = {
+              siteUrl: `https://twitter.com${tweetUrl}`,
+              title: title,
+              srcUrl: `${imageUrl}:orig`,
+            };
+            return info;
+          }
+          case 'movie': {
+            let imageUrl = targetElement.find(this.twitter_movie).attr('src'); // 動画(mp4)
+            // 複数枚のときは今見ている画像を保存する。
+            // console.log(imageUrl);
+            // imageUrl =
+            //   $(this.tweet_media)
+            //     .first()
+            //     .attr('src') || imageUrl;
+            // console.log(imageUrl);
 
-      const info = {
-        siteUrl: `https://twitter.com${tweetUrl}`,
-        title: title,
-        srcUrl: `${imageUrl}:orig`,
-      };
-      console.log(info);
+            const info = {
+              siteUrl: `https://twitter.com${tweetUrl}`,
+              title: title,
+              srcUrl: `${imageUrl}`,
+            };
+            return info;
+          }
+        }
+      })(tweetType);
+
       return resolve(info);
     });
   }
@@ -55,13 +92,16 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
     const existKawpaaButton =
       _$.find(this.kawpaa_button_container).length !== 0;
     const hasPhoto = _$.find(this.tweet_image).length > 0;
-    if (existKawpaaButton || !hasPhoto) {
+    const hasMovie = _$.find(this.twitter_movie).length > 0;
+    if (existKawpaaButton || !(hasPhoto || hasMovie)) {
       return;
     }
 
     const html = `\
       <div class="ProfileTweet-action action-kawpaa-container" style="display: inline-block; min-width:80px;">
-        <a class="js-tooltip kawpaa-save-link" href="#" data-original-title="Save to Kawpaa" style="display: inline-block; float: left;">
+        <a class="${
+          this.kawpaaLinkClassName
+        } js-tooltip" href="#" data-original-title="Save to Kawpaa" style="display: inline-block; float: left;">
           <span class="icon icon-kawpaa" style="display: block; height: 16px; position: relative; top: 3px; width: 16px; background-image: url(${
             ICONS.GRAY_16
           });">a</span>

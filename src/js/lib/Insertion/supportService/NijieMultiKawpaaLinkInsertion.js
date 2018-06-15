@@ -8,7 +8,7 @@ export default class NijieMultiKawpaaLinkInsertion extends KawpaaLinkInsertion {
     this.selector = '.illust_click_a';
     this.html = `
       <div style="font-size: 1.5rem; padding: 1rem 0;">
-        <a href="#" class="kawpaa-save-link">Save to Kawpaa</a>
+        <a href="#" class="${this.kawpaaLinkClassName}">Save to Kawpaa</a>
       </div>
     `;
     this.$content = null;

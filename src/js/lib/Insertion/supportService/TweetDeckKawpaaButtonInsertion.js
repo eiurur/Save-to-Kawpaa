@@ -41,7 +41,9 @@ export default class TweetDeckKawpaaButtonInsertion extends KawpaaButtonInsertio
 
     const html = `\
       <li class="tweet-action-item action-kawpaa-container pull-left margin-r--13">
-        <a class="js-show-tip tweet-action kawpaa-save-link" href="#" title="" data-original-title="Save to Kawpaa">
+        <a class="${
+          this.kawpaaLinkClassName
+        } js-show-tip tweet-action" href="#" title="" data-original-title="Save to Kawpaa">
           <span class="icon icon-kawpaa txt-right" style="display: block; height: 16px; position: relative; top: 3px; width: 16px; background-image: url(${
             ICONS.GRAY_16
           });"></span>

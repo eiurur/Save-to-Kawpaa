@@ -7,7 +7,9 @@ export default class IwaraKawpaaLinkInsertion extends KawpaaLinkInsertion {
     super(SUPPORT_SERVICE.IWARA_HOSTNAME);
     this.selector = '.node-buttons';
     this.html = `
-      <a id="kawpaa-save-button" href="#" target="_blank" class="btn btn-info kawpaa-save-link">
+      <a id="kawpaa-save-button" href="#" target="_blank" class="${
+        this.kawpaaLinkClassName
+      } btn btn-info">
         <span class="glyphicon glyphicon-record"></span> Save to Kawpaa
       </a>`;
   }

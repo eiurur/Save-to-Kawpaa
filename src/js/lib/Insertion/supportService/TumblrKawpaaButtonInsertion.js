@@ -35,7 +35,9 @@ export default class TumblrKawpaaButtonInsertion extends KawpaaButtonInsertion {
       return;
     }
 
-    const html = `<div class="post_control post-control-icon icon-kawpaa kawpaa-save-link" title="Save to Kawpaa" data-subview="Save to Kawpaa" style="background-image: url(${
+    const html = `<div class="${
+      this.kawpaaLinkClassName
+    } post_control post-control-icon icon-kawpaa" title="Save to Kawpaa" data-subview="Save to Kawpaa" style="background-image: url(${
       ICONS.GRAY_24
     });"></div>`;
     _$.find(SUPPORT_SERVICEelector).append(html);

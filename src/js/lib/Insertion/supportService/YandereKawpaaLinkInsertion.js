@@ -9,7 +9,9 @@ export default class YandereKawpaaLinkInsertion extends KawpaaLinkInsertion {
   constructor() {
     super(SUPPORT_SERVICE.YANDE_RE_HOSTNAME);
     this.selector = '#right-col h4';
-    this.html = `| <a class="kawpaa-save-link" href="#">Save to Kawpaa</a>`;
+    this.html = `| <a class="${
+      this.kawpaaLinkClassName
+    }" href="#">Save to Kawpaa</a>`;
   }
 
   getUrl() {
