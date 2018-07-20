@@ -5,7 +5,7 @@ import KawpaaLinkInsertion from '../KawpaaLinkInsertion';
 export default class PixivKawpaaLinkInsertion extends KawpaaLinkInsertion {
   constructor() {
     super(SUPPORT_SERVICE.PIXIV_HOSTNAME);
-    this.selector = 'figure .sticky section';
+    this.selector = 'figure section';
     this.html = `
     <div style="margin-right: 20px;" class="${
       this.kawpaaLinkClassName
