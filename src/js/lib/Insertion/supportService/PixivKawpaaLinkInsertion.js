@@ -22,6 +22,33 @@ export default class PixivKawpaaLinkInsertion extends KawpaaLinkInsertion {
     "><span style="vertical-align: middle;">Save to Kawpaa</span></button></div>`;
   }
 
+  getTitle() {
+    const title = $('head title').text();
+    const tags = $.map($('figcaption footer ul li'), function(n, i) {
+      return '#' + $(n).text();
+    }).join(' ');
+    console.log(tags);
+    return `${title} - ${tags}`;
+  }
+
+  getParamsToServer() {
+    return Promise.all([
+      this.getType(),
+      this.getContent(),
+      this.getUrl(),
+      this.getTitle(),
+    ]).then(getedData => ({
+      name: this.hostname,
+      info: {
+        type: getedData[0],
+        content: getedData[1],
+        srcUrl: getedData[2], // TODO: urlだけに統一できない？
+        url: getedData[2],
+        title: getedData[3],
+      },
+    }));
+  }
+
   //  <a href="#" class="_bookmark-toggle-button add-bookmark kawpaa-save-link">Save to Kawpaa</a>`;
   getUrl() {
     return new Promise(resolve => {
