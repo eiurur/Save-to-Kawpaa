@@ -27,7 +27,6 @@ export default class PixivKawpaaLinkInsertion extends KawpaaLinkInsertion {
     const tags = $.map($('figcaption footer ul li'), function(n, i) {
       return '#' + $(n).text();
     }).join(' ');
-    console.log(tags);
     return `${title} - ${tags}`;
   }
 
@@ -52,22 +51,8 @@ export default class PixivKawpaaLinkInsertion extends KawpaaLinkInsertion {
   //  <a href="#" class="_bookmark-toggle-button add-bookmark kawpaa-save-link">Save to Kawpaa</a>`;
   getUrl() {
     return new Promise(resolve => {
-      // single
-      const singleIllustSrcUrl = $('figure div[role="presentation"] a').attr(
-        'href',
-      );
-
-      // multi
-      const multiIllustSrcUrl = $('figure div[role="presentation"] a img').attr(
-        'src',
-      );
-
-      // FIXME: とりあえず画像拡張子の有無で画像URLかページURLか判定する。
-      const srcUrl = ['.jpg', '.png'].includes(singleIllustSrcUrl)
-        ? singleIllustSrcUrl
-        : multiIllustSrcUrl;
-
-      return resolve(srcUrl);
+      const illustSrcUrl = $('figure div[role="presentation"] a').attr('href');
+      return resolve(illustSrcUrl);
     });
   }
 }

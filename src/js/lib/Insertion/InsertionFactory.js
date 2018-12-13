@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import { SUPPORT_SERVICE, SUPPORT_URL } from '../../config/config';
 import {
   DanbooruKawpaaLinkInsertion,
@@ -17,7 +18,28 @@ import {
   YandereKawpaaLinkInsertion,
 } from './supportService/';
 
+const patches = {
+  pixiv: () => {
+    let timer = setInterval(async () => {
+      const illustNum = $('figure > [role="presentation"]').find(
+        '[role="presentation"]',
+      ).length;
+      if (illustNum > 1) {
+        InsertionFactory.clean();
+        const inserter = new PixivMultipleKawpaaLinkInsertion();
+        const success = await inserter.insert();
+        if (success) inserter.on();
+        clearInterval(timer);
+      }
+    }, 1000);
+  },
+};
 export default class InsertionFactory {
+  static clean() {
+    $('[class^="kawpaa-save-link"]').remove();
+    return this;
+  }
+
   static create(hostname, url) {
     // 例外(複数)
     if (url.includes(SUPPORT_URL.PIXIV_MANGA_URL))
@@ -48,6 +70,7 @@ export default class InsertionFactory {
       // case SUPPORT_SERVICE.IWARA_HOSTNAME:
       //   return new IwaraKawpaaLinkInsertion();
       case SUPPORT_SERVICE.PIXIV_HOSTNAME:
+        patches.pixiv();
         return new PixivKawpaaLinkInsertion();
       case SUPPORT_SERVICE.SANKAKUCOMPLEX_HOSTNAME:
         return new SankakuComplexKawpaaLinkInsertion();
