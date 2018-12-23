@@ -13,6 +13,10 @@ export default class KawpaaLinkInsertion extends Link {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
+  exist() {
+    return $(this.selector).length > 0;
+  }
+
   /**
    * リンクの設置の数に関係なくclickイベントの登録処理が走ってしまうので
    * 挿入のときに制御する必要が生じた。

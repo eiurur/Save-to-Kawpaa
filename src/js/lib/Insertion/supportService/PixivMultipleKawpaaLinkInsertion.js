@@ -20,6 +20,7 @@ export default class PixivMultipleKawpaaLinkInsertion extends KawpaaLinkInsertio
         right: 0;
         padding: 16px;
         cursor: pointer;
+        text-align: center;
         transition: all 0.5s ease;
       }
       .${this.kawpaaLinkClassName}:hover {

@@ -51,8 +51,25 @@ export default class PixivKawpaaLinkInsertion extends KawpaaLinkInsertion {
   //  <a href="#" class="_bookmark-toggle-button add-bookmark kawpaa-save-link">Save to Kawpaa</a>`;
   getUrl() {
     return new Promise(resolve => {
-      const illustSrcUrl = $('figure div[role="presentation"] a').attr('href');
-      return resolve(illustSrcUrl);
+      // single
+      const singleIllustSrcUrl = $('figure div[role="presentation"] a').attr(
+        'href',
+      );
+
+      // multi
+      const multiIllustSrcUrl = $('figure div[role="presentation"] a img').attr(
+        'src',
+      );
+
+      const srcUrl = ['.jpg', '.png'].includes(singleIllustSrcUrl)
+        ? singleIllustSrcUrl
+        : multiIllustSrcUrl;
+
+      return resolve(srcUrl);
     });
+    // return new Promise(resolve => {
+    //   const illustSrcUrl = $('figure div[role="presentation"] a').attr('href');
+    //   return resolve(illustSrcUrl);
+    // });
   }
 }

@@ -26,6 +26,10 @@ export default class KawpaaButtonInsertion extends Button {
     });
   }
 
+  exist() {
+    return $(this.selector).length > 0;
+  }
+
   send(params) {
     chrome.runtime.sendMessage(params, response => console.log(response));
   }

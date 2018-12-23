@@ -11,6 +11,7 @@ import {
   NijiuraKawpaaButtonInsertion,
   PixivKawpaaLinkInsertion,
   PixivMultipleKawpaaLinkInsertion,
+  PixivOldMultipleKawpaaLinkInsertion,
   SankakuComplexKawpaaLinkInsertion,
   TumblrKawpaaButtonInsertion,
   TwitterKawpaaButtonInsertion,
@@ -43,7 +44,10 @@ export default class InsertionFactory {
   static create(hostname, url) {
     // 例外(複数)
     if (url.includes(SUPPORT_URL.PIXIV_MANGA_URL))
-      return new PixivMultipleKawpaaLinkInsertion();
+      return [
+        new PixivMultipleKawpaaLinkInsertion(),
+        new PixivOldMultipleKawpaaLinkInsertion(),
+      ];
     if (url.includes(SUPPORT_URL.NIJIE_MULTI_URL))
       return new NijieMultiKawpaaLinkInsertion();
 
