@@ -1,5 +1,9 @@
 import $ from 'jquery';
-import { SUPPORT_SERVICE, ICONS } from '../../../../config/config';
+import {
+  CONTENT_TYPE,
+  SUPPORT_SERVICE,
+  ICONS,
+} from '../../../../config/config';
 import KawpaaButtonInsertion from '../KawpaaButtonInsertion';
 
 export default class NijiuraKawpaaButtonInsertion extends KawpaaButtonInsertion {
@@ -20,17 +24,25 @@ export default class NijiuraKawpaaButtonInsertion extends KawpaaButtonInsertion 
         .find(this.threadTextElement)
         .text();
       const responseText = targetElement.find(this.responseTextElement).text();
-      const imageUrl = `http://${this.hostname}${targetElement
+      const srcUrl = `http://${this.hostname}${targetElement
         .find(this.imageElement)
         .closest('a')
         .attr('href')}`;
       const info = {
+        type: this.getType(srcUrl),
         siteUrl: location.href,
         title: `${threadTitle} - ${responseText}`,
-        srcUrl: imageUrl,
+        srcUrl: srcUrl,
       };
+      console.log(info);
       return resolve(info);
     });
+  }
+
+  getType(url) {
+    return /(\.avi|\.mp4|\.webm)/.test(url)
+      ? CONTENT_TYPE.MOVIE
+      : CONTENT_TYPE.IMAGE;
   }
 
   show(_$, kawpaaButtonBasisPositionSelector) {
