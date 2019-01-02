@@ -30,7 +30,7 @@ const CHROME_EXTENSION_RESOURCES = {
   js: {
     contents: 'build/js/contents.bundle.js',
     insert: 'build/js/insert.bundle.js',
-    retrieveToken: 'build/js/retrieveToken.bundle.js',
+    token: 'build/js/token.bundle.js',
   },
   images: {
     BLUE_19: 'build/images/blue/icon19.png',

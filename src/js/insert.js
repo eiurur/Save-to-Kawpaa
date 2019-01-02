@@ -1,12 +1,12 @@
-import InsertionFactory from './lib/Insertion/InsertionFactory';
+import InsertionFactory from './lib/domains/Insertion/InsertionFactory';
 
 const currentHostname = location.host;
 const currentUrl = location.href;
 
 (async () => {
   InsertionFactory.clean();
-  const inserter = InsertionFactory.create(currentHostname, currentUrl);
 
+  const inserter = InsertionFactory.create(currentHostname, currentUrl);
   if (!Array.isArray(inserter)) {
     const success = await inserter.insert();
     if (success) inserter.on();

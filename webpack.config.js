@@ -8,7 +8,7 @@ module.exports = {
     contents: './contents.js',
     options: './options.js',
     insert: './insert.js',
-    retrieveToken: './retrieveToken.js',
+    token: './token.js',
   },
   output: {
     path: path.resolve(__dirname, './build/js'),
@@ -19,14 +19,6 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        // use: [
-        //   {
-        //     loader: 'babel-loader',
-        //     options: {
-        //       presets: ['es2015', 'stage-3'],
-        //     },
-        //   },
-        // ],
         exclude: /node_modules/,
       },
     ],

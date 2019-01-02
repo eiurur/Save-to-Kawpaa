@@ -1,46 +1,57 @@
-import KawpaaScriptExecuter from '../lib/KawpaaScriptExecuter';
+import ScriptExecuter from '../lib/domains/ScriptExecuter';
 import { ENDPOINT } from '../config/config';
 
 export default class ContextMenuExtensionListener {
   constructor() {
     this.contexts = ['page', 'image', 'selection', 'video'];
-    this.create();
+    this.rebuildContextMext();
     return this;
   }
 
-  activate() {
-    chrome.contextMenus.onClicked.addListener(this.onClick);
-  }
-
-  create() {
+  rebuildContextMext() {
     chrome.contextMenus.removeAll(() => {
-      this.contexts.forEach(context => {
-        const title = `Save to Kawpaa with ${context}`;
-        chrome.contextMenus.create({
-          title: title,
-          contexts: [context],
-          id: context,
-        });
-      });
-
-      chrome.contextMenus.create({
-        title: 'Open Kawpaa',
-        contexts: ['browser_action'],
-        id: 'browser_action_open_kawpaa',
-      });
+      this.createContextMenu();
+      this.createBrowserIconContextMenu();
     });
   }
 
-  onClick(info, tab) {
-    if (info.menuItemId === 'browser_action_open_kawpaa') {
-      chrome.tabs.create({ url: ENDPOINT.PROD, active: true }, tab =>
-        console.log('open Kawpaa'),
-      );
-      return;
-    }
-    console.log(tab);
-    console.log(info);
-    let infoStr = JSON.stringify(info);
-    new KawpaaScriptExecuter(infoStr).execute();
+  createContextMenu() {
+    this.contexts
+      .map(context => {
+        const title = `Save to Kawpaa with ${context}`;
+        return {
+          title: title,
+          contexts: [context],
+          id: context,
+        };
+      })
+      .forEach(contextMenu => chrome.contextMenus.create(contextMenu));
+  }
+
+  createBrowserIconContextMenu() {
+    chrome.contextMenus.create({
+      title: 'Open Kawpaa',
+      contexts: ['browser_action'],
+      id: 'browser_action_open_kawpaa',
+    });
+  }
+
+  goToKawpaa() {
+    chrome.tabs.create({ url: ENDPOINT.PROD, active: true }, tab =>
+      console.log('open Kawpaa'),
+    );
+  }
+
+  registerContentToKawpaa(info) {
+    new ScriptExecuter(info).execute();
+  }
+
+  activate() {
+    chrome.contextMenus.onClicked.addListener((info, tab) => {
+      if (info.menuItemId === 'browser_action_open_kawpaa') {
+        return this.goToKawpaa();
+      }
+      this.registerContentToKawpaa(JSON.stringify(info));
+    });
   }
 }

@@ -6,21 +6,26 @@ export default class TabActivateListener {
     this.CAN_RETRIEVE_PATTERN = /^https:\/\/kawpaa.eiurur.xyz(|\/|\/account)$/;
   }
 
-  isAllowedRetrieving(tab) {
-    return this.CAN_RETRIEVE_PATTERN.test(tab.url);
+  isRetrivingUrl(url) {
+    return this.CAN_RETRIEVE_PATTERN.test(url);
   }
 
+  retriveToken(tab) {
+    if (!this.isRetrivingUrl(tab.url)) {
+      return;
+    }
+
+    ChromeExecuter.executeScript({
+      file: CHROME_EXTENSION_RESOURCES.js.token,
+    }).then(res => console.log(res));
+  }
+
+  /**
+   * 1. 特定のURLでトークンを抽出し、ChromeExtensionのstorageに保存する。
+   */
   activate() {
     chrome.tabs.onActivated.addListener(tabInfo => {
-      chrome.tabs.get(tabInfo.tabId, tab => {
-        if (!this.isAllowedRetrieving(tab)) {
-          return;
-        }
-
-        ChromeExecuter.executeScript({
-          file: CHROME_EXTENSION_RESOURCES.js.retriveToken,
-        }).then(res => console.log(res));
-      });
+      chrome.tabs.get(tabInfo.tabId, tab => this.retriveToken(tab));
     });
   }
 }
