@@ -2,7 +2,7 @@ import ChromeExecuter from '../utils/ChromeExecuter';
 import ChromeSyncStorageManager from '../utils/ChromeSyncStorageManager';
 import { CHROME_EXTENSION_RESOURCES } from '../../config/config';
 
-export default class criptExecuter {
+export default class ScriptExecuter {
   constructor(info) {
     this.tasks = [
       ChromeExecuter.insertCSS({ file: CHROME_EXTENSION_RESOURCES.css.lib }),
