@@ -35,6 +35,7 @@ const patches = {
     }, 1000);
   },
 };
+
 export default class InsertionFactory {
   static clean() {
     $('[class^="kawpaa-save-link"]').remove();

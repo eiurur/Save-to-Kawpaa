@@ -40,9 +40,10 @@ export default class NijiuraKawpaaButtonInsertion extends KawpaaButtonInsertion 
   }
 
   getType(url) {
-    return /(\.avi|\.mp4|\.webm)/.test(url)
-      ? CONTENT_TYPE.MOVIE
-      : CONTENT_TYPE.IMAGE;
+    const pathname = new URL(url).pathname;
+    const videoPattern = /(\.mp4|\.webm|\.avi)/;
+    const isVideoContent = videoPattern.test(pathname);
+    return isVideoContent ? CONTENT_TYPE.VIDEO : CONTENT_TYPE.IMAGE;
   }
 
   show(_$, kawpaaButtonBasisPositionSelector) {

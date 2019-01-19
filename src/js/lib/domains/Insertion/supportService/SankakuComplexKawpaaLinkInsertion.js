@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import { SUPPORT_SERVICE } from '../../../../config/config';
+import { CONTENT_TYPE, SUPPORT_SERVICE } from '../../../../config/config';
 import KawpaaLinkInsertion from '../KawpaaLinkInsertion';
 
 export default class SankakuComplexKawpaaLinkInsertion extends KawpaaLinkInsertion {
@@ -31,16 +31,11 @@ export default class SankakuComplexKawpaaLinkInsertion extends KawpaaLinkInserti
 
   async getType() {
     await this.expandImage();
-    const contentUrl = this.extraxtContentUrl();
-    const pathname = new URL(contentUrl).pathname;
-    const videoPattern = /(.mp4|.webm|.avi)/;
-    const isVideoContents = videoPattern.test(pathname);
-
-    if (isVideoContents) {
-      return 'video';
-    } else {
-      return 'image';
-    }
+    const url = this.extraxtContentUrl();
+    const pathname = new URL(url).pathname;
+    const videoPattern = /(\.mp4|\.webm|\.avi)/;
+    const isVideoContent = videoPattern.test(pathname);
+    return isVideoContent ? CONTENT_TYPE.VIDEO : CONTENT_TYPE.IMAGE;
   }
 
   // TODO: いつか不要になる。後で消す。

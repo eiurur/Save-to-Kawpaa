@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import { SUPPORT_SERVICE } from '../../../../config/config';
+import { CONTENT_TYPE, SUPPORT_SERVICE } from '../../../../config/config';
 import KawpaaLinkInsertion from '../KawpaaLinkInsertion';
 
 export default class DanbooruKawpaaLinkInsertion extends KawpaaLinkInsertion {
@@ -19,16 +19,11 @@ export default class DanbooruKawpaaLinkInsertion extends KawpaaLinkInsertion {
   }
 
   getType() {
-    const contentUrl = this.extraxtContentUrl();
-    const pathname = new URL(contentUrl).pathname;
-    const videoPattern = /(.mp4|.webm|.avi)/;
-    const isVideoContents = videoPattern.test(pathname);
-
-    if (isVideoContents) {
-      return 'video';
-    } else {
-      return 'image';
-    }
+    const url = this.extraxtContentUrl();
+    const pathname = new URL(url).pathname;
+    const videoPattern = /(\.mp4|\.webm|\.avi)/;
+    const isVideoContent = videoPattern.test(pathname);
+    return isVideoContent ? CONTENT_TYPE.VIDEO : CONTENT_TYPE.IMAGE;
   }
 
   normalize(src) {

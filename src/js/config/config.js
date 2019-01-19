@@ -25,7 +25,7 @@ const ICONS = {
 
 const CONTENT_TYPE = {
   IMAGE: 'image',
-  MOVIE: 'movie',
+  VIDEO: 'video',
   LINK: 'link',
   TEXT: 'text',
 };
