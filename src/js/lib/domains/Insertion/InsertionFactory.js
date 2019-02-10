@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import { SUPPORT_SERVICE, SUPPORT_URL } from '../../../config/config';
 import {
+  AmatsukaLinkInsertion,
   DanbooruKawpaaLinkInsertion,
   DeviantArtKawpaaLinkInsertion,
   GelbooruKawpaaLinkInsertion,
@@ -63,6 +64,8 @@ export default class InsertionFactory {
       return new NijiuraKawpaaButtonInsertion();
 
     switch (hostname) {
+      case SUPPORT_SERVICE.AMATSUKA_HOSTNAME:
+        return new AmatsukaLinkInsertion();
       case SUPPORT_SERVICE.DONMAI_HOSTNAME:
       case SUPPORT_SERVICE.DANBOORU_HOSTNAME:
         return new DanbooruKawpaaLinkInsertion();

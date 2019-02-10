@@ -1,3 +1,4 @@
+import AmatsukaLinkInsertion from './AmatsukaLinkInsertion';
 import DanbooruKawpaaLinkInsertion from './DanbooruKawpaaLinkInsertion';
 import DeviantArtKawpaaLinkInsertion from './DeviantArtKawpaaLinkInsertion';
 import GelbooruKawpaaLinkInsertion from './GelbooruKawpaaLinkInsertion';
@@ -17,6 +18,7 @@ import TwitterKawpaaButtonInsertion from './TwitterKawpaaButtonInsertion';
 import YandereKawpaaLinkInsertion from './YandereKawpaaLinkInsertion';
 
 export {
+  AmatsukaLinkInsertion,
   DanbooruKawpaaLinkInsertion,
   DeviantArtKawpaaLinkInsertion,
   GelbooruKawpaaLinkInsertion,

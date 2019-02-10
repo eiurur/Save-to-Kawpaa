@@ -45,6 +45,7 @@ const CHROME_EXTENSION_RESOURCES = {
 };
 
 const SUPPORT_SERVICE = {
+  AMATSUKA_HOSTNAME: 'amatsuka.herokuapp.com',
   DONMAI_HOSTNAME: 'donmai.us',
   DANBOORU_HOSTNAME: 'danbooru.donmai.us',
   DEVIANTART_HOSTNAME: 'deviantart.com',

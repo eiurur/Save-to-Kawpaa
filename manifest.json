@@ -3,12 +3,40 @@
   "name": "Save to Kawpaa",
   "description": "あとで抜く",
   "version": "0.12.9",
-  "permissions": ["tabs", "storage", "contextMenus", "notifications", "http://*/*", "https://*/*", "chrome://favicon/"],
-  "content_scripts": [{
-    "matches": ["https://twitter.com/*", "https://tweetdeck.twitter.com/*", "https://www.tumblr.com/*", "https://chan.sankakucomplex.com/*/post/show/*", "https://chan.sankakucomplex.com/post/show/*", "*://danbooru.donmai.us/posts/*", "*://donmai.us/posts/*", "*://*.deviantart.com/art/*", "https://gelbooru.com/*", "*://*.iwara.tv/videos/*", "https://konachan.com/post/show/*", "https://www.pixiv.net/member_illust.php*", "https://yande.re/post/show/*", "*://nijie.info/view.php*", "*://nijie.info/view_popup.php*", "*://*.2chan.net/*/res/*"],
-    "js": ["build/js/insert.bundle.js"],
-    "run_at": "document_end"
-  }],
+  "permissions": [
+    "tabs",
+    "storage",
+    "contextMenus",
+    "notifications",
+    "http://*/*",
+    "https://*/*",
+    "chrome://favicon/"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://amatsuka.herokuapp.com/*",
+        "https://twitter.com/*",
+        "https://tweetdeck.twitter.com/*",
+        "https://www.tumblr.com/*",
+        "https://chan.sankakucomplex.com/*/post/show/*",
+        "https://chan.sankakucomplex.com/post/show/*",
+        "*://danbooru.donmai.us/posts/*",
+        "*://donmai.us/posts/*",
+        "*://*.deviantart.com/art/*",
+        "https://gelbooru.com/*",
+        "*://*.iwara.tv/videos/*",
+        "https://konachan.com/post/show/*",
+        "https://www.pixiv.net/member_illust.php*",
+        "https://yande.re/post/show/*",
+        "*://nijie.info/view.php*",
+        "*://nijie.info/view_popup.php*",
+        "*://*.2chan.net/*/res/*"
+      ],
+      "js": ["build/js/insert.bundle.js"],
+      "run_at": "document_end"
+    }
+  ],
   "browser_action": {
     "default_icon": {
       "19": "build/images/gray/icon19.png",
