@@ -1,5 +1,5 @@
 import ChromeExecuter from '../lib/utils/ChromeExecuter';
-import { CHROME_EXTENSION_RESOURCES } from '../config/config';
+import { CHROME_EXTENSION_RESOURCES } from '../config/';
 
 export default class TabActivateListener {
   constructor() {

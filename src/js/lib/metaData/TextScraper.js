@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import QueryStringParser from '../utils/QueryStringParser';
 import HTMLMetaDataScraper from './HTMLMetaDataScraper';
-import { DEFAULT_IMAGE_URL } from '../../config/config';
+import { DEFAULT_IMAGE_URL } from '../../config/';
 
 export default class TextScraper extends HTMLMetaDataScraper {
   constructor(data) {

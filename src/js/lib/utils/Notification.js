@@ -1,5 +1,5 @@
 import alertify from 'alertifyjs';
-import { CHROME_EXTENSION_RESOURCES } from '../../config/config';
+import { CHROME_EXTENSION_RESOURCES } from '../../config/';
 
 export default class Notification {
   static log() {

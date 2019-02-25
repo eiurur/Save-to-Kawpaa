@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { API, CHROME_RUNTIME_ID, ENDPOINT } from '../../config/config';
+import { API, CHROME_RUNTIME_ID, ENDPOINT } from '../../config/';
 
 export default class KawpaaSender {
   constructor(payload) {

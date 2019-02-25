@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import { SUPPORT_SERVICE, SUPPORT_URL } from '../../../config/config';
+import { SUPPORT_SERVICE, SUPPORT_URL } from '../../../config/';
 import {
   AmatsukaLinkInsertion,
   DanbooruKawpaaLinkInsertion,

@@ -1,6 +1,6 @@
 import ChromeExecuter from '../utils/ChromeExecuter';
 import ChromeSyncStorageManager from '../utils/ChromeSyncStorageManager';
-import { CHROME_EXTENSION_RESOURCES } from '../../config/config';
+import { CHROME_EXTENSION_RESOURCES } from '../../config/';
 
 export default class ScriptExecuter {
   constructor(info) {

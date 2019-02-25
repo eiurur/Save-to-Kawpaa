@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import { CONTENT_TYPE, SUPPORT_SERVICE } from '../../../../config/config';
+import { CONTENT_TYPE, SUPPORT_SERVICE } from '../../../../config/';
 import KawpaaLinkInsertion from '../KawpaaLinkInsertion';
 
 export default class PixivOldMultipleKawpaaLinkInsertion extends KawpaaLinkInsertion {

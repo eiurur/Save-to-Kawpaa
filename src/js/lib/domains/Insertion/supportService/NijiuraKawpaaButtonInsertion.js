@@ -3,7 +3,7 @@ import {
   CONTENT_TYPE,
   SUPPORT_SERVICE,
   ICONS,
-} from '../../../../config/config';
+} from '../../../../config/';
 import KawpaaButtonInsertion from '../KawpaaButtonInsertion';
 
 export default class NijiuraKawpaaButtonInsertion extends KawpaaButtonInsertion {

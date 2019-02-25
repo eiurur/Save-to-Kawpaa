@@ -1,4 +1,4 @@
-import { SUPPORT_SERVICE } from '../config/config';
+import { SUPPORT_SERVICE } from '../config/';
 import ScriptExecuter from '../lib/domains/ScriptExecuter';
 
 export default class RuntimeMessageListener {

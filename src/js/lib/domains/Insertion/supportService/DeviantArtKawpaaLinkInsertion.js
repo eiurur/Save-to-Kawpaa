@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import { SUPPORT_SERVICE, ICONS } from '../../../../config/config';
+import { SUPPORT_SERVICE, ICONS } from '../../../../config/';
 import KawpaaLinkInsertion from '../KawpaaLinkInsertion';
 
 export default class DeviantArtKawpaaLinkInsertion extends KawpaaLinkInsertion {
