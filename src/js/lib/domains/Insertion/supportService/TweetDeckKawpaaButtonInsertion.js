@@ -1,6 +1,9 @@
 import $ from 'jquery';
-import { SUPPORT_SERVICE, ICONS } from '../../../../config/';
+import { CONTENT_TYPE, SUPPORT_SERVICE, ICONS } from '../../../../config/';
 import KawpaaButtonInsertion from '../KawpaaButtonInsertion';
+
+import ChromeSyncStorageManager from '../../../utils/ChromeSyncStorageManager';
+import KawpaaSender from '../../KawpaaSender';
 
 export default class TweetDeckKawpaaButtonInsertion extends KawpaaButtonInsertion {
   constructor() {
@@ -10,32 +13,66 @@ export default class TweetDeckKawpaaButtonInsertion extends KawpaaButtonInsertio
     this.twitter_name = '.account-inline';
     this.tweet_text = '.tweet-text';
     this.tweet_image = '.media-img';
+    this.tweet_video = '.js-media-native-video';
     this.kawpaa_button_container = '.action-kawpaa-container';
     this.kawpaa_button = '.tweet-actions';
   }
 
-  getInfo(targetElement) {
-    return new Promise(resolve => {
-      const info = {
-        siteUrl: targetElement.find('.tweet-timestamp > a').attr('href'),
-        title: `${targetElement
-          .find(this.twitter_name)
-          .text()} / ${targetElement.find(this.tweet_text).text()}`,
-        srcUrl: `${targetElement
+  getTweetType(element) {
+    const hasPhoto = element.find(this.tweet_image).length > 0;
+    const hasVideo = element.find(this.tweet_video).length > 0;
+    if (hasPhoto) {
+      return 'photo';
+    }
+    if (hasVideo) {
+      return 'video';
+    }
+    return 'text';
+  }
+
+  async getInfo(targetElement) {
+    const siteUrl = targetElement.find('.tweet-timestamp > a').attr('href');
+    const title = `${targetElement
+      .find(this.twitter_name)
+      .text()} / ${targetElement.find(this.tweet_text).text()}`;
+    let info = { siteUrl, title };
+
+    const tweetType = this.getTweetType(targetElement);
+    switch (tweetType) {
+      case 'photo': {
+        const imageUrl = `${targetElement
           .find(this.tweet_image)
           .attr('src')
-          .replace(':large', '')}:orig`,
-      };
-      console.log(info);
-      return resolve(info);
-    });
+          .replace(':large', '')}:orig`;
+        info = Object.assign(info, {
+          type: CONTENT_TYPE.IMAGE,
+          srcUrl: imageUrl,
+        });
+        break;
+      }
+      case 'video': {
+        const tweetId = /status\/(\d+)$/.exec(siteUrl)[1];
+        const { data } = await this.fetchTweet(tweetId);
+        const videos = data.data.extended_entities.media[0].video_info.variants;
+        const videoUrl = videos.splice(-2, 1)[0].url;
+        info = Object.assign(info, {
+          type: CONTENT_TYPE.VIDEO,
+          url: videoUrl,
+          srcUrl: videoUrl,
+        });
+        break;
+      }
+    }
+    console.log(info);
+    return info;
   }
 
   show(_$) {
     const existKawpaaButton =
       _$.find(this.kawpaa_button_container).length !== 0;
     const hasPhoto = _$.find(this.tweet_image).length > 0;
-    if (existKawpaaButton || !hasPhoto) {
+    const hasVideo = _$.find(this.tweet_video).length > 0;
+    if (existKawpaaButton || !(hasPhoto || hasVideo)) {
       return;
     }
 
@@ -81,5 +118,14 @@ export default class TweetDeckKawpaaButtonInsertion extends KawpaaButtonInsertio
       },
       _this.container,
     );
+  }
+
+  async fetchTweet(tweetId) {
+    const token = await ChromeSyncStorageManager.get('token');
+    const payload = {
+      token: token,
+    };
+    const sender = new KawpaaSender(payload);
+    return await sender.get(`/api/convert/tweet/${tweetId}`);
   }
 }

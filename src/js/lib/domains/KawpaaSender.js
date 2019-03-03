@@ -5,7 +5,6 @@ export default class KawpaaSender {
   constructor(payload) {
     this.payload = payload === null ? {} : payload;
     this.instance = this.getAxios();
-    this.format();
   }
 
   format() {
@@ -28,11 +27,15 @@ export default class KawpaaSender {
   }
 
   save() {
-    return new Promise((resolve, reject) => {
-      this.instance
-        .post(API.REGISTER, this.payload)
-        .then(response => resolve(response))
-        .catch(err => reject(err));
-    });
+    this.format();
+    return this.instance.post(API.REGISTER, this.payload);
+  }
+
+  get(url) {
+    return this.instance.get(url, this.payload);
+  }
+
+  post(url) {
+    return this.instance.post(url, this.payload);
   }
 }
