@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import { SUPPORT_SERVICE, ICONS } from '../../../../config/';
+import { CONTENT_TYPE, SUPPORT_SERVICE, ICONS } from '../../../../config/';
 import KawpaaButtonInsertion from '../KawpaaButtonInsertion';
 
 export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion {
@@ -14,20 +14,20 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
     this.tweet_text = '.js-tweet-text';
     this.tweet_image = '.js-adaptive-photo';
     this.tweet_media = '.media-image';
+    this.tweet_video = '.AdaptiveMedia-video';
     this.kawpaa_button_container = '.action-kawpaa-container';
     this.kawpaa_button = '.ProfileTweet-actionList';
-    this.twitter_movie = 'video > source';
   }
 
   getTweetType(element) {
     const hasPhoto = element.find(this.tweet_image).length > 0;
-    const hasMovie = element.find(this.twitter_movie).length > 0;
+    const hasVideo = element.find(this.tweet_video).length > 0;
 
     if (hasPhoto) {
       return 'photo';
     }
-    if (hasMovie) {
-      return 'movie';
+    if (hasVideo) {
+      return 'video';
     }
     return 'text';
   }
@@ -58,26 +58,24 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
             imageUrl = imageUrl.replace(':large', '');
 
             const info = {
+              type: CONTENT_TYPE.IMAGE,
               siteUrl: `https://twitter.com${tweetUrl}`,
               title: title,
               srcUrl: `${imageUrl}:orig`,
             };
             return info;
           }
-          case 'movie': {
-            let imageUrl = targetElement.find(this.twitter_movie).attr('src'); // 動画(mp4)
+          case 'video': {
+            let videoUrl = targetElement.find('video').attr('src'); // 動画(mp4)
             // 複数枚のときは今見ている画像を保存する。
-            // console.log(imageUrl);
-            // imageUrl =
-            //   $(this.tweet_media)
-            //     .first()
-            //     .attr('src') || imageUrl;
-            // console.log(imageUrl);
+            console.log(videoUrl);
 
             const info = {
+              type: CONTENT_TYPE.VIDEO,
               siteUrl: `https://twitter.com${tweetUrl}`,
               title: title,
-              srcUrl: `${imageUrl}`,
+              url: `${videoUrl}`,
+              srcUrl: `${videoUrl}`,
             };
             return info;
           }
@@ -92,8 +90,8 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
     const existKawpaaButton =
       _$.find(this.kawpaa_button_container).length !== 0;
     const hasPhoto = _$.find(this.tweet_image).length > 0;
-    const hasMovie = _$.find(this.twitter_movie).length > 0;
-    if (existKawpaaButton || !(hasPhoto || hasMovie)) {
+    const hasVideo = _$.find(this.tweet_video).length > 0;
+    if (existKawpaaButton || !(hasPhoto || hasVideo)) {
       return;
     }
 
