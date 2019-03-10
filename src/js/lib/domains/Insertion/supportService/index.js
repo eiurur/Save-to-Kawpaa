@@ -1,4 +1,5 @@
 import AmatsukaLinkInsertion from './AmatsukaLinkInsertion';
+import AnimePictureKawpaaLinkInsertion from './AnimePictureKawpaaLinkInsertion';
 import DanbooruKawpaaLinkInsertion from './DanbooruKawpaaLinkInsertion';
 import DeviantArtKawpaaLinkInsertion from './DeviantArtKawpaaLinkInsertion';
 import GelbooruKawpaaLinkInsertion from './GelbooruKawpaaLinkInsertion';
@@ -8,6 +9,7 @@ import KonachanKawpaaLinkInsertion from './KonachanKawpaaLinkInsertion';
 import NijieKawpaaLinkInsertion from './NijieKawpaaLinkInsertion';
 import NijieMultiKawpaaLinkInsertion from './NijieMultiKawpaaLinkInsertion';
 import NijiuraKawpaaButtonInsertion from './NijiuraKawpaaButtonInsertion';
+import NozomiLaKawpaaLinkInsertion from './NozomiLaKawpaaLinkInsertion';
 import PixivKawpaaLinkInsertion from './PixivKawpaaLinkInsertion';
 import PixivMultipleKawpaaLinkInsertion from './PixivMultipleKawpaaLinkInsertion';
 import PixivOldMultipleKawpaaLinkInsertion from './PixivOldMultipleKawpaaLinkInsertion';
@@ -19,6 +21,7 @@ import YandereKawpaaLinkInsertion from './YandereKawpaaLinkInsertion';
 
 export {
   AmatsukaLinkInsertion,
+  AnimePictureKawpaaLinkInsertion,
   DanbooruKawpaaLinkInsertion,
   DeviantArtKawpaaLinkInsertion,
   GelbooruKawpaaLinkInsertion,
@@ -27,6 +30,7 @@ export {
   NijieKawpaaLinkInsertion,
   NijieMultiKawpaaLinkInsertion,
   NijiuraKawpaaButtonInsertion,
+  NozomiLaKawpaaLinkInsertion,
   PixivKawpaaLinkInsertion,
   PixivMultipleKawpaaLinkInsertion,
   PixivOldMultipleKawpaaLinkInsertion,

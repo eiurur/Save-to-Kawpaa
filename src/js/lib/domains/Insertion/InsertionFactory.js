@@ -2,6 +2,7 @@ import $ from 'jquery';
 import { SUPPORT_SERVICE, SUPPORT_URL } from '../../../config/';
 import {
   AmatsukaLinkInsertion,
+  AnimePictureKawpaaLinkInsertion,
   DanbooruKawpaaLinkInsertion,
   DeviantArtKawpaaLinkInsertion,
   GelbooruKawpaaLinkInsertion,
@@ -10,6 +11,7 @@ import {
   NijieKawpaaLinkInsertion,
   NijieMultiKawpaaLinkInsertion,
   NijiuraKawpaaButtonInsertion,
+  NozomiLaKawpaaLinkInsertion,
   PixivKawpaaLinkInsertion,
   PixivMultipleKawpaaLinkInsertion,
   PixivOldMultipleKawpaaLinkInsertion,
@@ -66,6 +68,8 @@ export default class InsertionFactory {
     switch (hostname) {
       case SUPPORT_SERVICE.AMATSUKA_HOSTNAME:
         return new AmatsukaLinkInsertion();
+      case SUPPORT_SERVICE.ANIME_PICTURE_HOSTNAME:
+        return new AnimePictureKawpaaLinkInsertion();
       case SUPPORT_SERVICE.DONMAI_HOSTNAME:
       case SUPPORT_SERVICE.DANBOORU_HOSTNAME:
         return new DanbooruKawpaaLinkInsertion();
@@ -77,6 +81,8 @@ export default class InsertionFactory {
         return new KonachanKawpaaLinkInsertion();
       // case SUPPORT_SERVICE.IWARA_HOSTNAME:
       //   return new IwaraKawpaaLinkInsertion();
+      case SUPPORT_SERVICE.NOZOMI_LA_HOSTNAME:
+        return new NozomiLaKawpaaLinkInsertion();
       case SUPPORT_SERVICE.PIXIV_HOSTNAME:
         patches.pixiv();
         return new PixivKawpaaLinkInsertion();

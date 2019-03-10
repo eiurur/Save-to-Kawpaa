@@ -44,32 +44,34 @@ Go to Site
 
 # Support Service
 
-* [x] Danbooru
-* [x] DeviantART
-* [x] Gelbooru
-* [x] <a href="http://ecchi.iwara.tv" target="_blank">Iwara.tv</a>
-* [x] Konachan
-* [x] Nijie (ニジエ)
-* [x] pixiv
-* [x] Twitter
-* [x] TweetDeck
-* [x] SankakuComplex
-* [x] yande.re
-* [x] 2chan.net (ふたばちゃんねる)
+- [x] Danbooru
+- [x] DeviantART
+- [x] Gelbooru
+- [x] <a href="http://ecchi.iwara.tv" target="_blank">Iwara.tv</a>
+- [x] Konachan
+- [x] Nijie (ニジエ)
+- [x] pixiv
+- [x] Twitter
+- [x] TweetDeck
+- [x] SankakuComplex
+- [x] yande.re
+- [x] 2chan.net (ふたばちゃんねる)
+- [x] anime-picutres.net
+- [x] nozomi.la
 
-- [ ] DLSite
-- [ ] DMM.com
-- [ ] pinterest
-- [ ] pornhub
-- [ ] youtube
+* [ ] DLSite
+* [ ] DMM.com
+* [ ] pinterest
+* [ ] pornhub
+* [ ] youtube
 
 # Shortcut
 
 you can save the link with shortcut
 
-* Windows -- `Ctrl + Shift + U`
+- Windows -- `Ctrl + Shift + U`
 
-* Mac -- `Command + Shift + U`
+- Mac -- `Command + Shift + U`
 
 # Development
 
@@ -86,16 +88,16 @@ you can save the link with shortcut
 > <a href="https://twitter.com/haruyuki_nijyou/status/687040101721874432" target="_blank">はる雪さんは Twitter を使っています : &quot; 中学生大家さん
 > https://t.co/VP0YdGl1YE&quot;</a>
 
-| プロパティ名 | 説明                                                                                            | 例                                                                              | デフォルトのクエリ                             |
-| ------------ | ----------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ---------------------------------------------- |
-| title        | ページタイトル                                                                                  | はる雪さんは Twitter を使っています : " 中学生大家さん https://t.co/VP0YdGl1YE" | $('head title').text()                         |
-| siteName     | サイトの名前                                                                                    |                                                                                 | $('meta[property="og:site_name"]').text()      |
-| siteUrl      | サイトの URL                                                                                    | https://twitter.com/haruyuki_nijyou/status/687040101721874432                   | $(location).attr('href')                       |
-| url          | イラストまたはリンクの URL                                                                      | https://twitter.com/haruyuki_nijyou/status/687040101721874432                   |                                                |
-| type         | コンテンツの種類 (image/link)                                                                   | link                                                                            |                                                |
-| hostName     | ホスト名                                                                                        | twitter.com                                                                     | location.host                                  |
-| description  | サイトの説明                                                                                    | “ 中学生大家さん ”                                                              | $('meta[name="description"]').attr('content')  |
-| siteImage    | type が image であれば、対象の画像 URL、type が link であればページで最初に見つかった画像の URL | https://pbs.twimg.com/media/CYjbVOCVAAAEegD.png:large                           | $('meta[property="og:image"]').attr('content') |
-| favicon      | ファビコン                                                                                      | https://abs.twimg.com/favicons/favicon.ico                                      | $('link[rel="shortcut icon"]').prop('href')    |
-| isPrivate    | 非公開か否かの Boolean 値。固定値。                                                             | true                                                                            |                                                |
-| isArchive    | Archive に属するコンテンツか否かの Boolean 値。固定値。                                         | false                                                                           |                                                |
+| プロパティ名 | 説明                                                                                            | 例                                                                              | デフォルトのクエリ                              |
+| ------------ | ----------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ----------------------------------------------- |
+| title        | ページタイトル                                                                                  | はる雪さんは Twitter を使っています : " 中学生大家さん https://t.co/VP0YdGl1YE" | \$('head title').text()                         |
+| siteName     | サイトの名前                                                                                    |                                                                                 | \$('meta[property="og:site_name"]').text()      |
+| siteUrl      | サイトの URL                                                                                    | https://twitter.com/haruyuki_nijyou/status/687040101721874432                   | \$(location).attr('href')                       |
+| url          | イラストまたはリンクの URL                                                                      | https://twitter.com/haruyuki_nijyou/status/687040101721874432                   |                                                 |
+| type         | コンテンツの種類 (image/link)                                                                   | link                                                                            |                                                 |
+| hostName     | ホスト名                                                                                        | twitter.com                                                                     | location.host                                   |
+| description  | サイトの説明                                                                                    | “ 中学生大家さん ”                                                              | \$('meta[name="description"]').attr('content')  |
+| siteImage    | type が image であれば、対象の画像 URL、type が link であればページで最初に見つかった画像の URL | https://pbs.twimg.com/media/CYjbVOCVAAAEegD.png:large                           | \$('meta[property="og:image"]').attr('content') |
+| favicon      | ファビコン                                                                                      | https://abs.twimg.com/favicons/favicon.ico                                      | \$('link[rel="shortcut icon"]').prop('href')    |
+| isPrivate    | 非公開か否かの Boolean 値。固定値。                                                             | true                                                                            |                                                 |
+| isArchive    | Archive に属するコンテンツか否かの Boolean 値。固定値。                                         | false                                                                           |                                                 |

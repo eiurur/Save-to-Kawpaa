@@ -101,7 +101,7 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
         } js-tooltip" href="#" data-original-title="Save to Kawpaa" style="display: inline-block; float: left;">
           <span class="icon icon-kawpaa" style="display: block; height: 16px; position: relative; top: 3px; width: 16px; background-image: url(${
             ICONS.GRAY_16
-          });">a</span>
+          });"></span>
         </a>
       </div>\
     `;

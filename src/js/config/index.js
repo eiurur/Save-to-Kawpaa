@@ -46,6 +46,7 @@ const CHROME_EXTENSION_RESOURCES = {
 
 const SUPPORT_SERVICE = {
   AMATSUKA_HOSTNAME: 'amatsuka.herokuapp.com',
+  ANIME_PICTURE_HOSTNAME: 'anime-pictures.net',
   DONMAI_HOSTNAME: 'donmai.us',
   DANBOORU_HOSTNAME: 'danbooru.donmai.us',
   DEVIANTART_HOSTNAME: 'deviantart.com',
@@ -55,6 +56,7 @@ const SUPPORT_SERVICE = {
   KONACHAN_HOSTNAME: 'konachan.com',
   NIJIE_HOSTNAME: 'nijie.info',
   NIJIURA_HOSTNAME: '2chan.net',
+  NOZOMI_LA_HOSTNAME: 'nozomi.la',
   PIXIV_HOSTNAME: 'www.pixiv.net',
   SANKAKUCOMPLEX_HOSTNAME: 'chan.sankakucomplex.com',
   TUMBLR_HOSTNAME: 'www.tumblr.com',
