@@ -54,7 +54,7 @@ export default class KawpaaLinkInsertion {
     return null;
   }
 
-  getParamsToServer(info) {
+  getParamsToServer(info = {}) {
     return Promise.all([this.getType(), this.getContent(), this.getUrl()]).then(
       getedData => ({
         name: this.hostname,

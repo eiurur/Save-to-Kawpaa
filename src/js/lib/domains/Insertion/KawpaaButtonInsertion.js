@@ -17,7 +17,7 @@ export default class KawpaaButtonInsertion {
 
   getInfo() {}
 
-  getParamsToServer(info) {
+  getParamsToServer(info = {}) {
     return new Promise((resolve, reject) => {
       const params = {
         name: this.hostname,
