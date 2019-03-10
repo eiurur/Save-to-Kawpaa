@@ -2,6 +2,8 @@ import $ from 'jquery';
 import { CONTENT_TYPE, SUPPORT_SERVICE, ICONS } from '../../../../config/';
 import KawpaaButtonInsertion from '../KawpaaButtonInsertion';
 
+import ChromeSyncStorageManager from '../../../utils/ChromeSyncStorageManager';
+import KawpaaSender from '../../KawpaaSender';
 export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion {
   constructor() {
     super(SUPPORT_SERVICE.TWITTER_HOSTNAME);
@@ -32,58 +34,55 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
     return 'text';
   }
 
-  getInfo(targetElement) {
-    return new Promise(resolve => {
-      let tweetUrl =
-        targetElement.find(this.tweet_url).attr('href') ||
-        targetElement.find(this.tweet_container).data('permalink-path');
-      let fullname = targetElement.find(this.twitter_fullname).text();
-      let username = targetElement.find(this.twitter_username).text();
-      let monoUsername = /^@(\w)*/.exec(username)[0]; // ツイート詳細モーダルだと複数の@usernameが取得されるので単一にする。
-      let text = targetElement.find(this.tweet_text).text();
-      let title = `${fullname} ${monoUsername} / ${text}`;
+  async getInfo(targetElement) {
+    let tweetUrl =
+      targetElement.find(this.tweet_url).attr('href') ||
+      targetElement.find(this.tweet_container).data('permalink-path');
+    let siteUrl = `https://twitter.com${tweetUrl}`;
 
-      const tweetType = this.getTweetType(targetElement);
-      const info = (tweetType => {
-        switch (tweetType) {
-          case 'photo': {
-            let imageUrl = targetElement
-              .find(this.tweet_image)
-              .attr('data-image-url');
-            // 複数枚のときは今見ている画像を保存する。
-            imageUrl =
-              $(this.tweet_media)
-                .first()
-                .attr('src') || imageUrl;
-            imageUrl = imageUrl.replace(':large', '');
+    let fullname = targetElement.find(this.twitter_fullname).text();
+    let username = targetElement.find(this.twitter_username).text();
+    let monoUsername = /^@(\w)*/.exec(username)[0]; // ツイート詳細モーダルだと複数の@usernameが取得されるので単一にする。
+    let text = targetElement.find(this.tweet_text).text();
+    let title = `${fullname} ${monoUsername} / ${text}`;
+    let info = { siteUrl, title };
 
-            const info = {
-              type: CONTENT_TYPE.IMAGE,
-              siteUrl: `https://twitter.com${tweetUrl}`,
-              title: title,
-              srcUrl: `${imageUrl}:orig`,
-            };
-            return info;
-          }
-          case 'video': {
-            let videoUrl = targetElement.find('video').attr('src'); // 動画(mp4)
-            // 複数枚のときは今見ている画像を保存する。
-            console.log(videoUrl);
+    const tweetType = this.getTweetType(targetElement);
 
-            const info = {
-              type: CONTENT_TYPE.VIDEO,
-              siteUrl: `https://twitter.com${tweetUrl}`,
-              title: title,
-              url: `${videoUrl}`,
-              srcUrl: `${videoUrl}`,
-            };
-            return info;
-          }
-        }
-      })(tweetType);
+    switch (tweetType) {
+      case 'photo': {
+        let imageUrl = targetElement
+          .find(this.tweet_image)
+          .attr('data-image-url');
+        // 複数枚のときは今見ている画像を保存する。
+        imageUrl =
+          $(this.tweet_media)
+            .first()
+            .attr('src') || imageUrl;
+        imageUrl = imageUrl.replace(':large', '');
 
-      return resolve(info);
-    });
+        info = Object.assign(info, {
+          type: CONTENT_TYPE.IMAGE,
+          srcUrl: `${imageUrl}:orig`,
+        });
+        break;
+      }
+      case 'video': {
+        const tweetId = /status\/(\d+)$/.exec(tweetUrl)[1];
+        const { data } = await this.fetchTweet(tweetId);
+        const videos = data.data.extended_entities.media[0].video_info.variants;
+        const videoUrl = videos.sort((a, b) => b.bitrate - a.bitrate)[0].url;
+        console.log(videoUrl);
+        info = Object.assign(info, {
+          type: CONTENT_TYPE.VIDEO,
+          url: videoUrl,
+          srcUrl: videoUrl,
+        });
+        break;
+      }
+    }
+    console.log(info);
+    return info;
   }
 
   show(_$) {
@@ -158,5 +157,14 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
       },
       _this.stream_tweet,
     );
+  }
+
+  async fetchTweet(tweetId) {
+    const token = await ChromeSyncStorageManager.get('token');
+    const payload = {
+      token: token,
+    };
+    const sender = new KawpaaSender(payload);
+    return await sender.get(`/api/convert/tweet/${tweetId}`);
   }
 }
