@@ -68,16 +68,26 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
         break;
       }
       case 'video': {
-        const tweetId = /status\/(\d+)$/.exec(tweetUrl)[1];
-        const { data } = await this.fetchTweet(tweetId);
-        const videos = data.data.extended_entities.media[0].video_info.variants;
-        const videoUrl = videos.sort((a, b) => b.bitrate - a.bitrate)[0].url;
-        console.log(videoUrl);
-        info = Object.assign(info, {
-          type: CONTENT_TYPE.VIDEO,
-          url: videoUrl,
-          srcUrl: videoUrl,
-        });
+        let videoUrl = targetElement.find('video').attr('src'); // 動画(mp4)
+        if (/\.mp4/.test(videoUrl)) {
+          info = Object.assign(info, {
+            type: CONTENT_TYPE.VIDEO,
+            url: videoUrl,
+            srcUrl: videoUrl,
+          });
+        } else {
+          const tweetId = /status\/(\d+)$/.exec(tweetUrl)[1];
+          const { data } = await this.fetchTweet(tweetId);
+          console.log(data);
+          const videos =
+            data.data.extended_entities.media[0].video_info.variants;
+          videoUrl = videos.sort((a, b) => b.bitrate - a.bitrate)[0].url;
+          info = Object.assign(info, {
+            type: CONTENT_TYPE.VIDEO,
+            url: videoUrl,
+            srcUrl: videoUrl,
+          });
+        }
         break;
       }
     }
@@ -165,6 +175,6 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
       token: token,
     };
     const sender = new KawpaaSender(payload);
-    return await sender.get(`/api/convert/tweet/${tweetId}`);
+    return sender.get(`/api/convert/tweet/${tweetId}`);
   }
 }
