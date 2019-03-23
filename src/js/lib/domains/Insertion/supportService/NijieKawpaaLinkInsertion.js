@@ -33,7 +33,7 @@ export default class NijieKawpaaLinkInsertion extends KawpaaLinkInsertion {
 
   getType() {
     const contentUrl = this.extraxtContentUrl();
-    const pathname = new URL(url).pathname;
+    const pathname = new URL(contentUrl).pathname;
     const videoPattern = /(\.mp4|\.webm|\.avi)/;
     const isVideoContent = videoPattern.test(pathname);
     return isVideoContent ? CONTENT_TYPE.VIDEO : CONTENT_TYPE.IMAGE;
