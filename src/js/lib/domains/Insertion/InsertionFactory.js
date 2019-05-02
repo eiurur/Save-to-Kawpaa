@@ -17,6 +17,7 @@ import {
   PixivOldMultipleKawpaaLinkInsertion,
   SankakuComplexKawpaaLinkInsertion,
   TumblrKawpaaButtonInsertion,
+  OldTwitterKawpaaButtonInsertion,
   TwitterKawpaaButtonInsertion,
   TweetDeckKawpaaButtonInsertion,
   YandereKawpaaLinkInsertion,
@@ -36,6 +37,13 @@ const patches = {
         clearInterval(timer);
       }
     }, 1000);
+  },
+  twitter: () => {
+    if ($('.global-nav').length > 0) {
+      return new OldTwitterKawpaaButtonInsertion();
+    } else {
+      return new TwitterKawpaaButtonInsertion();
+    }
   },
 };
 
@@ -93,7 +101,7 @@ export default class InsertionFactory {
       case SUPPORT_SERVICE.TWEETDECK_HOSTNAME:
         return new TweetDeckKawpaaButtonInsertion();
       case SUPPORT_SERVICE.TWITTER_HOSTNAME:
-        return new TwitterKawpaaButtonInsertion();
+        return patches.twitter();
       case SUPPORT_SERVICE.YANDE_RE_HOSTNAME:
         return new YandereKawpaaLinkInsertion();
       default:

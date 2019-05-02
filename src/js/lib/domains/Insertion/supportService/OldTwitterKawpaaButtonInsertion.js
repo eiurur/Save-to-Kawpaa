@@ -1,12 +1,15 @@
 import $ from 'jquery';
-import { CONTENT_TYPE, SUPPORT_SERVICE, ICONS } from '../../../../config/';
+import { CONTENT_TYPE, SUPPORT_SERVICE, ICONS } from '../../../../config';
 import KawpaaButtonInsertion from '../KawpaaButtonInsertion';
 
-export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion {
+import ChromeSyncStorageManager from '../../../utils/ChromeSyncStorageManager';
+import KawpaaSender from '../../KawpaaSender';
+export default class OldTwitterKawpaaButtonInsertion extends KawpaaButtonInsertion {
   constructor() {
     super(SUPPORT_SERVICE.TWITTER_HOSTNAME);
-    this.container = '[role="article"]';
-    this.tweet_container = '[data-testid="tweet"]';
+    this.container = '.permalink-tweet-container';
+    this.stream_tweet = '.js-stream-tweet';
+    this.tweet_container = '.permalink-tweet';
     this.tweet_url = '.tweet-timestamp';
     this.twitter_fullname = '.fullname'; // ぴゃー
     this.twitter_username = '.username'; // @puaa
@@ -48,7 +51,9 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
 
     switch (tweetType) {
       case 'photo': {
-        let imageUrl = targetElement.find('[aria-label] img').attr('src');
+        let imageUrl = targetElement
+          .find(this.tweet_image)
+          .attr('data-image-url');
         // 複数枚のときは今見ている画像を保存する。
         imageUrl =
           $(this.tweet_media)
@@ -73,10 +78,11 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
         } else {
           const tweetId = /status\/(\d+)$/.exec(tweetUrl)[1];
           const { data } = await this.fetchTweet(tweetId);
-          console.log(data);
           const videos =
             data.data.extended_entities.media[0].video_info.variants;
-          videoUrl = videos.sort((a, b) => b.bitrate - a.bitrate)[0].url;
+          videoUrl = videos
+            .filter(video => !!video.bitrate)
+            .sort((a, b) => b.bitrate - a.bitrate)[0].url;
           info = Object.assign(info, {
             type: CONTENT_TYPE.VIDEO,
             url: videoUrl,
@@ -88,20 +94,6 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
     }
     console.log(info);
     return info;
-  }
-
-  fetchTweet(tweetId) {
-    return new Promise(resolve => {
-      chrome.runtime.sendMessage(
-        {
-          func: 'fetchTweet',
-          tweetId: tweetId,
-        },
-        data => {
-          return resolve(data);
-        },
-      );
-    });
   }
 
   show(_$) {
@@ -137,7 +129,19 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
         .find('.icon-kawpaa')
         .css('background-image', 'url(' + ICONS.BLUE_16 + ')');
 
-      const targetElement = $(this).closest(_this.tweet_container);
+      const $jsStreamTweet = $(this).closest(_this.stream_tweet);
+      const $permalinkTweetContaner = $(this).closest(_this.tweet_container);
+      const nowPageVariable =
+        $jsStreamTweet.length > 0 ? 'homeTImeline' : void 0;
+      var targetElement = null;
+      switch (nowPageVariable) {
+        case 'homeTImeline':
+          targetElement = $jsStreamTweet;
+          break;
+        default:
+          targetElement = $permalinkTweetContaner;
+      }
+
       _this
         .getInfo(targetElement)
         .then(info => _this.getParamsToServer(info))
@@ -166,6 +170,19 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
     );
   }
 
+  fetchTweet(tweetId) {
+    return new Promise(resolve => {
+      chrome.runtime.sendMessage(
+        {
+          func: 'fetchTweet',
+          tweetId: tweetId,
+        },
+        data => {
+          return resolve(data);
+        },
+      );
+    });
+  }
   // async fetchTweet(tweetId) {
   //   const token = await ChromeSyncStorageManager.get('token');
   //   const payload = {
