@@ -14,11 +14,11 @@ export default class PixivMultipleKawpaaLinkInsertion extends KawpaaLinkInsertio
       .${this.kawpaaLinkClassName} {
         position: absolute;
         background: rgba(0,0,0,0.5);
-        bottom: 0;
         color: white;
         left: 0;
-        right: 0;
-        padding: 16px;
+        top: 50%;
+        transform: rotate(-90deg) translate(0, -200%);
+        padding: 8px;
         cursor: pointer;
         text-align: center;
         transition: all 0.5s ease;

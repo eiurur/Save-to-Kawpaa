@@ -5,5 +5,5 @@ gulp.task('build', [
   'images',
   'vendor_js',
   'vendor_css',
-  'option_css'
+  'option_css',
 ]);
