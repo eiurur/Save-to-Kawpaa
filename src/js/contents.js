@@ -12,8 +12,11 @@ import KawpaaAgent from './lib/domains/KawpaaAgent';
     await agent.register();
     Notification.success();
   } catch (err) {
+    console.log(err, err.response, err.message);
     const errorReason =
-      err && err.response ? err.response.data.message : err.message;
+      err && err.response && err.response.data
+        ? err.response.data
+        : err.message;
     const errorMessage =
       '<b>保存に失敗しました。</b><br><br><br><br><b>原因：</b><br><br> ' +
       errorReason +
