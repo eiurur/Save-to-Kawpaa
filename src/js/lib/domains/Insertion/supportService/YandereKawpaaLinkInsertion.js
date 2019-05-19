@@ -17,8 +17,9 @@ export default class YandereKawpaaLinkInsertion extends KawpaaLinkInsertion {
   getUrl() {
     return new Promise(resolve => {
       // 個人的にsampleサイズでも十分に感じるため大きいサイズに変換する処理は行わない。
-      const originalImageSrc = $('#image').attr('src');
-      const url = originalImageSrc;
+      const largeImagesrc = $('#highres').attr('href');
+      const viewingImageSrc = $('#image').attr('src');
+      const url = largeImagesrc ? largeImagesrc : viewingImageSrc;
       return resolve(url);
     });
   }
