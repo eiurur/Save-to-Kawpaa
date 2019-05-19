@@ -29,8 +29,13 @@ export default class IwaraKawpaaLinkInsertion extends KawpaaLinkInsertion {
       video.attr('width', '100%');
       return video.get(0).outerHTML;
     } else if (location.href.includes('www.iwara.tv/videos')) {
-      var video = $('.embedded-video iframe');
-      return video.get(0).outerHTML;
+      var videoExternal = $('.embedded-video iframe');
+      var videoOriginal = $('#video-player_html5_api');
+      videoOriginal.attr('controls', true);
+      videoOriginal.attr('width', '100%');
+      return videoExternal.get(0)
+        ? videoExternal.get(0).outerHTML
+        : videoOriginal.get(0).outerHTML;
     } else {
       return null;
     }
@@ -43,8 +48,11 @@ export default class IwaraKawpaaLinkInsertion extends KawpaaLinkInsertion {
         const srcUrl = `http:${videoThumbnailImage}`;
         return resolve(srcUrl);
       } else if (location.href.includes('www.iwara.tv/videos')) {
+        const videoThumbnailImage = $('#video-player').attr('poster');
         const profileImage = $('.node-info .user-picture img').attr('src');
-        const srcUrl = `http:${profileImage}`;
+        const srcUrl = videoThumbnailImage
+          ? videoThumbnailImage
+          : `http:${profileImage}`;
         return resolve(srcUrl);
       } else {
         return null;

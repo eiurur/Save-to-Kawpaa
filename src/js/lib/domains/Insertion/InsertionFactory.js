@@ -87,8 +87,6 @@ export default class InsertionFactory {
       //   return new KomifloKawpaaLinkInsertion();
       case SUPPORT_SERVICE.KONACHAN_HOSTNAME:
         return new KonachanKawpaaLinkInsertion();
-      // case SUPPORT_SERVICE.IWARA_HOSTNAME:
-      //   return new IwaraKawpaaLinkInsertion();
       case SUPPORT_SERVICE.NOZOMI_LA_HOSTNAME:
         return new NozomiLaKawpaaLinkInsertion();
       case SUPPORT_SERVICE.PIXIV_HOSTNAME:
