@@ -6,7 +6,7 @@ const watch = require('gulp-watch');
 
 const ManifestVersionManager = require('../lib/ManifestVersionManager');
 
-gulp.task('zip', ['update_manifest_version'], function() {
+gulp.task('zip', gulp.series('update_manifest_version'), function() {
   let manifest = require('../../manifest.json');
   let newVersion = new ManifestVersionManager(argv.versions, manifest.version)
     .update()
