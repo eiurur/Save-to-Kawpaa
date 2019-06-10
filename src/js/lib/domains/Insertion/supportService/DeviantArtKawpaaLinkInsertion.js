@@ -12,12 +12,8 @@ export default class DeviantArtKawpaaLinkInsertion extends KawpaaLinkInsertion {
 
   buildButton({ ext, width, height, imageUrl }) {
     this.html = `
-    <a class='${
-      this.kawpaaLinkClassName
-    } dev-page-button dev-page-button-with-text dev-page-download' href='#' data-download_url='${imageUrl}'>
-    <i style='background: url(${
-      ICONS.BLUE_16
-    }); background-position: none; background-repeat: no-repeat;'></i>
+    <a class='${this.kawpaaLinkClassName} dev-page-button dev-page-button-with-text dev-page-download' href='#' data-download_url='${imageUrl}'>
+    <i style='background: url(${ICONS.BLUE_16}); background-position: none; background-repeat: no-repeat;'></i>
     <span class='label'>Save to Kawpaa</span>
     <span class='text'>${ext} ${width} x ${height}</span>
     </a>

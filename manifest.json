@@ -32,7 +32,7 @@
         "https://yande.re/post/show/*",
         "*://nijie.info/view.php*",
         "*://nijie.info/view_popup.php*",
-        "*://*.2chan.net/*/res/*",
+        "*://nijiuradeck.serveo.net/*",
         "https://nozomi.la/*"
       ],
       "js": ["build/js/insert.bundle.js"],

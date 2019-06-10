@@ -11,6 +11,7 @@ import {
   NijieKawpaaLinkInsertion,
   NijieMultiKawpaaLinkInsertion,
   NijiuraKawpaaButtonInsertion,
+  NijiuraDecKawpaaButtonInsertion,
   NozomiLaKawpaaLinkInsertion,
   PixivKawpaaLinkInsertion,
   PixivMultipleKawpaaLinkInsertion,
@@ -87,6 +88,8 @@ export default class InsertionFactory {
       //   return new KomifloKawpaaLinkInsertion();
       case SUPPORT_SERVICE.KONACHAN_HOSTNAME:
         return new KonachanKawpaaLinkInsertion();
+      case SUPPORT_SERVICE.NIJIURA_DECK_HOSTNAME:
+        return new NijiuraDecKawpaaButtonInsertion();
       case SUPPORT_SERVICE.NOZOMI_LA_HOSTNAME:
         return new NozomiLaKawpaaLinkInsertion();
       case SUPPORT_SERVICE.PIXIV_HOSTNAME:
