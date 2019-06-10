@@ -29,7 +29,7 @@ const patches = {
       const illustNum = $('figure > [role="presentation"]').find(
         '[role="presentation"]',
       ).length;
-      if (illustNum > 1) {
+      if (illustNum >= 1) {
         InsertionFactory.clean();
         const inserter = new PixivMultipleKawpaaLinkInsertion();
         const success = await inserter.insert();
