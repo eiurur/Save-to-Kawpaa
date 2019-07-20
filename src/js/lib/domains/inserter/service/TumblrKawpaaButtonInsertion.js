@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import { SUPPORT_SERVICE, ICONS } from '../../../../config/';
+import { SUPPORT_SERVICE, ICONS } from '../../../../config';
 import KawpaaButtonInsertion from '../KawpaaButtonInsertion';
 
 export default class TumblrKawpaaButtonInsertion extends KawpaaButtonInsertion {

@@ -1,4 +1,4 @@
-import InsertionFactory from './lib/domains/Insertion/InsertionFactory';
+import InsertionFactory from './lib/domains/inserter/InsertionFactory';
 
 const currentHostname = location.host;
 const currentUrl = location.href;

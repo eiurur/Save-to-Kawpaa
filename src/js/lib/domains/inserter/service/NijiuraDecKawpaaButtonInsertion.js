@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import { CONTENT_TYPE, SUPPORT_SERVICE, ICONS } from '../../../../config/';
+import { CONTENT_TYPE, SUPPORT_SERVICE, ICONS } from '../../../../config';
 import KawpaaButtonInsertion from '../KawpaaButtonInsertion';
 
 export default class NijiuraDecKawpaaButtonInsertion extends KawpaaButtonInsertion {

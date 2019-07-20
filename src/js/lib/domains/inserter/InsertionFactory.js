@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import { SUPPORT_SERVICE, SUPPORT_URL } from '../../../config/';
+import { SUPPORT_SERVICE, SUPPORT_URL } from '../../../config';
 import {
   AmatsukaLinkInsertion,
   AnimePictureKawpaaLinkInsertion,
@@ -22,7 +22,7 @@ import {
   TwitterKawpaaButtonInsertion,
   TweetDeckKawpaaButtonInsertion,
   YandereKawpaaLinkInsertion,
-} from './supportService/';
+} from './service';
 
 const patches = {
   pixiv: () => {

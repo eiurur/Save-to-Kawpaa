@@ -1,10 +1,10 @@
 import $ from 'jquery';
-import { CONTENT_TYPE, SUPPORT_SERVICE } from '../../../../config/';
+import { CONTENT_TYPE, SUPPORT_SERVICE } from '../../../../config';
 import KawpaaLinkInsertion from '../KawpaaLinkInsertion';
 
-export default class KonachanKawpaaLinkInsertion extends KawpaaLinkInsertion {
+export default class GelbooruKawpaaLinkInsertion extends KawpaaLinkInsertion {
   constructor() {
-    super(SUPPORT_SERVICE.KONACHAN_HOSTNAME);
+    super(SUPPORT_SERVICE.GELBOORU_HOSTNAME);
     this.selector = '#right-col h4';
     this.html = `| <a class="${
       this.kawpaaLinkClassName
@@ -13,8 +13,8 @@ export default class KonachanKawpaaLinkInsertion extends KawpaaLinkInsertion {
 
   extraxtContentUrl() {
     const originalUrl = $('#image').attr('src');
-    const conetntUrl = this.normalize(originalUrl);
-    return originalUrl;
+    const contentUrl = this.normalize(originalUrl);
+    return contentUrl;
   }
 
   getType() {

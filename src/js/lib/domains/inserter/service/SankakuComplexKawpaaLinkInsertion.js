@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import { CONTENT_TYPE, SUPPORT_SERVICE } from '../../../../config/';
+import { CONTENT_TYPE, SUPPORT_SERVICE } from '../../../../config';
 import KawpaaLinkInsertion from '../KawpaaLinkInsertion';
 
 export default class SankakuComplexKawpaaLinkInsertion extends KawpaaLinkInsertion {
