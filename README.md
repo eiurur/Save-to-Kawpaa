@@ -12,7 +12,7 @@ This is to be used in conjunction with the web service
 
 1. Go to <a href="https://github.com/eiurur/Save-to-Kawpaa/releases" target="_blank">Release page</a>.
 2. Download a zip file of latest version. (ex) `Save.to.Kawpaa.v0.14.0.zip`
-3. Drop a zip file
+3. Drop a zip file to <a href="chrome://extension" target="_blank">`chrome://extension</a>
 
 ![](https://github.com/eiurur/Save-to-Kawpaa/raw/master/images/description/drop.jpg)
 
@@ -20,9 +20,11 @@ This is to be used in conjunction with the web service
 
 ![](https://github.com/eiurur/Save-to-Kawpaa/raw/master/images/description/open_option.jpg)
 
-5. Copy token on <a href="https://kawpaa.eiurur.xyz/account" target="_blank">Account page</a>
+5. Copy token on <a href="https://kawpaa.eiurur.xyz/account" target="_blank">Kawpaa's account page</a>
 
 ![](https://github.com/eiurur/Save-to-Kawpaa/raw/master/images/description/copy.jpg)
+
+<br>
 
 ## How to save
 
