@@ -6,6 +6,8 @@ Later'.
 This is to be used in conjunction with the web service
 (<a href="https://kawpaa.eiurur.xyz/" target="_blank">Kawpaa</a>).
 
+<br>
+
 # Usage
 
 ## How to setup
@@ -56,6 +58,8 @@ Go to Site
 
 > <a href="https://kawpaa.eiurur.xyz/" target="_blank">Kawpaa</a>
 
+<br>
+
 # Support Service
 
 - [x] Danbooru
@@ -79,6 +83,8 @@ Go to Site
 * [ ] pornhub
 * [ ] youtube
 
+<br>
+
 # Shortcut
 
 you can save the link with shortcut
@@ -86,6 +92,8 @@ you can save the link with shortcut
 - Windows -- `Ctrl + Shift + U`
 
 - Mac -- `Command + Shift + U`
+
+<br>
 
 # Development
 
@@ -97,7 +105,7 @@ you can save the link with shortcut
 
 # Memo
 
-以下のページで link を保存した場合、例のような値を抽出してサーバに送信する。
+If you save link on the following page, it will extract the example value and send it to the server.
 
 > <a href="https://twitter.com/haruyuki_nijyou/status/687040101721874432" target="_blank">はる雪さんは Twitter を使っています : &quot; 中学生大家さん
 > https://t.co/VP0YdGl1YE&quot;</a>
