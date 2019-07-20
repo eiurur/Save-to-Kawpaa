@@ -14,7 +14,7 @@ This is to be used in conjunction with the web service
 
 1. Go to <a href="https://github.com/eiurur/Save-to-Kawpaa/releases" target="_blank">Release page</a>.
 2. Download a zip file of latest version. (ex) `Save.to.Kawpaa.v0.14.0.zip`
-3. Drop a zip file to <a href="chrome://extension" target="_blank">`chrome://extension</a>
+3. Drop a zip file to <a href="chrome://extensions" target="_blank">chrome://extensions</a>
 
 ![](https://github.com/eiurur/Save-to-Kawpaa/raw/master/images/description/drop.jpg)
 
