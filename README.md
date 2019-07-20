@@ -10,7 +10,19 @@ This is to be used in conjunction with the web service
 
 ## How to setup
 
-To be written
+1. Go to <a href="https://github.com/eiurur/Save-to-Kawpaa/releases" target="_blank">Release page</a>.
+2. Download a zip file of latest version. (ex) `Save.to.Kawpaa.v0.14.0.zip`
+3. Drop a zip file
+
+![](https://github.com/eiurur/Save-to-Kawpaa/raw/master/images/description/drop.png)
+
+4. Open option page.
+
+![](https://github.com/eiurur/Save-to-Kawpaa/raw/master/images/description/open_option.png)
+
+5. Copy token on <a href="https://kawpaa.eiurur.xyz/account" target="_blank">Account page</a>
+
+![](https://github.com/eiurur/Save-to-Kawpaa/raw/master/images/description/copy.png)
 
 ## How to save
 
