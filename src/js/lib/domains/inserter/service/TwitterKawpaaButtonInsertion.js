@@ -54,7 +54,18 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
 
     switch (tweetType) {
       case 'photo': {
-        let imageUrl = targetElement.find('[aria-label] img').attr('src');
+        const srcList = targetElement
+          .find('[aria-label] img')
+          .map(function(i, image) {
+            return $(image).attr('src');
+          })
+          .get();
+        const images = srcList.filter(
+          image => image.indexOf('https://pbs.twimg.com/media/') !== -1,
+        );
+        if (images.length < 1) break;
+        let imageUrl = images[0];
+
         imageUrl = imageUrl.replace(/name=(.*)/, 'name=orig');
         info = Object.assign(info, {
           type: CONTENT_TYPE.IMAGE,
