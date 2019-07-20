@@ -14,15 +14,15 @@ This is to be used in conjunction with the web service
 2. Download a zip file of latest version. (ex) `Save.to.Kawpaa.v0.14.0.zip`
 3. Drop a zip file
 
-![](https://github.com/eiurur/Save-to-Kawpaa/raw/master/images/description/drop.png)
+![](https://github.com/eiurur/Save-to-Kawpaa/raw/master/images/description/drop.jpg)
 
 4. Open option page.
 
-![](https://github.com/eiurur/Save-to-Kawpaa/raw/master/images/description/open_option.png)
+![](https://github.com/eiurur/Save-to-Kawpaa/raw/master/images/description/open_option.jpg)
 
 5. Copy token on <a href="https://kawpaa.eiurur.xyz/account" target="_blank">Account page</a>
 
-![](https://github.com/eiurur/Save-to-Kawpaa/raw/master/images/description/copy.png)
+![](https://github.com/eiurur/Save-to-Kawpaa/raw/master/images/description/copy.jpg)
 
 ## How to save
 
