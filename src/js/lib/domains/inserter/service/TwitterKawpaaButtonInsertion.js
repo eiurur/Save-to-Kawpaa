@@ -1,47 +1,53 @@
 import $ from 'jquery';
 import { CONTENT_TYPE, SUPPORT_SERVICE, ICONS } from '../../../../config';
 import KawpaaButtonInsertion from '../KawpaaButtonInsertion';
+import { ucs2 } from 'punycode';
 
 export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion {
   constructor() {
     super(SUPPORT_SERVICE.TWITTER_HOSTNAME);
-    this.container = '[role="article"]';
-    this.tweet_container = '[data-testid="tweet"]';
-    this.tweet_url = '.tweet-timestamp';
-    this.twitter_fullname = '.fullname'; // ぴゃー
-    this.twitter_username = '.username'; // @puaa
-    this.tweet_text = '.js-tweet-text';
-    this.tweet_image = '.js-adaptive-photo';
-    this.tweet_media = '.media-image';
-    this.tweet_video = '.AdaptiveMedia-video';
+    this.container = '[role=main] article[role=article]';
+    this.tweet_container = '[data-testid=tweet]';
+    this.tweet_url = 'a[role=link][aria-label]';
+    this.twitter_username =
+      'a[role=link][aria-haspopup="false"][data-focusable="true"]'; // ぴゃー @puaa
+    this.tweet_text = '[lang][dir=auto]';
+    this.tweet_image = 'img[draggable="false"]';
+    this.tweet_video = 'video';
     this.kawpaa_button_container = '.action-kawpaa-container';
     this.kawpaa_button = '.ProfileTweet-actionList';
   }
 
   getTweetType(element) {
-    const hasPhoto = element.find(this.tweet_image).length > 0;
     const hasVideo = element.find(this.tweet_video).length > 0;
+    const hasPhoto = element.find(this.tweet_image).length > 0;
 
-    if (hasPhoto) {
-      return 'photo';
-    }
     if (hasVideo) {
       return 'video';
+    }
+    if (hasPhoto) {
+      return 'photo';
     }
     return 'text';
   }
 
   async getInfo(targetElement) {
-    let tweetUrl =
-      targetElement.find(this.tweet_url).attr('href') ||
-      targetElement.find(this.tweet_container).data('permalink-path');
-    let siteUrl = `https://twitter.com${tweetUrl}`;
+    let tweetUrl = '';
+    if (document.location.href.indexOf('/status/') !== -1) {
+      tweetUrl = document.location.href;
+    } else {
+      const tu = targetElement.find(this.tweet_container).find(this.tweet_url);
+      if (tu && tu.length > 0) {
+        tweetUrl = `https://twitter.com${tu.first().attr('href')}`;
+      } else {
+        tweetUrl = document.location.href;
+      }
+    }
+    let siteUrl = tweetUrl;
 
-    let fullname = targetElement.find(this.twitter_fullname).text();
     let username = targetElement.find(this.twitter_username).text();
-    let monoUsername = /^@(\w)*/.exec(username)[0]; // ツイート詳細モーダルだと複数の@usernameが取得されるので単一にする。
     let text = targetElement.find(this.tweet_text).text();
-    let title = `${fullname} ${monoUsername} / ${text}`;
+    let title = `${username} / ${text}`;
     let info = { siteUrl, title };
 
     const tweetType = this.getTweetType(targetElement);
@@ -49,16 +55,10 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
     switch (tweetType) {
       case 'photo': {
         let imageUrl = targetElement.find('[aria-label] img').attr('src');
-        // 複数枚のときは今見ている画像を保存する。
-        imageUrl =
-          $(this.tweet_media)
-            .first()
-            .attr('src') || imageUrl;
-        imageUrl = imageUrl.replace(':large', '');
-
+        imageUrl = imageUrl.replace(/name=(.*)/, 'name=orig');
         info = Object.assign(info, {
           type: CONTENT_TYPE.IMAGE,
-          srcUrl: `${imageUrl}:orig`,
+          srcUrl: imageUrl,
         });
         break;
       }
@@ -107,24 +107,35 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
   show(_$) {
     const existKawpaaButton =
       _$.find(this.kawpaa_button_container).length !== 0;
-    const hasPhoto = _$.find(this.tweet_image).length > 0;
+    const hasPhoto = _$.find('[aria-label]').find(this.tweet_image).length > 0;
     const hasVideo = _$.find(this.tweet_video).length > 0;
     if (existKawpaaButton || !(hasPhoto || hasVideo)) {
       return;
     }
 
     const html = `\
-      <div class="ProfileTweet-action action-kawpaa-container" style="display: inline-block; min-width:80px;">
-        <a class="${
-          this.kawpaaLinkClassName
-        } js-tooltip" href="#" data-original-title="Save to Kawpaa" style="display: inline-block; float: left;">
-          <span class="icon icon-kawpaa" style="display: block; height: 16px; position: relative; top: 3px; width: 16px; background-image: url(${
-            ICONS.GRAY_16
-          });"></span>
+      <div  class="action-kawpaa-container" style="
+        display: flex;
+        flex-basis: auto;
+        flex-direction: column;
+        flex-shrink: 0;
+        margin: 0px;
+        min-height: 0px;
+        min-width: 0px;
+        padding: 0px;
+        position: relative;
+        z-index: 0;
+      ">
+        <a class="${this.kawpaaLinkClassName}" href="#" data-original-title="Save to Kawpaa" style="
+          display: flex;
+          height: 100%;
+          align-items: center;
+        ">
+          <span class="icon icon-kawpaa" style="display: block; height: 16px; position: relative;  width: 16px; background-image: url(${ICONS.GRAY_16});"></span>
         </a>
       </div>\
     `;
-    return _$.find('.ProfileTweet-action--dm').after(html);
+    return _$.find('[role=group]').append(html);
   }
 
   onClick() {
@@ -137,7 +148,7 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
         .find('.icon-kawpaa')
         .css('background-image', 'url(' + ICONS.BLUE_16 + ')');
 
-      const targetElement = $(this).closest(_this.tweet_container);
+      const targetElement = $(this).closest(_this.container);
       _this
         .getInfo(targetElement)
         .then(info => _this.getParamsToServer(info))
@@ -146,6 +157,7 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
   }
 
   onMouseEnter() {
+    console.log('on');
     const _this = this;
     $(document).on(
       {
@@ -154,15 +166,6 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
         },
       },
       _this.container,
-    );
-
-    $(document).on(
-      {
-        mouseenter: function(e) {
-          _this.show($(this));
-        },
-      },
-      _this.stream_tweet,
     );
   }
 

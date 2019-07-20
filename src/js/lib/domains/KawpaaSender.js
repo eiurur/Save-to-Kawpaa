@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { API, CHROME_RUNTIME_ID, ENDPOINT } from '../../config/';
+import { API, CHROME_RUNTIME_ID, ENDPOINT, IS_PRODUCTION } from '../../config/';
 
 export default class KawpaaSender {
   constructor(payload) {
@@ -13,8 +13,7 @@ export default class KawpaaSender {
   }
 
   getBaseURL() {
-    const isProduction = chrome.runtime.id === CHROME_RUNTIME_ID;
-    return isProduction ? ENDPOINT.PROD : ENDPOINT.ENV;
+    return IS_PRODUCTION ? ENDPOINT.PROD : ENDPOINT.ENV;
   }
 
   getAxios() {
