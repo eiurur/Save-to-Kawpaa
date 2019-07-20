@@ -56,7 +56,7 @@ const SUPPORT_SERVICE = {
   KONACHAN_HOSTNAME: 'konachan.com',
   NIJIE_HOSTNAME: 'nijie.info',
   NIJIURA_HOSTNAME: '2chan.net',
-  NIJIURA_DECK_HOSTNAME: 'nijiuradeck.serveo.net',
+  NIJIURA_DECK_HOSTNAME: 'nijiuradeck.herokuapp.com',
   NOZOMI_LA_HOSTNAME: 'nozomi.la',
   PIXIV_HOSTNAME: 'www.pixiv.net',
   SANKAKUCOMPLEX_HOSTNAME: 'chan.sankakucomplex.com',

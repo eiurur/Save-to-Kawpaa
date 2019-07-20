@@ -17,14 +17,14 @@ export default class NijiuraDecKawpaaButtonInsertion extends KawpaaButtonInserti
   getInfo(targetElement) {
     return new Promise(resolve => {
       const threadTitle = $(targetElement)
-        .closest('.column-scroiller')
+        .closest('.column-scroller')
         .find('.response-text')
         .first()
         .text();
       const responseText = targetElement.find('.response-text').text();
       const srcUrl = targetElement
-        .find('img')
-        .attr('src')
+        .find('[data-orig]')
+        .attr('data-orig')
         .replace('thumb', 'src')
         .replace(/(\d+)s/, '$1');
       const info = {

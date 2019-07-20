@@ -3,12 +3,42 @@
   "name": "Save to Kawpaa",
   "description": "あとで抜く",
   "version": "0.13.5",
-  "permissions": ["tabs", "storage", "contextMenus", "notifications", "http://*/*", "https://*/*", "chrome://favicon/"],
-  "content_scripts": [{
-    "matches": ["https://amatsuka.herokuapp.com/*", "https://anime-pictures.net/*", "https://twitter.com/*", "https://tweetdeck.twitter.com/*", "https://www.tumblr.com/*", "https://chan.sankakucomplex.com/*/post/show/*", "https://chan.sankakucomplex.com/post/show/*", "*://danbooru.donmai.us/posts/*", "*://donmai.us/posts/*", "*://*.deviantart.com/art/*", "https://gelbooru.com/*", "*://*.iwara.tv/videos/*", "https://konachan.com/post/show/*", "https://www.pixiv.net/member_illust.php*", "https://yande.re/post/show/*", "*://nijie.info/view.php*", "*://nijie.info/view_popup.php*", "*://nijiuradeck.serveo.net/*", "https://nozomi.la/*"],
-    "js": ["build/js/insert.bundle.js"],
-    "run_at": "document_end"
-  }],
+  "permissions": [
+    "tabs",
+    "storage",
+    "contextMenus",
+    "notifications",
+    "http://*/*",
+    "https://*/*",
+    "chrome://favicon/"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://amatsuka.herokuapp.com/*",
+        "https://anime-pictures.net/*",
+        "https://twitter.com/*",
+        "https://tweetdeck.twitter.com/*",
+        "https://www.tumblr.com/*",
+        "https://chan.sankakucomplex.com/*/post/show/*",
+        "https://chan.sankakucomplex.com/post/show/*",
+        "*://danbooru.donmai.us/posts/*",
+        "*://donmai.us/posts/*",
+        "*://*.deviantart.com/art/*",
+        "https://gelbooru.com/*",
+        "*://*.iwara.tv/videos/*",
+        "https://konachan.com/post/show/*",
+        "https://www.pixiv.net/member_illust.php*",
+        "https://yande.re/post/show/*",
+        "*://nijie.info/view.php*",
+        "*://nijie.info/view_popup.php*",
+        "*://nijiuradeck.herokuapp.com/*",
+        "https://nozomi.la/*"
+      ],
+      "js": ["build/js/insert.bundle.js"],
+      "run_at": "document_end"
+    }
+  ],
   "browser_action": {
     "default_icon": {
       "19": "build/images/gray/icon19.png",
