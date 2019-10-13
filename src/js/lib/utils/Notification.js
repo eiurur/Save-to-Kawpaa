@@ -23,9 +23,7 @@ export default class Notification {
     } else if (err.response) {
       // axios
       alertify.error(
-        `statusCode: ${err.response.status} <br> statusText: ${
-          err.response.statusText
-        } <br> ${err.response.data.message}`,
+        `statusCode: ${err.response.status} <br> statusText: ${err.response.statusText} <br> ${err.response.data.message}`,
       );
     } else if (err.statusCode) {
       // Base64に変換をかますときとかにこけた
@@ -36,6 +34,18 @@ export default class Notification {
     } else {
       alertify.error(err.toString());
     }
+  }
+
+  static makeErrorMessgage(err) {
+    const errorReason =
+      err.response && err.response.data ? err.response.data : err.message;
+    const errorMessage = [
+      '<b>保存に失敗しました。</b>',
+      '<b>原因：</b> ',
+      errorReason,
+      '<b>問題を報告しますか？</b>',
+    ].join('<br><br>');
+    return errorMessage.replace(/\r?\n/g, '<br>');
   }
 
   static confirm({ message, callback }) {

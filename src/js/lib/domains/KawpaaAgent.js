@@ -7,13 +7,6 @@ export default class KawpaaAgent {
     this.postData = {};
   }
 
-  validate() {
-    if (!this.token)
-      throw new Error(
-        'トークンが未登録です。<br> 拡張機能のオプションページでトークンを登録してください',
-      );
-  }
-
   setPostData(info = {}) {
     const scraper = MetaDataScraperFactory.create(info);
     const htmlMetaData = scraper.scrape(info);
