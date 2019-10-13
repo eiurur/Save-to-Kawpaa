@@ -3,7 +3,7 @@ import { CHROME_EXTENSION_RESOURCES, SUPPORT_URL } from '../config/';
 
 export default class TabUpdatedListener {
   constructor() {
-    this.PIXIV_URL_PATTERN = /^https:\/\/www.pixiv.net\/member_illust.php\?mode=medium.*$/;
+    this.PIXIV_URL_PATTERN = /^https:\/\/www.pixiv.net\/artworks\/*$/;
   }
 
   isAllowedUrl(url) {
@@ -11,7 +11,7 @@ export default class TabUpdatedListener {
   }
 
   isRejectUrl(url) {
-    return url && url.includes(SUPPORT_URL.PIXIV_MANGA_URL);
+    return false;
   }
 
   insertSaveLinkInPixiv(tab) {

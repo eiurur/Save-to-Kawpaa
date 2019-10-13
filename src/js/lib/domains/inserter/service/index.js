@@ -12,8 +12,6 @@ import NijiuraKawpaaButtonInsertion from './NijiuraKawpaaButtonInsertion';
 import NijiuraDecKawpaaButtonInsertion from './NijiuraDecKawpaaButtonInsertion';
 import NozomiLaKawpaaLinkInsertion from './NozomiLaKawpaaLinkInsertion';
 import PixivKawpaaLinkInsertion from './PixivKawpaaLinkInsertion';
-import PixivMultipleKawpaaLinkInsertion from './PixivMultipleKawpaaLinkInsertion';
-import PixivOldMultipleKawpaaLinkInsertion from './PixivOldMultipleKawpaaLinkInsertion';
 import SankakuComplexKawpaaLinkInsertion from './SankakuComplexKawpaaLinkInsertion';
 import TumblrKawpaaButtonInsertion from './TumblrKawpaaButtonInsertion';
 import TweetDeckKawpaaButtonInsertion from './TweetDeckKawpaaButtonInsertion';
@@ -34,8 +32,6 @@ export {
   NijiuraDecKawpaaButtonInsertion,
   NozomiLaKawpaaLinkInsertion,
   PixivKawpaaLinkInsertion,
-  PixivMultipleKawpaaLinkInsertion,
-  PixivOldMultipleKawpaaLinkInsertion,
   SankakuComplexKawpaaLinkInsertion,
   TumblrKawpaaButtonInsertion,
   TwitterKawpaaButtonInsertion,

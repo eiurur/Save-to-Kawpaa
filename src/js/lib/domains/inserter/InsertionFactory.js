@@ -14,8 +14,6 @@ import {
   NijiuraDecKawpaaButtonInsertion,
   NozomiLaKawpaaLinkInsertion,
   PixivKawpaaLinkInsertion,
-  PixivMultipleKawpaaLinkInsertion,
-  PixivOldMultipleKawpaaLinkInsertion,
   SankakuComplexKawpaaLinkInsertion,
   TumblrKawpaaButtonInsertion,
   TwitterKawpaaButtonInsertion,
@@ -30,31 +28,40 @@ const patches = {
         '[role="presentation"]',
       ).length;
       if (illustNum >= 1) {
+        if (InsertionFactory.existLink()) return;
         InsertionFactory.clean();
-        const inserter = new PixivMultipleKawpaaLinkInsertion();
+        const inserter = new PixivKawpaaLinkInsertion();
         const success = await inserter.insert();
         if (success) inserter.on();
-        clearInterval(timer);
+        // clearInterval(timer);
       }
     }, 1000);
   },
 };
 
 export default class InsertionFactory {
+  static getKawpaaLinkElements() {
+    return $('[class^="kawpaa-save-link"]');
+  }
   static clean() {
-    $('[class^="kawpaa-save-link"]').remove();
+    this.getKawpaaLinkElements().remove();
     return this;
   }
 
+  static existLink() {
+    return this.getKawpaaLinkElements().length > 0;
+  }
+
   static create(hostname, url) {
+    console.log(hostname, url);
     // 例外(複数)
-    if (url.includes(SUPPORT_URL.PIXIV_MANGA_URL))
-      return [
-        new PixivMultipleKawpaaLinkInsertion(),
-        new PixivOldMultipleKawpaaLinkInsertion(),
-      ];
-    if (url.includes(SUPPORT_URL.NIJIE_MULTI_URL))
+    if (url.includes(SUPPORT_URL.PIXIV_URL)) {
+      patches.pixiv();
+      return new PixivKawpaaLinkInsertion();
+    }
+    if (url.includes(SUPPORT_URL.NIJIE_MULTI_URL)) {
       return new NijieMultiKawpaaLinkInsertion();
+    }
 
     // 例外(単数)
     if (hostname.includes(SUPPORT_SERVICE.DEVIANTART_HOSTNAME))
@@ -76,17 +83,15 @@ export default class InsertionFactory {
         return new DanbooruKawpaaLinkInsertion();
       case SUPPORT_SERVICE.GELBOORU_HOSTNAME:
         return new GelbooruKawpaaLinkInsertion();
-      // case SUPPORT_SERVICE.KOMIFLO_HOSTNAME:
-      //   return new KomifloKawpaaLinkInsertion();
       case SUPPORT_SERVICE.KONACHAN_HOSTNAME:
         return new KonachanKawpaaLinkInsertion();
       case SUPPORT_SERVICE.NIJIURA_DECK_HOSTNAME:
         return new NijiuraDecKawpaaButtonInsertion();
       case SUPPORT_SERVICE.NOZOMI_LA_HOSTNAME:
         return new NozomiLaKawpaaLinkInsertion();
-      case SUPPORT_SERVICE.PIXIV_HOSTNAME:
-        patches.pixiv();
-        return new PixivKawpaaLinkInsertion();
+      // case SUPPORT_SERVICE.PIXIV_HOSTNAME:
+      //   patches.pixiv();
+      //   return new PixivKawpaaLinkInsertion();
       case SUPPORT_SERVICE.SANKAKUCOMPLEX_HOSTNAME:
         return new SankakuComplexKawpaaLinkInsertion();
       case SUPPORT_SERVICE.TUMBLR_HOSTNAME:

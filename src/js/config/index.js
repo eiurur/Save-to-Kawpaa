@@ -68,7 +68,7 @@ const SUPPORT_SERVICE = {
   YANDE_RE_HOSTNAME: 'yande.re',
 };
 const SUPPORT_URL = {
-  PIXIV_MANGA_URL: 'https://www.pixiv.net/member_illust.php?mode=manga',
+  PIXIV_URL: 'https://www.pixiv.net/artworks',
   NIJIE_URL: 'nijie.info/view.php',
   NIJIE_MULTI_URL: 'nijie.info/view_popup.php',
 };

@@ -5,21 +5,56 @@ import KawpaaLinkInsertion from '../KawpaaLinkInsertion';
 export default class PixivKawpaaLinkInsertion extends KawpaaLinkInsertion {
   constructor() {
     super(SUPPORT_SERVICE.PIXIV_HOSTNAME);
-    this.selector = 'figure section';
+    this.selector = '[role="presentation"] [role="presentation"]';
     this.html = `
-    <div style="margin-right: 20px;" class="${
-      this.kawpaaLinkClassName
-    }"><button type="button" style="
-    background: none;
-    border: none;
-    color: #333;
-    cursor: pointer;
-    display: inline-block;
-    font-weight: 700;
-    height: 32px;
-    line-height: 32px;
-    padding: 0;
-    "><span style="vertical-align: middle;">Save to Kawpaa</span></button></div>`;
+    <div class="${this.kawpaaLinkClassName}" >Save to Kawpaa</div>
+    `;
+    $('head').append(`
+    <style type="text/css">
+      .${this.kawpaaLinkClassName} {
+        position: absolute;
+        background: rgba(0,0,0,0.5);
+        color: white;
+        left: 0;
+        top: 50%;
+        transform: rotate(-90deg) translate(0, -200%);
+        padding: 8px;
+        cursor: pointer;
+        text-align: center;
+        transition: all 0.5s ease;
+      }
+      .${this.kawpaaLinkClassName}:hover {
+        color: #73d0da;
+        background:  rgba(0,0,0,0.8);
+      }
+    </style>`);
+  }
+
+  onClick() {
+    const _this = this;
+    $(document).on('click', _this.onClickElement, function(e) {
+      e.preventDefault();
+
+      // FIXME: suprt.onClick()が使えない！
+      // KawpaaLinkInsertion.jsを再利用
+      Promise.all([
+        _this.getType(),
+        _this.getContent(),
+        _this.getUrl($(this)),
+        _this.getTitle(),
+      ])
+        .then(getedData => ({
+          name: _this.hostname,
+          info: {
+            type: getedData[0],
+            content: getedData[1],
+            srcUrl: getedData[2], // TODO: urlだけに統一できない？
+            url: getedData[2],
+            title: getedData[3],
+          },
+        }))
+        .then(params => _this.send(params));
+    });
   }
 
   getTitle() {
@@ -30,46 +65,12 @@ export default class PixivKawpaaLinkInsertion extends KawpaaLinkInsertion {
     return `${title} - ${tags}`;
   }
 
-  getParamsToServer() {
-    return Promise.all([
-      this.getType(),
-      this.getContent(),
-      this.getUrl(),
-      this.getTitle(),
-    ]).then(getedData => ({
-      name: this.hostname,
-      info: {
-        type: getedData[0],
-        content: getedData[1],
-        srcUrl: getedData[2], // TODO: urlだけに統一できない？
-        url: getedData[2],
-        title: getedData[3],
-      },
-    }));
-  }
-
-  //  <a href="#" class="_bookmark-toggle-button add-bookmark kawpaa-save-link">Save to Kawpaa</a>`;
-  getUrl() {
+  getUrl(_$) {
     return new Promise(resolve => {
-      // single
-      const singleIllustSrcUrl = $('figure div[role="presentation"] a').attr(
-        'href',
-      );
-
-      // multi
-      const multiIllustSrcUrl = $('figure div[role="presentation"] a img').attr(
-        'src',
-      );
-
-      const srcUrl = ['.jpg', '.png'].includes(singleIllustSrcUrl)
-        ? singleIllustSrcUrl
-        : multiIllustSrcUrl;
-
+      const srcUrl = _$.closest(this.selector)
+        .find('a')
+        .attr('href');
       return resolve(srcUrl);
     });
-    // return new Promise(resolve => {
-    //   const illustSrcUrl = $('figure div[role="presentation"] a').attr('href');
-    //   return resolve(illustSrcUrl);
-    // });
   }
 }
