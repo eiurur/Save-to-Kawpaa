@@ -118,7 +118,7 @@ export default class LinkScraper extends HTMLMetaDataScraper {
     // }
 
     // youtube
-    const youtubeMatch = /https:\/\/www.youtube.com\/watch\?v=([a-zA-Z0-9\-\_]+)/.exec(
+    const youtubeMatch = /https:\/\/www.youtube.com\/watch\?v=([a-zA-Z0-9\-\_]{11})/.exec(
       siteURL,
     );
     if (youtubeMatch) {
