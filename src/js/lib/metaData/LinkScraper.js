@@ -64,9 +64,7 @@ export default class LinkScraper extends HTMLMetaDataScraper {
       // Pornhub
     } else if (location.href.indexOf('pornhub.com') > -1) {
       var params = QueryStringParser.parse();
-      content = `<iframe src="https://jp.pornhub.com/embed/${
-        params.viewkey
-      }" frameborder="0" width="560" height="340" scrolling="no" allowfullscreen></iframe>`;
+      content = `<iframe src="https://jp.pornhub.com/embed/${params.viewkey}" frameborder="0" width="560" height="340" scrolling="no" allowfullscreen></iframe>`;
     } else {
       content = this.removeScriptTag($('main').html());
       console.log(content);
@@ -120,11 +118,14 @@ export default class LinkScraper extends HTMLMetaDataScraper {
     // }
 
     // youtube
-    // TODO: 別の動画に移動しても$('meta[property="og:image"]').attr('content')に変化なし。分からん。
-    if (siteURL.indexOf('www.youtube.com/watch?v=') > -1) {
-      u = this.__guard__($('meta[property="og:image"]'), x2 =>
-        x2.attr('content'),
-      );
+    const youtubeMatch = /https:\/\/www.youtube.com\/watch\?v=([a-zA-Z0-9\-\_]+)/.exec(
+      siteURL,
+    );
+    if (youtubeMatch) {
+      const youtubeVideoId = youtubeMatch[1];
+      if (youtubeVideoId.length == 11) {
+        u = `https://img.youtube.com/vi/${youtubeVideoId}/hqdefault.jpg`;
+      }
     }
 
     // XVIDEOSなら動画のサムネを指定
