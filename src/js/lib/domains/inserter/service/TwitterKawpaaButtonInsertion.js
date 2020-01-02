@@ -157,7 +157,7 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
       // 画像の差し替え
       $(this)
         .find('.icon-kawpaa')
-        .css('background-image', 'url(' + ICONS.BLUE_16 + ')');
+        .css('background-image', `url(${ICONS.BLUE_16})`);
 
       const targetElement = $(this).closest(_this.container);
       _this
@@ -179,13 +179,4 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
       _this.container,
     );
   }
-
-  // async fetchTweet(tweetId) {
-  //   const token = await ChromeSyncStorageManager.get('token');
-  //   const payload = {
-  //     token: token,
-  //   };
-  //   const sender = new KawpaaSender(payload);
-  //   return sender.get(`/api/convert/tweet/${tweetId}`);
-  // }
 }
