@@ -102,8 +102,9 @@ export default class LinkScraper extends HTMLMetaDataScraper {
     */
     // 例外中の例外。もし、他のChromeExtensionがimgを挿入していた場合、urlにchrome-extension://から始まる画像ファイルが代入され、保存に失敗してしまう。
     if (
-      this.__guard__(this.__guard__(this.data, x1 => x1.url), x =>
-        x.indexOf('chrome-extension://'),
+      this.__guard__(
+        this.__guard__(this.data, x1 => x1.url),
+        x => x.indexOf('chrome-extension://'),
       ) > -1
     ) {
       console.log('ChromeExnteionsファイルを画像に設定されてしまった。');
@@ -124,7 +125,7 @@ export default class LinkScraper extends HTMLMetaDataScraper {
     if (youtubeMatch) {
       const youtubeVideoId = youtubeMatch[1];
       if (youtubeVideoId.length == 11) {
-        u = `https://img.youtube.com/vi/${youtubeVideoId}/hqdefault.jpg`;
+        u = `https://img.youtube.com/vi/${youtubeVideoId}/maxresdefault.jpg`;
       }
     }
 
