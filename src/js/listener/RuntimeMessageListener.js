@@ -1,5 +1,5 @@
 import { SUPPORT_SERVICE } from '../config/';
-import ScriptExecuter from '../lib/domains/ScriptExecuter';
+import ScriptExecuter from '../lib/utils/ScriptExecuter';
 import ChromeSyncStorageManager from '../lib/utils/ChromeSyncStorageManager';
 import KawpaaSender from '../lib/domains/KawpaaSender';
 
