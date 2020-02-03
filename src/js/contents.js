@@ -1,23 +1,46 @@
 import ChromeSyncStorageManager from './lib/utils/ChromeSyncStorageManager';
 import Notification from './lib/utils/Notification';
+import MetaDataScraperFactory from './lib/metaData/MetaDataScraperFactory';
 import KawpaaAgent from './lib/domains/KawpaaAgent';
 
 (async () => {
-  try {
-    Notification.log();
-    const token = await ChromeSyncStorageManager.get('token');
-    const agent = new KawpaaAgent(token);
-    agent.setPostData(info);
-    await agent.register();
-    Notification.success();
-  } catch (err) {
-    console.log(err, err.response, err.message);
-    Notification.build({
-      name: 'report',
-      header: 'Save to Kawpaa',
-      message: Notification.makeErrorMessgage(err),
-    })
-      .then(_ => chrome.runtime.sendMessage({ name: 'REPORT_ERROR' }))
-      .catch(_ => Notification.fail(err));
-  }
+  const mergePostData = (info = {}) => {
+    const scraper = MetaDataScraperFactory.create(info);
+    const htmlMetaData = scraper.scrape(info);
+    return Object.assign(htmlMetaData, info);
+  };
+
+  const showErrorModal = async err => {
+    try {
+      await Notification.build({
+        name: 'report',
+        header: 'Save to Kawpaa',
+        message: Notification.makeErrorMessgage(err),
+      });
+      chrome.runtime.sendMessage({ name: 'REPORT_ERROR' });
+    } catch (e) {
+      Notification.fail(err);
+    }
+  };
+
+  const saveContentToKawpaa = async (info = {}) => {
+    try {
+      Notification.log();
+      const token = await ChromeSyncStorageManager.get('token');
+      const postData = mergePostData(info);
+
+      const payload = {
+        token: token,
+        post: postData,
+      };
+      const agent = new KawpaaAgent(payload);
+      await agent.save();
+      Notification.success();
+    } catch (err) {
+      await showErrorModal();
+    }
+  };
+
+  // CAUTION: contents.js内のinfo変数は
+  await saveContentToKawpaa(info);
 })();

@@ -5,9 +5,8 @@
       document.querySelector('.dashboard code');
     const token = codeDOM ? codeDOM.textContent : '';
 
-    if (token) {
-      chrome.storage.sync.set({ token }, () => console.log('token ok', token));
-    }
+    if (!token) return;
+    chrome.storage.sync.set({ token }, () => console.log('token ok', token));
   };
 
   retrieve();
