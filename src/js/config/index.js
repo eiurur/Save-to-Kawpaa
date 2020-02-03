@@ -5,11 +5,11 @@ const API = {
 const CHROME_RUNTIME_ID = 'dghanpofbgihidnoofloojkpbkgjkfgg';
 
 const ENDPOINT = {
-  ENV: 'https://127.0.0.1:9021/',
-  PROD: 'https://kawpaa.eiurur.xyz/',
+  ENV: 'https://127.0.0.1:9021',
+  PROD: 'https://kawpaa.eiurur.xyz',
 };
 
-const IS_PRODUCTION = true;
+const IS_PRODUCTION = false;
 
 const DEFAULT_IMAGE_URL =
   'https://68.media.tumblr.com/9086462174c34becaf8b3e59de8f5800/tumblr_nzek2kWNNJ1ukgdjoo2_1280.jpg';
@@ -45,6 +45,8 @@ const CHROME_EXTENSION_RESOURCES = {
     BLUE_19: 'build/images/blue/icon19.png',
   },
 };
+
+const MAX_UPLOADABLE_FILESIZE_MB = 5;
 
 const SUPPORT_SERVICE = {
   AMATSUKA_HOSTNAME: 'amatsuka.herokuapp.com',
@@ -82,6 +84,7 @@ export {
   ENDPOINT,
   ICONS,
   IS_PRODUCTION,
+  MAX_UPLOADABLE_FILESIZE_MB,
   SUPPORT_SERVICE,
   SUPPORT_URL,
 };
