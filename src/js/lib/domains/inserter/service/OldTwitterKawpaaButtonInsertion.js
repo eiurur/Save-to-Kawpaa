@@ -3,7 +3,6 @@ import { CONTENT_TYPE, SUPPORT_SERVICE, ICONS } from '../../../../config';
 import KawpaaButtonInsertion from '../KawpaaButtonInsertion';
 
 import ChromeSyncStorageManager from '../../../utils/ChromeSyncStorageManager';
-import KawpaaSender from '../../KawpaaSender';
 export default class OldTwitterKawpaaButtonInsertion extends KawpaaButtonInsertion {
   constructor() {
     super(SUPPORT_SERVICE.TWITTER_HOSTNAME);
@@ -107,12 +106,8 @@ export default class OldTwitterKawpaaButtonInsertion extends KawpaaButtonInserti
 
     const html = `\
       <div class="ProfileTweet-action action-kawpaa-container" style="display: inline-block; min-width:80px;">
-        <a class="${
-          this.kawpaaLinkClassName
-        } js-tooltip" href="#" data-original-title="Save to Kawpaa" style="display: inline-block; float: left;">
-          <span class="icon icon-kawpaa" style="display: block; height: 16px; position: relative; top: 3px; width: 16px; background-image: url(${
-            ICONS.GRAY_16
-          });"></span>
+        <a class="${this.kawpaaLinkClassName} js-tooltip" href="#" data-original-title="Save to Kawpaa" style="display: inline-block; float: left;">
+          <span class="icon icon-kawpaa" style="display: block; height: 16px; position: relative; top: 3px; width: 16px; background-image: url(${ICONS.GRAY_16});"></span>
         </a>
       </div>\
     `;
@@ -183,12 +178,4 @@ export default class OldTwitterKawpaaButtonInsertion extends KawpaaButtonInserti
       );
     });
   }
-  // async fetchTweet(tweetId) {
-  //   const token = await ChromeSyncStorageManager.get('token');
-  //   const payload = {
-  //     token: token,
-  //   };
-  //   const sender = new KawpaaSender(payload);
-  //   return sender.get(`/api/convert/tweet/${tweetId}`);
-  // }
 }
