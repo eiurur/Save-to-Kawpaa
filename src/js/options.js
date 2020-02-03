@@ -2,7 +2,7 @@ $(function() {
   const onSavedToken = () => {
     const token = $('#token').val();
     chrome.storage.sync.set({ token }, () => {
-      const message = `${new Date().toLocaleString()} : トークンを保存しました`;
+      const message = `${new Date().toLocaleString()} : Saved a token :)`;
       $('#console').html(message);
     });
   };
