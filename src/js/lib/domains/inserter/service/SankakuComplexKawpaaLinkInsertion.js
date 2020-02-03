@@ -6,9 +6,7 @@ export default class SankakuComplexKawpaaLinkInsertion extends KawpaaLinkInserti
   constructor() {
     super(SUPPORT_SERVICE.SANKAKUCOMPLEX_HOSTNAME);
     this.selector = '#share';
-    this.html = `<h3><a class="${
-      this.kawpaaLinkClassName
-    }" href="#">Save to Kawpaa</a></h3>`;
+    this.html = `<h3><a class="${this.kawpaaLinkClassName}" href="#">Save to Kawpaa</a></h3>`;
   }
 
   expandImage() {
@@ -30,7 +28,7 @@ export default class SankakuComplexKawpaaLinkInsertion extends KawpaaLinkInserti
   }
 
   async getType() {
-    await this.expandImage();
+    // await this.expandImage(); // 制限サイズを変更(10MB->5MB)。拡大画像だとほぼ引っかかる。自動拡大機能は停止。
     const url = this.extraxtContentUrl();
     const pathname = new URL(url).pathname;
     const videoPattern = /(\.mp4|\.webm|\.avi)/;
