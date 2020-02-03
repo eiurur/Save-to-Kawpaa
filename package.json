@@ -6,7 +6,7 @@
   "license": "MIT",
   "dependencies": {
     "alertifyjs": "^1.13.1",
-    "axios": "^0.19.0",
+    "axios": "^0.19.1",
     "bootstrap": "^4.4.1",
     "jquery": "^3.4.1",
     "require-all": "^3.0.0"
