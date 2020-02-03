@@ -3,7 +3,7 @@ import { CHROME_EXTENSION_RESOURCES } from '../../config/';
 
 export default class Notification {
   static log() {
-    alertify.message('保存中 ...... ');
+    alertify.message('Saving ...... ');
   }
 
   // アイコンに色をつけて、完了したことをわかるようにする。通知もする。
@@ -11,14 +11,14 @@ export default class Notification {
     chrome.runtime.sendMessage({
       newIconPath: CHROME_EXTENSION_RESOURCES.images.BLUE_19,
     });
-    alertify.success('保存しました。');
+    alertify.success('Saved :)');
   }
 
   static fail(err) {
     console.log(err);
     if (!err) {
       alertify.error(
-        `statusCode: 500 <br> Kawpaaのサーバがダウンしています。しばらくお待ち下さい。`,
+        `statusCode: 500 <br> Kawpaa server has problems. Please wait for a moment.`,
       );
     } else if (err.response) {
       // axios
@@ -37,20 +37,24 @@ export default class Notification {
   }
 
   static makeErrorMessgage(err) {
-    const errorReason =
-      err.response && err.response.data ? err.response.data : err.message;
+    console.log(err.response);
+    const errorReason = err.response ? err.response : err.message;
     const errorMessage = [
-      '<b>保存に失敗しました。</b>',
-      '<b>原因：</b> ',
+      '<b>Failed to save.</b>',
+      '<b>Cause of failure</b> ',
       errorReason,
-      '<b>問題を報告しますか？</b>',
+      '<b>Do you want to report symptom of this problem?</b>',
     ].join('<br><br>');
     return errorMessage.replace(/\r?\n/g, '<br>');
   }
 
   static confirm({ message, callback }) {
     return new Promise((resolve, reject) => {
-      alertify.confirm(message, () => resolve(), () => reject());
+      alertify.confirm(
+        message,
+        () => resolve(),
+        () => reject(),
+      );
     });
   }
 
@@ -70,7 +74,11 @@ export default class Notification {
       );
     }
     return new Promise((resolve, reject) => {
-      alertify[name](message, () => resolve(), () => reject());
+      alertify[name](
+        message,
+        () => resolve(),
+        () => reject(),
+      );
     });
   }
 }

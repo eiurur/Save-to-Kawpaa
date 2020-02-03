@@ -3,7 +3,7 @@ import { CONTENT_TYPE, SUPPORT_SERVICE, ICONS } from '../../../../config';
 import KawpaaButtonInsertion from '../KawpaaButtonInsertion';
 
 import ChromeSyncStorageManager from '../../../utils/ChromeSyncStorageManager';
-import KawpaaSender from '../../KawpaaSender';
+import KawpaaAgent from '../../KawpaaAgent';
 
 export default class TweetDeckKawpaaButtonInsertion extends KawpaaButtonInsertion {
   constructor() {
@@ -121,7 +121,7 @@ export default class TweetDeckKawpaaButtonInsertion extends KawpaaButtonInsertio
     const payload = {
       token: token,
     };
-    const sender = new KawpaaSender(payload);
-    return await sender.get(`/api/convert/tweet/${tweetId}`);
+    const agent = new KawpaaAgent(payload);
+    return await agent.get(`/api/convert/tweet/${tweetId}`);
   }
 }

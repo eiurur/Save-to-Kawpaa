@@ -1,7 +1,7 @@
 import { SUPPORT_SERVICE } from '../config/';
 import ScriptExecuter from '../lib/utils/ScriptExecuter';
 import ChromeSyncStorageManager from '../lib/utils/ChromeSyncStorageManager';
-import KawpaaSender from '../lib/domains/KawpaaSender';
+import KawpaaAgent from '../lib/domains/KawpaaAgent';
 
 export default class RuntimeMessageListener {
   constructor() {
@@ -45,8 +45,8 @@ export default class RuntimeMessageListener {
     const payload = {
       token: token,
     };
-    const sender = new KawpaaSender(payload);
-    return sender.get(`/api/convert/tweet/${tweetId}`);
+    const agent = new KawpaaAgent(payload);
+    return agent.get(`/api/convert/tweet/${tweetId}`);
   }
 
   activate() {

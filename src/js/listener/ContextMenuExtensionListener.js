@@ -1,4 +1,4 @@
-import ScriptExecuter from '../lib/domains/ScriptExecuter';
+import ScriptExecuter from '../lib/utils/ScriptExecuter';
 import { ENDPOINT } from '../config/';
 
 export default class ContextMenuExtensionListener {
