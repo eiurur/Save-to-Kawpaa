@@ -1,11 +1,11 @@
 import $ from 'jquery';
-import { CONTENT_TYPE, SUPPORT_SERVICE, ICONS } from '../../../../config';
+import { CONTENT_TYPE, SUPPORT_SERVICE_DOMAIN, ICONS } from '../../../../config';
 import KawpaaButtonInsertion from '../KawpaaButtonInsertion';
 import { ucs2 } from 'punycode';
 
 export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion {
   constructor() {
-    super(SUPPORT_SERVICE.TWITTER_HOSTNAME);
+    super(SUPPORT_SERVICE_DOMAIN.TWITTER_HOSTNAME);
     this.container = '[role=main] article[role=article]';
     this.tweet_container = '[data-testid=tweet]';
     this.tweet_url = 'a[role=link][aria-label]';

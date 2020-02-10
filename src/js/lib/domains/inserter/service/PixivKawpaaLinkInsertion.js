@@ -1,14 +1,17 @@
 import $ from 'jquery';
-import { CONTENT_TYPE, SUPPORT_SERVICE } from '../../../../config';
+import { CONTENT_TYPE, SUPPORT_SERVICE_DOMAIN } from '../../../../config';
 import KawpaaLinkInsertion from '../KawpaaLinkInsertion';
 
 export default class PixivKawpaaLinkInsertion extends KawpaaLinkInsertion {
   constructor() {
-    super(SUPPORT_SERVICE.PIXIV_HOSTNAME);
+    super(SUPPORT_SERVICE_DOMAIN.PIXIV_HOSTNAME);
     this.selector = '[role="presentation"] [role="presentation"]';
     this.html = `
     <div class="${this.kawpaaLinkClassName}" >Save to Kawpaa</div>
     `;
+    this.insertStyle();
+  }
+  insertStyle() {
     $('head').append(`
     <style type="text/css">
       .${this.kawpaaLinkClassName} {

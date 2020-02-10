@@ -1,10 +1,10 @@
 import $ from 'jquery';
-import { SUPPORT_SERVICE, ICONS } from '../../../../config';
+import { SUPPORT_SERVICE_DOMAIN, ICONS } from '../../../../config';
 import KawpaaLinkInsertion from '../KawpaaLinkInsertion';
 
 export default class DeviantArtKawpaaLinkInsertion extends KawpaaLinkInsertion {
   constructor() {
-    super(SUPPORT_SERVICE.DEVIANTART_HOSTNAME);
+    super(SUPPORT_SERVICE_DOMAIN.DEVIANTART_HOSTNAME);
     this.selector = '.dev-meta-actions';
 
     // this.onChangeURL();

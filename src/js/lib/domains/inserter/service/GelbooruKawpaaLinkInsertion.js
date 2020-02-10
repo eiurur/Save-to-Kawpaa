@@ -1,10 +1,10 @@
 import $ from 'jquery';
-import { CONTENT_TYPE, SUPPORT_SERVICE } from '../../../../config';
+import { CONTENT_TYPE, SUPPORT_SERVICE_DOMAIN } from '../../../../config';
 import KawpaaLinkInsertion from '../KawpaaLinkInsertion';
 
 export default class GelbooruKawpaaLinkInsertion extends KawpaaLinkInsertion {
   constructor() {
-    super(SUPPORT_SERVICE.GELBOORU_HOSTNAME);
+    super(SUPPORT_SERVICE_DOMAIN.GELBOORU_HOSTNAME);
     this.selector = '#right-col h4';
     this.html = `| <a class="${
       this.kawpaaLinkClassName

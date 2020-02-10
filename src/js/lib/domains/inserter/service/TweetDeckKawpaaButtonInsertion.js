@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import { CONTENT_TYPE, SUPPORT_SERVICE, ICONS } from '../../../../config';
+import { CONTENT_TYPE, SUPPORT_SERVICE_DOMAIN, ICONS } from '../../../../config';
 import KawpaaButtonInsertion from '../KawpaaButtonInsertion';
 
 import ChromeSyncStorageManager from '../../../utils/ChromeSyncStorageManager';
@@ -7,7 +7,7 @@ import KawpaaAgent from '../../KawpaaAgent';
 
 export default class TweetDeckKawpaaButtonInsertion extends KawpaaButtonInsertion {
   constructor() {
-    super(SUPPORT_SERVICE.TWEETDECK_HOSTNAME);
+    super(SUPPORT_SERVICE_DOMAIN.TWEETDECK_HOSTNAME);
 
     this.container = '.s-full';
     this.twitter_name = '.account-inline';

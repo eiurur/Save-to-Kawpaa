@@ -1,10 +1,10 @@
 import $ from 'jquery';
-import { CONTENT_TYPE, ICONS, SUPPORT_SERVICE } from '../../../../config';
+import { CONTENT_TYPE, ICONS, SUPPORT_SERVICE_DOMAIN } from '../../../../config';
 import KawpaaLinkInsertion from '../KawpaaLinkInsertion';
 
 export default class AnimePictureKawpaaLinkInsertion extends KawpaaLinkInsertion {
   constructor() {
-    super(SUPPORT_SERVICE.ANIME_PICTURE_HOSTNAME);
+    super(SUPPORT_SERVICE_DOMAIN.ANIME_PICTURE_HOSTNAME);
     this.selector = '.post_vote_block #rating';
     this.html = `<a class="${
       this.kawpaaLinkClassName

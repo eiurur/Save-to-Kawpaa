@@ -1,10 +1,10 @@
 import $ from 'jquery';
-import { CONTENT_TYPE, SUPPORT_SERVICE } from '../../../../config';
+import { CONTENT_TYPE, SUPPORT_SERVICE_DOMAIN } from '../../../../config';
 import KawpaaLinkInsertion from '../KawpaaLinkInsertion';
 
 export default class NijieKawpaaLinkInsertion extends KawpaaLinkInsertion {
   constructor() {
-    super(SUPPORT_SERVICE.NIJIE_HOSTNAME);
+    super(SUPPORT_SERVICE_DOMAIN.NIJIE_HOSTNAME);
     this.selector = '#view-center-button';
     this.html = `
     <ul id="view-center-left"">

@@ -48,7 +48,7 @@ const CHROME_EXTENSION_RESOURCES = {
 
 const MAX_UPLOADABLE_FILESIZE_MB = 5;
 
-const SUPPORT_SERVICE = {
+const SUPPORT_SERVICE_DOMAIN = {
   AMATSUKA_HOSTNAME: 'amatsuka.herokuapp.com',
   ANIME_PICTURE_HOSTNAME: 'anime-pictures.net',
   DONMAI_HOSTNAME: 'donmai.us',
@@ -69,7 +69,7 @@ const SUPPORT_SERVICE = {
   TWEETDECK_HOSTNAME: 'tweetdeck.twitter.com',
   YANDE_RE_HOSTNAME: 'yande.re',
 };
-const SUPPORT_URL = {
+const SUPPORT_SERVICE_URL = {
   PIXIV_URL: 'https://www.pixiv.net/artworks',
   NIJIE_URL: 'nijie.info/view.php',
   NIJIE_MULTI_URL: 'nijie.info/view_popup.php',
@@ -85,6 +85,6 @@ export {
   ICONS,
   IS_PRODUCTION,
   MAX_UPLOADABLE_FILESIZE_MB,
-  SUPPORT_SERVICE,
-  SUPPORT_URL,
+  SUPPORT_SERVICE_DOMAIN,
+  SUPPORT_SERVICE_URL,
 };

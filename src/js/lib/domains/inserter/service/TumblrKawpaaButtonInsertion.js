@@ -1,10 +1,10 @@
 import $ from 'jquery';
-import { SUPPORT_SERVICE, ICONS } from '../../../../config';
+import { SUPPORT_SERVICE_DOMAIN, ICONS } from '../../../../config';
 import KawpaaButtonInsertion from '../KawpaaButtonInsertion';
 
 export default class TumblrKawpaaButtonInsertion extends KawpaaButtonInsertion {
   constructor() {
-    super(SUPPORT_SERVICE.TUMBLR_HOSTNAME);
+    super(SUPPORT_SERVICE_DOMAIN.TUMBLR_HOSTNAME);
 
     this.container = '.post_wrapper';
     this.post_container = '.post';

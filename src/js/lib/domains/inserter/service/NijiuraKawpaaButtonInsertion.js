@@ -1,14 +1,14 @@
 import $ from 'jquery';
 import {
   CONTENT_TYPE,
-  SUPPORT_SERVICE,
+  SUPPORT_SERVICE_DOMAIN,
   ICONS,
 } from '../../../../config';
 import KawpaaButtonInsertion from '../KawpaaButtonInsertion';
 
 export default class NijiuraKawpaaButtonInsertion extends KawpaaButtonInsertion {
   constructor() {
-    super(SUPPORT_SERVICE.NIJIURA_HOSTNAME);
+    super(SUPPORT_SERVICE_DOMAIN.NIJIURA_HOSTNAME);
 
     this.hostname = document.domain; // 二次裏は掲示板ごとにサブドメインが異なるがDOM構造は同じなのでスクリプトは同一。ただしドメインが異なるのでわざわざ取得・代入。
     this.threadElement = '.thre';

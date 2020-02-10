@@ -1,10 +1,10 @@
 import $ from 'jquery';
-import { CONTENT_TYPE, SUPPORT_SERVICE } from '../../../../config';
+import { CONTENT_TYPE, SUPPORT_SERVICE_DOMAIN } from '../../../../config';
 import KawpaaLinkInsertion from '../KawpaaLinkInsertion';
 
 export default class NozomiLaKawpaaLinkInsertion extends KawpaaLinkInsertion {
   constructor() {
-    super(SUPPORT_SERVICE.NOZOMI_LA_HOSTNAME);
+    super(SUPPORT_SERVICE_DOMAIN.NOZOMI_LA_HOSTNAME);
     this.selector = '.sidebar';
     this.html = `<span class="title">Kawpaa</span>
     <ul>

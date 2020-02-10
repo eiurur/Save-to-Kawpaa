@@ -1,4 +1,4 @@
-import { SUPPORT_SERVICE } from '../config/';
+import { SUPPORT_SERVICE_DOMAIN } from '../config/';
 import ScriptExecuter from '../lib/utils/ScriptExecuter';
 import ChromeSyncStorageManager from '../lib/utils/ChromeSyncStorageManager';
 import KawpaaAgent from '../lib/domains/KawpaaAgent';
@@ -28,15 +28,15 @@ export default class RuntimeMessageListener {
 
   isRequestFromSpecificService(hostname) {
     // ページ間でサブドメインが異なるサービス
-    if (hostname.includes(SUPPORT_SERVICE.DEVIANTART_HOSTNAME)) {
+    if (hostname.includes(SUPPORT_SERVICE_DOMAIN.DEVIANTART_HOSTNAME)) {
       return true;
     }
-    if (hostname.includes(SUPPORT_SERVICE.NIJIURA_HOSTNAME)) {
+    if (hostname.includes(SUPPORT_SERVICE_DOMAIN.NIJIURA_HOSTNAME)) {
       return true;
     }
 
     // ページ間でサブドメインが同一のサービス
-    var hostnameList = Object.values(SUPPORT_SERVICE);
+    var hostnameList = Object.values(SUPPORT_SERVICE_DOMAIN);
     return hostnameList.includes(hostname);
   }
 

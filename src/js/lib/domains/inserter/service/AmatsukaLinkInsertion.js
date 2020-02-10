@@ -1,13 +1,13 @@
 import $ from 'jquery';
-import { SUPPORT_SERVICE, ICONS } from '../../../../config';
+import { SUPPORT_SERVICE_DOMAIN, ICONS } from '../../../../config';
 import KawpaaButtonInsertion from '../KawpaaButtonInsertion';
 
 export default class AmatsukaLinkInsertion extends KawpaaButtonInsertion {
   constructor() {
-    super(SUPPORT_SERVICE.AMATSUKA_HOSTNAME);
+    super(SUPPORT_SERVICE_DOMAIN.AMATSUKA_HOSTNAME);
     this.container = '.image-layer';
     this.kawpaaButtonContainer = '.kawpaa-button-container';
-    console.log(SUPPORT_SERVICE.AMATSUKA_HOSTNAME);
+    console.log(SUPPORT_SERVICE_DOMAIN.AMATSUKA_HOSTNAME);
   }
 
   getInfo(targetElement) {
