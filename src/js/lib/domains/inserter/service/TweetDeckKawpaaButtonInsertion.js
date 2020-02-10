@@ -1,5 +1,9 @@
 import $ from 'jquery';
-import { CONTENT_TYPE, SUPPORT_SERVICE_DOMAIN, ICONS } from '../../../../config';
+import {
+  CONTENT_TYPE,
+  SUPPORT_SERVICE_DOMAIN,
+  ICONS,
+} from '../../../../config';
 import KawpaaButtonInsertion from '../KawpaaButtonInsertion';
 
 import ChromeSyncStorageManager from '../../../utils/ChromeSyncStorageManager';
@@ -40,10 +44,8 @@ export default class TweetDeckKawpaaButtonInsertion extends KawpaaButtonInsertio
     const tweetType = this.getTweetType(targetElement);
     switch (tweetType) {
       case 'photo': {
-        const imageUrl = `${targetElement
-          .find(this.tweet_image)
-          .attr('src')
-          .replace('name=large', 'name=orig')}`;
+        const imageUrl = targetElement.find(this.tweet_image).attr('src');
+        // .replace('name=large', 'name=orig');
         info = Object.assign(info, {
           type: CONTENT_TYPE.IMAGE,
           srcUrl: imageUrl,

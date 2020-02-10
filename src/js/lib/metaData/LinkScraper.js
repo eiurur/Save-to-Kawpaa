@@ -71,7 +71,7 @@ export default class LinkScraper extends HTMLMetaDataScraper {
     const ogImage = this.getSiteImage();
     if (ogImage) return ogImage;
 
-    let u = DEFAULT_IMAGE_URL;
+    let u = null;
     const $img = $('img');
 
     /*

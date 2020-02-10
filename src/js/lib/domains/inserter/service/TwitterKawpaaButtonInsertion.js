@@ -1,5 +1,9 @@
 import $ from 'jquery';
-import { CONTENT_TYPE, SUPPORT_SERVICE_DOMAIN, ICONS } from '../../../../config';
+import {
+  CONTENT_TYPE,
+  SUPPORT_SERVICE_DOMAIN,
+  ICONS,
+} from '../../../../config';
 import KawpaaButtonInsertion from '../KawpaaButtonInsertion';
 import { ucs2 } from 'punycode';
 
@@ -12,7 +16,7 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
     this.twitter_username =
       'a[role=link][aria-haspopup="false"][data-focusable="true"]'; // ぴゃー @puaa
     this.tweet_text = '[lang][dir=auto]';
-    this.tweet_image = 'img[draggable="false"]';
+    this.tweet_image = 'img[draggable]';
     this.tweet_video = 'video';
     this.kawpaa_button_container = '.action-kawpaa-container';
     this.kawpaa_button = '.ProfileTweet-actionList';
@@ -66,7 +70,7 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
         if (images.length < 1) break;
         let imageUrl = images[0];
 
-        imageUrl = imageUrl.replace(/name=(.*)/, 'name=orig');
+        // imageUrl = imageUrl.replace(/name=(.*)/, 'name=orig');
         info = Object.assign(info, {
           type: CONTENT_TYPE.IMAGE,
           srcUrl: imageUrl,
@@ -120,6 +124,7 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
       _$.find(this.kawpaa_button_container).length !== 0;
     const hasPhoto = _$.find('[aria-label]').find(this.tweet_image).length > 0;
     const hasVideo = _$.find(this.tweet_video).length > 0;
+    console.log(existKawpaaButton, hasPhoto, hasVideo);
     if (existKawpaaButton || !(hasPhoto || hasVideo)) {
       return;
     }
