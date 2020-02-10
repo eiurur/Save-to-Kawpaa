@@ -46,7 +46,7 @@ const CHROME_EXTENSION_RESOURCES = {
   },
 };
 
-const MAX_UPLOADABLE_FILESIZE_MB = 5;
+const MAX_UPLOADABLE_FILESIZE_MB = 3;
 
 const SUPPORT_SERVICE_DOMAIN = {
   AMATSUKA_HOSTNAME: 'amatsuka.herokuapp.com',

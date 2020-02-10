@@ -22,6 +22,11 @@ export default {
       `Savable file size is up to ${MAX_UPLOADABLE_FILESIZE_MB}MB`,
       480,
     ),
+  490: () =>
+    new KawpaaHttpException(
+      `You have reached the maximum number of registrations per day. Regulations are lifted at 00:00 every day.`,
+      490,
+    ),
   500: () =>
     new KawpaaHttpException(
       'Kawpaa server has problems. Please wait for a moment.',
