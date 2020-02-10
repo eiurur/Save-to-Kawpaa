@@ -1,25 +1,25 @@
 import $ from 'jquery';
-import { CONTENT_TYPE, SUPPORT_SERVICE } from '../../../../config';
+import { CONTENT_TYPE, SUPPORT_SERVICE_DOMAIN } from '../../../../config';
 import KawpaaLinkInsertion from '../KawpaaLinkInsertion';
 
 export default class SankakuComplexKawpaaLinkInsertion extends KawpaaLinkInsertion {
   constructor() {
-    super(SUPPORT_SERVICE.SANKAKUCOMPLEX_HOSTNAME);
+    super(SUPPORT_SERVICE_DOMAIN.SANKAKUCOMPLEX_HOSTNAME);
     this.selector = '#share';
     this.html = `<h3><a class="${this.kawpaaLinkClassName}" href="#">Save to Kawpaa</a></h3>`;
   }
 
-  expandImage() {
-    return new Promise(resolve => {
-      // loadイベントだと読み込み待ちが発生する。
-      $('#image').on('click', async e => {
-        // 少し待たないと<img>のsrcがabout:blankでサーバに送信してしまい、データの保存に失敗する。
-        await this.wait(500);
-        return resolve();
-      });
-      $('#image').click();
-    });
-  }
+  // expandImage() {
+  //   return new Promise(resolve => {
+  //     // loadイベントだと読み込み待ちが発生する。
+  //     $('#image').on('click', async e => {
+  //       // 少し待たないと<img>のsrcがabout:blankでサーバに送信してしまい、データの保存に失敗する。
+  //       await this.wait(500);
+  //       return resolve();
+  //     });
+  //     $('#image').click();
+  //   });
+  // }
 
   extraxtContentUrl() {
     const originalUrl = $('#image').attr('src');
@@ -42,7 +42,7 @@ export default class SankakuComplexKawpaaLinkInsertion extends KawpaaLinkInserti
   }
 
   async getUrl() {
-    await this.expandImage();
+    // await this.expandImage(); // 制限サイズを変更(10MB->5MB)。拡大画像だとほぼ引っかかる。自動拡大機能は停止。
     const contentUrl = this.extraxtContentUrl();
     return contentUrl;
   }
