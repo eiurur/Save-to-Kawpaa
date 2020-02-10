@@ -125,10 +125,17 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
     const hasPhoto = _$.find('[aria-label]').find(this.tweet_image).length > 0;
     const hasVideo = _$.find(this.tweet_video).length > 0;
     console.log(existKawpaaButton, hasPhoto, hasVideo);
-    if (existKawpaaButton || !(hasPhoto || hasVideo)) {
-      return;
-    }
+    if (existKawpaaButton || !(hasPhoto || hasVideo)) return;
 
+    const actions = _$.find('[aria-label][role=group]');
+    if (!actions.length) return;
+
+    const headAction = $(actions).children('div:first');
+    const followingActions = $(actions).children('div:not(:first)');
+    const headActionClasses = $(headAction).attr('class');
+    $(followingActions)
+      .removeClass()
+      .addClass(headActionClasses);
     const html = `\
       <div  class="action-kawpaa-container" style="
         display: flex;
