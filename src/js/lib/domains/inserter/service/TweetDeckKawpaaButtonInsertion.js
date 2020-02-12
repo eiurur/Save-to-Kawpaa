@@ -44,8 +44,10 @@ export default class TweetDeckKawpaaButtonInsertion extends KawpaaButtonInsertio
     const tweetType = this.getTweetType(targetElement);
     switch (tweetType) {
       case 'photo': {
-        const imageUrl = targetElement.find(this.tweet_image).attr('src');
-        // .replace('name=large', 'name=orig');
+        const imageUrl = targetElement
+          .find(this.tweet_image)
+          .attr('src')
+          .replace(/name=(.*)/, 'name=large');
         info = Object.assign(info, {
           type: CONTENT_TYPE.IMAGE,
           srcUrl: imageUrl,

@@ -70,7 +70,7 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
         if (images.length < 1) break;
         let imageUrl = images[0];
 
-        // imageUrl = imageUrl.replace(/name=(.*)/, 'name=orig');
+        imageUrl = imageUrl.replace(/name=(.*)/, 'name=large');
         info = Object.assign(info, {
           type: CONTENT_TYPE.IMAGE,
           srcUrl: imageUrl,
