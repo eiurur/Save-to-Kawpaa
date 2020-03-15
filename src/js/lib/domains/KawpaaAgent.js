@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { API, CHROME_RUNTIME_ID, ENDPOINT, IS_PRODUCTION } from '../../config/';
 import httpException from '../errors/httpException';
+import { version } from '../../../../manifest.json';
 
 export default class KawpaaAgent {
   constructor(payload) {
@@ -24,6 +25,10 @@ export default class KawpaaAgent {
   setDefaultValueToPayload() {
     this.payload.post.isPrivate = true;
     this.payload.post.isArchive = false;
+  }
+
+  setVersion() {
+    this.payload.version = version;
   }
 
   async request(method, url, payload) {
@@ -51,14 +56,17 @@ export default class KawpaaAgent {
 
   async save() {
     this.setDefaultValueToPayload();
-    await this.request('post', API.REGISTER, this.payload);
+    this.setVersion();
+    return await this.request('post', API.REGISTER, this.payload);
   }
 
   async get(url) {
-    await this.request('get', url, this.payload);
+    this.setVersion();
+    return await this.request('get', url, this.payload);
   }
 
   async post(url) {
-    await this.request('post', url, this.payload);
+    this.setVersion();
+    return await this.request('post', url, this.payload);
   }
 }

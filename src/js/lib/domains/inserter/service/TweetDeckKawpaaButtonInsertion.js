@@ -58,7 +58,10 @@ export default class TweetDeckKawpaaButtonInsertion extends KawpaaButtonInsertio
         const tweetId = /status\/(\d+)$/.exec(siteUrl)[1];
         const { data } = await this.fetchTweet(tweetId);
         const videos = data.data.extended_entities.media[0].video_info.variants;
-        const videoUrl = videos.splice(-2, 1)[0].url;
+        const mp4VideoHasHighestSize = videos
+          .filter(video => video.bitrate)
+          .sort((a, b) => b.bitrate - a.bitrate)[0];
+        const videoUrl = mp4VideoHasHighestSize.url;
         info = Object.assign(info, {
           type: CONTENT_TYPE.VIDEO,
           url: videoUrl,
@@ -120,12 +123,17 @@ export default class TweetDeckKawpaaButtonInsertion extends KawpaaButtonInsertio
     );
   }
 
-  async fetchTweet(tweetId) {
-    const token = await ChromeSyncStorageManager.get('token');
-    const payload = {
-      token: token,
-    };
-    const agent = new KawpaaAgent(payload);
-    return await agent.get(`/api/convert/tweet/${tweetId}`);
+  fetchTweet(tweetId) {
+    return new Promise(resolve => {
+      chrome.runtime.sendMessage(
+        {
+          func: 'fetchTweet',
+          tweetId: tweetId,
+        },
+        data => {
+          return resolve(data);
+        },
+      );
+    });
   }
 }

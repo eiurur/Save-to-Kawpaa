@@ -2,7 +2,6 @@ import ChromeSyncStorageManager from './lib/utils/ChromeSyncStorageManager';
 import Notification from './lib/utils/Notification';
 import MetaDataScraperFactory from './lib/metaData/MetaDataScraperFactory';
 import KawpaaAgent from './lib/domains/KawpaaAgent';
-import { version } from '../../manifest.json';
 
 (async () => {
   const mergePostData = (info = {}) => {
@@ -33,7 +32,6 @@ import { version } from '../../manifest.json';
       const payload = {
         token: token,
         post: postData,
-        version,
       };
       console.log(payload);
       const agent = new KawpaaAgent(payload);

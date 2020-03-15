@@ -79,25 +79,21 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
       }
       case 'video': {
         let videoUrl = targetElement.find('video').attr('src'); // 動画(mp4)
-        if (/\.mp4/.test(videoUrl)) {
-          info = Object.assign(info, {
-            type: CONTENT_TYPE.VIDEO,
-            url: videoUrl,
-            srcUrl: videoUrl,
-          });
-        } else {
+        if (!/\.mp4/.test(videoUrl)) {
           const tweetId = /status\/(\d+)$/.exec(tweetUrl)[1];
           const { data } = await this.fetchTweet(tweetId);
-          console.log(data);
           const videos =
             data.data.extended_entities.media[0].video_info.variants;
-          videoUrl = videos.sort((a, b) => b.bitrate - a.bitrate)[0].url;
-          info = Object.assign(info, {
-            type: CONTENT_TYPE.VIDEO,
-            url: videoUrl,
-            srcUrl: videoUrl,
-          });
+          const mp4VideoHasHighestSize = videos
+            .filter(video => video.bitrate)
+            .sort((a, b) => b.bitrate - a.bitrate)[0];
+          videoUrl = mp4VideoHasHighestSize.url;
         }
+        info = Object.assign(info, {
+          type: CONTENT_TYPE.VIDEO,
+          url: videoUrl,
+          srcUrl: videoUrl,
+        });
         break;
       }
     }
