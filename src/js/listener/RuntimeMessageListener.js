@@ -43,10 +43,11 @@ export default class RuntimeMessageListener {
   async fetchTweet({ tweetId }) {
     const token = await ChromeSyncStorageManager.get('token');
     const payload = {
-      token: token,
+      token,
     };
     const agent = new KawpaaAgent(payload);
-    return agent.get(`/api/convert/tweet/${tweetId}`);
+    const tweet = await agent.get(`/api/convert/tweet/${tweetId}`);
+    return tweet;
   }
 
   activate() {
