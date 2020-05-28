@@ -47,11 +47,16 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
         tweetUrl = document.location.href;
       }
     }
-    let siteUrl = tweetUrl;
 
+    const tweetId = /status\/(\d+)$/.exec(tweetUrl)[1];
+    const { data } = await this.fetchTweet(tweetId);
+    let tweet = data.data; // originalのtweetIDを取得できているのでretweetedの判定は不要
+    let user = tweet.user;
+
+    let siteUrl = tweetUrl;
     let username = targetElement.find(this.twitter_username).text();
     let text = targetElement.find(this.tweet_text).text();
-    let title = `${username} / ${text}`;
+    let title = `${user.name} @${user.screen_name} / ${text}`;
     let info = { siteUrl, title };
 
     const tweetType = this.getTweetType(targetElement);
@@ -60,12 +65,12 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
       case 'photo': {
         const srcList = targetElement
           .find('[aria-label] img')
-          .map(function(i, image) {
+          .map(function (i, image) {
             return $(image).attr('src');
           })
           .get();
         const images = srcList.filter(
-          image => image.indexOf('https://pbs.twimg.com/media/') !== -1,
+          (image) => image.indexOf('https://pbs.twimg.com/media/') !== -1,
         );
         if (images.length < 1) break;
         let imageUrl = images[0];
@@ -80,12 +85,9 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
       case 'video': {
         let videoUrl = targetElement.find('video').attr('src'); // 動画(mp4)
         if (!/\.mp4/.test(videoUrl)) {
-          const tweetId = /status\/(\d+)$/.exec(tweetUrl)[1];
-          const { data } = await this.fetchTweet(tweetId);
-          const videos =
-            data.data.extended_entities.media[0].video_info.variants;
+          const videos = tweet.extended_entities.media[0].video_info.variants;
           const mp4VideoHasHighestSize = videos
-            .filter(video => video.bitrate)
+            .filter((video) => video.bitrate)
             .sort((a, b) => b.bitrate - a.bitrate)[0];
           videoUrl = mp4VideoHasHighestSize.url;
         }
@@ -102,13 +104,13 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
   }
 
   fetchTweet(tweetId) {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       chrome.runtime.sendMessage(
         {
           func: 'fetchTweet',
           tweetId: tweetId,
         },
-        data => {
+        (data) => {
           return resolve(data);
         },
       );
@@ -129,9 +131,7 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
     const headAction = $(actions).children('div:first');
     const followingActions = $(actions).children('div:not(:first)');
     const headActionClasses = $(headAction).attr('class');
-    $(followingActions)
-      .removeClass()
-      .addClass(headActionClasses);
+    $(followingActions).removeClass().addClass(headActionClasses);
     const html = `\
       <div  class="action-kawpaa-container" style="
         display: flex;
@@ -159,7 +159,7 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
 
   onClick() {
     const _this = this;
-    $(document).on('click', this.onClickElement, function(e) {
+    $(document).on('click', this.onClickElement, function (e) {
       e.preventDefault();
 
       // 画像の差し替え
@@ -170,8 +170,8 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
       const targetElement = $(this).closest(_this.container);
       _this
         .getInfo(targetElement)
-        .then(info => _this.getParamsToServer(info))
-        .then(params => _this.send(params));
+        .then((info) => _this.getParamsToServer(info))
+        .then((params) => _this.send(params));
     });
   }
 
@@ -180,7 +180,7 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
     const _this = this;
     $(document).on(
       {
-        mouseenter: function(e) {
+        mouseenter: function (e) {
           _this.show($(this));
         },
       },
