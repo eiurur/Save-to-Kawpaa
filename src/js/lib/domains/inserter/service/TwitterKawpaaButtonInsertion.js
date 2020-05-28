@@ -10,11 +10,10 @@ import { ucs2 } from 'punycode';
 export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion {
   constructor() {
     super(SUPPORT_SERVICE_DOMAIN.TWITTER_HOSTNAME);
-    this.container = '[role=main] article[role=article]';
+    this.container =
+      '[role=main] article[role=article], [aria-labelledby="modal-header"]';
     this.tweet_container = '[data-testid=tweet]';
     this.tweet_url = 'a[role=link][aria-label]';
-    this.twitter_username =
-      'a[role=link][aria-haspopup="false"][data-focusable="true"]'; // ぴゃー @puaa
     this.tweet_text = '[lang][dir=auto]';
     this.tweet_image = 'img[draggable]';
     this.tweet_video = 'video';
@@ -48,13 +47,15 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
       }
     }
 
-    const tweetId = /status\/(\d+)$/.exec(tweetUrl)[1];
+    const tweetMatch = /status\/(\d+).*/.exec(tweetUrl);
+    const photoMatch = /status\/(\d+)\/photo\/(\d)+/.exec(tweetUrl);
+    const tweetId = tweetMatch ? tweetMatch[1] : null;
+    const indexIdx = photoMatch ? photoMatch[2] - 1 : 0;
     const { data } = await this.fetchTweet(tweetId);
     let tweet = data.data; // originalのtweetIDを取得できているのでretweetedの判定は不要
     let user = tweet.user;
 
     let siteUrl = tweetUrl;
-    let username = targetElement.find(this.twitter_username).text();
     let text = targetElement.find(this.tweet_text).text();
     let title = `${user.name} @${user.screen_name} / ${text}`;
     let info = { siteUrl, title };
@@ -73,7 +74,7 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
           (image) => image.indexOf('https://pbs.twimg.com/media/') !== -1,
         );
         if (images.length < 1) break;
-        let imageUrl = images[0];
+        let imageUrl = images[indexIdx];
 
         imageUrl = imageUrl.replace(/name=(.*)/, 'name=large');
         info = Object.assign(info, {
@@ -99,7 +100,6 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
         break;
       }
     }
-    console.log(info);
     return info;
   }
 
@@ -122,7 +122,6 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
       _$.find(this.kawpaa_button_container).length !== 0;
     const hasPhoto = _$.find('[aria-label]').find(this.tweet_image).length > 0;
     const hasVideo = _$.find(this.tweet_video).length > 0;
-    console.log(existKawpaaButton, hasPhoto, hasVideo);
     if (existKawpaaButton || !(hasPhoto || hasVideo)) return;
 
     const actions = _$.find('[aria-label][role=group]');
@@ -161,6 +160,7 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
     const _this = this;
     $(document).on('click', this.onClickElement, function (e) {
       e.preventDefault();
+      e.stopPropagation();
 
       // 画像の差し替え
       $(this)

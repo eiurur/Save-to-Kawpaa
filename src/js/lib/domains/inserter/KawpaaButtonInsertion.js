@@ -37,7 +37,7 @@ export default class KawpaaButtonInsertion {
   }
 
   send(params) {
-    chrome.runtime.sendMessage(params, response => console.log(response));
+    chrome.runtime.sendMessage(params, (response) => console.log(response));
   }
 
   on() {
@@ -46,7 +46,7 @@ export default class KawpaaButtonInsertion {
   }
 
   onClick() {
-    $(document).on('click', this.onClickElement, function(e) {
+    $(document).on('click', this.onClickElement, function (e) {
       e.preventDefault();
     });
   }
@@ -55,7 +55,7 @@ export default class KawpaaButtonInsertion {
     const _this = this;
     $(document).on(
       {
-        mouseenter: function(e) {
+        mouseenter: function (e) {
           _this.show($(this));
         },
       },
