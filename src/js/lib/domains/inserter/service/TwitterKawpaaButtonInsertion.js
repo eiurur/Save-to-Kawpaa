@@ -14,7 +14,6 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
       '[role=main] article[role=article], [aria-labelledby="modal-header"]';
     this.tweet_container = '[data-testid=tweet]';
     this.tweet_url = 'a[role=link][aria-label]';
-    this.tweet_text = '[lang][dir=auto]';
     this.tweet_image = 'img[draggable]';
     this.tweet_video = 'video';
     this.kawpaa_button_container = '.action-kawpaa-container';
@@ -56,8 +55,7 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
     let user = tweet.user;
 
     let siteUrl = tweetUrl;
-    let text = targetElement.find(this.tweet_text).text();
-    let title = `${user.name} @${user.screen_name} / ${text}`;
+    let title = `${user.name} @${user.screen_name} / ${tweet.full_text}`;
     let info = { siteUrl, title };
 
     const tweetType = this.getTweetType(targetElement);
@@ -176,7 +174,6 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
   }
 
   onMouseEnter() {
-    console.log('on');
     const _this = this;
     $(document).on(
       {
