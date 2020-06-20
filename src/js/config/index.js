@@ -75,6 +75,9 @@ const SUPPORT_SERVICE_URL = {
   NIJIE_URL: 'nijie.info/view.php',
   NIJIE_MULTI_URL: 'nijie.info/view_popup.php',
 };
+const SUPPORT_SERVICE_URL_PATTERN = {
+  PIXIV_NOVEL_USER: /https:\/\/www.pixiv.net\/users\/\d+\/novels.*/,
+};
 
 export {
   API,
@@ -88,4 +91,5 @@ export {
   MAX_UPLOADABLE_FILESIZE_MB,
   SUPPORT_SERVICE_DOMAIN,
   SUPPORT_SERVICE_URL,
+  SUPPORT_SERVICE_URL_PATTERN,
 };

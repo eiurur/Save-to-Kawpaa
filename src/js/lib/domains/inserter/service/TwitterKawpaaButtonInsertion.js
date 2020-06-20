@@ -64,7 +64,6 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
     const tweetId = tweetMatch ? tweetMatch[1] : null;
     const indexIdx = photoMatch ? photoMatch[2] - 1 : 0;
     const { data } = await this.fetchTweet(tweetId);
-    console.log(tweetId, data);
     let tweet = data.data; // originalのtweetIDを取得できているのでretweetedの判定は不要
     let user = tweet.user;
 
@@ -73,7 +72,6 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
     let info = { siteUrl, title };
 
     const tweetType = this.getTweetType(tweet.extended_entities);
-    console.log(tweetType);
     switch (tweetType) {
       case 'photo': {
         if (

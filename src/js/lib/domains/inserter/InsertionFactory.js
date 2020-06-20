@@ -1,5 +1,9 @@
 import $ from 'jquery';
-import { SUPPORT_SERVICE_DOMAIN, SUPPORT_SERVICE_URL } from '../../../config';
+import {
+  SUPPORT_SERVICE_DOMAIN,
+  SUPPORT_SERVICE_URL,
+  SUPPORT_SERVICE_URL_PATTERN,
+} from '../../../config';
 import {
   AmatsukaLinkInsertion,
   AnimePictureKawpaaLinkInsertion,
@@ -38,6 +42,16 @@ const patches = {
       }
     }, 1000);
   },
+  pixivNovel: () => {
+    let timer = setInterval(async () => {
+      if (InsertionFactory.existLink()) return;
+      InsertionFactory.clean();
+      const inserter = new PixivNovelKawpaaLinkInsertion();
+      const success = await inserter.insert();
+      if (success) inserter.on();
+      // clearInterval(timer);
+    }, 1000);
+  },
 };
 
 export default class InsertionFactory {
@@ -60,7 +74,11 @@ export default class InsertionFactory {
       patches.pixiv();
       return new PixivKawpaaLinkInsertion();
     }
-    if (url.includes(SUPPORT_SERVICE_URL.PIXIV_NOVEL_URL)) {
+    if (
+      url.includes(SUPPORT_SERVICE_URL.PIXIV_NOVEL_URL) ||
+      SUPPORT_SERVICE_URL_PATTERN.PIXIV_NOVEL_USER.test(url)
+    ) {
+      patches.pixivNovel();
       return new PixivNovelKawpaaLinkInsertion();
     }
     if (url.includes(SUPPORT_SERVICE_URL.NIJIE_MULTI_URL)) {
