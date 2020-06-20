@@ -20,7 +20,8 @@ export default class PixivNovelKawpaaLinkInsertion extends KawpaaLinkInsertion {
         color: white;
         left: 1rem;
         bottom: 1rem;
-        padding: 8px;
+        padding: .5rem 1.5rem;
+        border-radius: 60rem;
         cursor: pointer;
         text-align: center;
         z-index: 10000;
