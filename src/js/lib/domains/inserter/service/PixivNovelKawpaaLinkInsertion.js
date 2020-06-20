@@ -61,7 +61,7 @@ export default class PixivNovelKawpaaLinkInsertion extends KawpaaLinkInsertion {
     });
   }
   getType() {
-    return CONTENT_TYPE.LINK;
+    return CONTENT_TYPE.TEXT;
   }
   getContent() {
     return $(`${this.selector} > div:eq(1) > div:eq(0) > div:eq(1)`).html();
