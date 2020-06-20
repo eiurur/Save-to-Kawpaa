@@ -20,14 +20,27 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
     this.kawpaa_button = '.ProfileTweet-actionList';
   }
 
-  getTweetType(element) {
-    const hasVideo = element.find(this.tweet_video).length > 0;
-    const hasPhoto = element.find(this.tweet_image).length > 0;
+  // getTweetType(element) {
+  //   const hasVideo = element.find(this.tweet_video).length > 0;
+  //   const hasPhoto = element.find(this.tweet_image).length > 0;
 
-    if (hasVideo) {
+  //   if (hasVideo) {
+  //     return 'video';
+  //   }
+  //   if (hasPhoto) {
+  //     return 'photo';
+  //   }
+  //   return 'text';
+  // }
+
+  getTweetType(entities) {
+    if (!entities.media || !entities.media[0]) {
+      return 'text';
+    }
+    if (entities.media[0].video_info) {
       return 'video';
     }
-    if (hasPhoto) {
+    if (entities.media) {
       return 'photo';
     }
     return 'text';
@@ -51,6 +64,7 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
     const tweetId = tweetMatch ? tweetMatch[1] : null;
     const indexIdx = photoMatch ? photoMatch[2] - 1 : 0;
     const { data } = await this.fetchTweet(tweetId);
+    console.log(tweetId, data);
     let tweet = data.data; // originalのtweetIDを取得できているのでretweetedの判定は不要
     let user = tweet.user;
 
@@ -58,23 +72,19 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
     let title = `${user.name} @${user.screen_name} / ${tweet.full_text}`;
     let info = { siteUrl, title };
 
-    const tweetType = this.getTweetType(targetElement);
-
+    const tweetType = this.getTweetType(tweet.extended_entities);
+    console.log(tweetType);
     switch (tweetType) {
       case 'photo': {
-        const srcList = targetElement
-          .find('[aria-label] img')
-          .map(function (i, image) {
-            return $(image).attr('src');
-          })
-          .get();
-        const images = srcList.filter(
-          (image) => image.indexOf('https://pbs.twimg.com/media/') !== -1,
-        );
-        if (images.length < 1) break;
-        let imageUrl = images[indexIdx];
-
-        imageUrl = imageUrl.replace(/name=(.*)/, 'name=large');
+        if (
+          !tweet.extended_entities ||
+          !tweet.extended_entities.media ||
+          tweet.extended_entities.media.length === 0
+        ) {
+          break;
+        }
+        const media = tweet.extended_entities.media[indexIdx];
+        const imageUrl = media.media_url_https;
         info = Object.assign(info, {
           type: CONTENT_TYPE.IMAGE,
           srcUrl: imageUrl,
@@ -82,14 +92,11 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
         break;
       }
       case 'video': {
-        let videoUrl = targetElement.find('video').attr('src'); // 動画(mp4)
-        if (!/\.mp4/.test(videoUrl)) {
-          const videos = tweet.extended_entities.media[0].video_info.variants;
-          const mp4VideoHasHighestSize = videos
-            .filter((video) => video.bitrate)
-            .sort((a, b) => b.bitrate - a.bitrate)[0];
-          videoUrl = mp4VideoHasHighestSize.url;
-        }
+        const videos = tweet.extended_entities.media[0].video_info.variants;
+        const mp4VideoHasHighestSize = videos
+          .filter((video) => video.bitrate)
+          .sort((a, b) => b.bitrate - a.bitrate)[0];
+        const videoUrl = mp4VideoHasHighestSize.url;
         info = Object.assign(info, {
           type: CONTENT_TYPE.VIDEO,
           url: videoUrl,
