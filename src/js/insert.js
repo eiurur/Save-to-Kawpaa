@@ -6,6 +6,7 @@ import InsertionFactory from './lib/domains/inserter/InsertionFactory';
   const currentHostname = location.host;
   const currentUrl = location.href;
   const inserter = InsertionFactory.create(currentHostname, currentUrl);
+  console.log(inserter);
   if (!Array.isArray(inserter)) {
     const success = await inserter.insert();
     if (success) inserter.on();

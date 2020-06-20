@@ -9,7 +9,7 @@ const ENDPOINT = {
   PROD: 'https://kawpaa.eiurur.xyz',
 };
 
-const IS_PRODUCTION = true;
+const IS_PRODUCTION = false;
 
 const DEFAULT_IMAGE_URL =
   'https://68.media.tumblr.com/9086462174c34becaf8b3e59de8f5800/tumblr_nzek2kWNNJ1ukgdjoo2_1280.jpg';
@@ -71,6 +71,7 @@ const SUPPORT_SERVICE_DOMAIN = {
 };
 const SUPPORT_SERVICE_URL = {
   PIXIV_URL: 'https://www.pixiv.net/artworks',
+  PIXIV_NOVEL_URL: 'https://www.pixiv.net/novel',
   NIJIE_URL: 'nijie.info/view.php',
   NIJIE_MULTI_URL: 'nijie.info/view_popup.php',
 };

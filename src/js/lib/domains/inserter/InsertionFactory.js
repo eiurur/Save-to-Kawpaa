@@ -14,6 +14,7 @@ import {
   NijiuraDecKawpaaButtonInsertion,
   NozomiLaKawpaaLinkInsertion,
   PixivKawpaaLinkInsertion,
+  PixivNovelKawpaaLinkInsertion,
   SankakuComplexKawpaaLinkInsertion,
   TumblrKawpaaButtonInsertion,
   TwitterKawpaaButtonInsertion,
@@ -58,6 +59,9 @@ export default class InsertionFactory {
     if (url.includes(SUPPORT_SERVICE_URL.PIXIV_URL)) {
       patches.pixiv();
       return new PixivKawpaaLinkInsertion();
+    }
+    if (url.includes(SUPPORT_SERVICE_URL.PIXIV_NOVEL_URL)) {
+      return new PixivNovelKawpaaLinkInsertion();
     }
     if (url.includes(SUPPORT_SERVICE_URL.NIJIE_MULTI_URL)) {
       return new NijieMultiKawpaaLinkInsertion();
