@@ -53,11 +53,6 @@ import KawpaaAgent from './lib/domains/KawpaaAgent';
       const token = await ChromeSyncStorageManager.get('token');
       const postData = mergePostData(info);
       const contentByte = bytes2(postData.content)
-      console.log(contentByte)
-      console.log(bytes2(JSON.stringify(postData)))
-      if(contentByte > 1024 * 20) { // TODO: 要調査
-        postData.content = ''
-      }
       await save(postData);
       Notification.success();
     } catch (err) {
