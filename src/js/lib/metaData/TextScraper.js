@@ -14,6 +14,9 @@ export default class TextScraper extends HTMLMetaDataScraper {
   }
 
   getContent() {
+    const content = this.data.selectionText
+    delete this.data.selectionText;
+
     const selectedElement = window.getSelection().getRangeAt(0);
     const startParentElement = selectedElement.startContainer.parentElement;
     const endParentElement = selectedElement.endContainer.parentElement;
@@ -21,7 +24,7 @@ export default class TextScraper extends HTMLMetaDataScraper {
     const $end = $(endParentElement);
 
     if (startParentElement === endParentElement) {
-      return this.removeScriptTag($start.html());
+      return this.removeScriptTag();
     } else {
       // jquery - get a common parent for two DOM elements - Stack Overflow
       // https://stackoverflow.com/questions/7647864/get-a-common-parent-for-two-dom-elements
@@ -31,7 +34,7 @@ export default class TextScraper extends HTMLMetaDataScraper {
         .first();
       return this.removeScriptTag($commonParent.html());
     }
-    return this.data.selectionText;
+    return content;
   }
 
   /**

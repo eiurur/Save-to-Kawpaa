@@ -33,7 +33,6 @@ export default class NijiuraDecKawpaaButtonInsertion extends KawpaaButtonInserti
         title: `${threadTitle} - ${responseText}`,
         srcUrl: srcUrl,
       };
-      console.log(info);
       return resolve(info);
     });
   }
@@ -48,7 +47,6 @@ export default class NijiuraDecKawpaaButtonInsertion extends KawpaaButtonInserti
   show(_$) {
     const existKawpaaButton = _$.find(this.onClickElement).length !== 0;
     const hasPhoto = !!_$.find(this.imageElement).attr('src');
-    console.log(_$, existKawpaaButton, hasPhoto);
     if (existKawpaaButton || !hasPhoto) {
       return;
     }

@@ -19,6 +19,8 @@ export default class KawpaaAgent {
       headers: {
         'Access-Control-Allow-Origin': '*',
       },
+      maxContentLength: Infinity,
+      maxBodyLength: Infinity,
     });
   }
 
@@ -37,20 +39,17 @@ export default class KawpaaAgent {
         method,
         url,
         data: payload,
+        maxContentLength: Infinity,
+        maxBodyLength: Infinity,
       });
     } catch (err) {
+      console.log('request:', err)
       let statusCode = 500;
-      if (err.response) {
-        statusCode = err.response.status;
-      } else if (err.statusCode) {
-        statusCode = err.statusCode;
-      }
+      if (err.response) statusCode = err.response.status;
+      else if (err.statusCode) statusCode = err.statusCode;
 
-      if (httpException[statusCode]) {
-        throw httpException[statusCode]();
-      } else {
-        throw httpException['500']();
-      }
+      if (httpException[statusCode]) httpException[statusCode]();
+      else  httpException['500']();
     }
   }
 

@@ -27,6 +27,8 @@ export default class RuntimeMessageListener {
   }
 
   isRequestFromSpecificService(hostname) {
+    if(!hostname) return false
+
     // ページ間でサブドメインが異なるサービス
     if (hostname.includes(SUPPORT_SERVICE_DOMAIN.DEVIANTART_HOSTNAME)) {
       return true;
@@ -50,6 +52,17 @@ export default class RuntimeMessageListener {
     return tweet;
   }
 
+  async saveToKawpaa({postData}) {
+    const token = await ChromeSyncStorageManager.get('token');
+    const payload = {
+      token,
+      post: postData,
+    };
+    const agent = new KawpaaAgent(payload);
+    const result = await agent.save();
+    return result;
+  }
+
   activate() {
     chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       console.log('onMessage request = ', request);
@@ -62,14 +75,16 @@ export default class RuntimeMessageListener {
         return sendResponse(`Done send link`);
       }
 
-      if (request.func) {
-        this[request.func](request).then(result => sendResponse(result));
-        return true; // Will respond asynchronously.
-      }
-
       if (this.isRequestFromSpecificService(request.name)) {
         this.registerContentToKawpaa(JSON.stringify(request.info));
       }
+      else if (request.func) {
+        this[request.func](request)
+        .then(result => sendResponse(result))
+        .catch(err => sendResponse(err));
+        return true; // Will respond asynchronously.
+      }
+
 
       if (request.name === 'REPORT_ERROR') {
         this.openErrorReportPage();

@@ -15,7 +15,6 @@ export default class Notification {
   }
 
   static fail(err) {
-    console.log(err);
     if (!err) {
       alertify.error(
         `statusCode: 500 <br> Kawpaa server has problems. Please wait for a moment.`,
@@ -37,8 +36,10 @@ export default class Notification {
   }
 
   static makeErrorMessgage(err) {
-    console.log(err.response);
-    const errorReason = err.response ? err.response : err.message;
+    let errorReason = err
+    if(err) {
+      errorReason = err.response ? err.response : err.message;
+    }
     const errorMessage = [
       '<b>Failed to save.</b>',
       '<b>Cause of failure</b> ',

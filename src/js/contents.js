@@ -9,6 +9,10 @@ import KawpaaAgent from './lib/domains/KawpaaAgent';
     const htmlMetaData = scraper.scrape(info);
     return Object.assign(htmlMetaData, info);
   };
+  
+  function bytes2(str) {
+    return(encodeURIComponent(str).replace(/%../g,"x").length);
+  }
 
   const showErrorModal = async err => {
     try {
@@ -17,28 +21,48 @@ import KawpaaAgent from './lib/domains/KawpaaAgent';
         header: 'Save to Kawpaa',
         message: Notification.makeErrorMessgage(err),
       });
-      chrome.runtime.sendMessage({ name: 'REPORT_ERROR' });
+      // chrome.runtime.sendMessage({ name: 'REPORT_ERROR' });
     } catch (e) {
-      Notification.fail(err);
+      Notification.fail(e);
     }
   };
+
+  const save = async (postData) => {
+    return new Promise((resolve, reject) => {
+      chrome.runtime.sendMessage(
+        {
+          func: 'saveToKawpaa',
+          postData: postData,
+        },
+        (response) => {
+          if(response && response.status) {
+            return resolve(response);
+          }
+          else {
+            return reject(response);
+          }
+        },
+      );
+    });
+  }
+
 
   const saveContentToKawpaa = async (info = {}) => {
     try {
       Notification.log();
       const token = await ChromeSyncStorageManager.get('token');
       const postData = mergePostData(info);
-
-      const payload = {
-        token: token,
-        post: postData,
-      };
-      console.log(payload);
-      const agent = new KawpaaAgent(payload);
-      await agent.save();
+      const contentByte = bytes2(postData.content)
+      console.log(contentByte)
+      console.log(bytes2(JSON.stringify(postData)))
+      if(contentByte > 1024 * 20) { // TODO: 要調査
+        postData.content = ''
+      }
+      await save(postData);
       Notification.success();
     } catch (err) {
-      await showErrorModal();
+      Notification.fail(err);
+      // await showErrorModal(err);
     }
   };
 
