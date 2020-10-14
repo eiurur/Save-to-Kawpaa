@@ -64,7 +64,14 @@ export default class PixivNovelKawpaaLinkInsertion extends KawpaaLinkInsertion {
     return CONTENT_TYPE.TEXT;
   }
   getContent() {
-    return $(`${this.selector} > div:eq(1) > div:eq(0) > div:eq(1)`).html();
+    let content = '';
+    const btns = $('main nav:first button[type="button"]')
+    $.each(btns, (i, btn) => {
+      if(i === 0 || i === (btns.length-1)) return
+      $(btn).trigger('click')
+      content+=$(`${this.selector} > div:eq(1) > div:eq(0) > div:eq(1)`).html()
+    })
+    return content;
   }
 
   getTitle() {
