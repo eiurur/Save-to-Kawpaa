@@ -67,7 +67,7 @@ export default class PixivNovelKawpaaLinkInsertion extends KawpaaLinkInsertion {
   getNovelText() {
     return this.getVerticalWritingText() || this.getHorizontalWritingText()
   }
-  
+
   getVerticalWritingText() {
     return $(`${this.selector} > div:eq(1) > div:eq(0) > div:eq(1)`).html()
   }
@@ -83,7 +83,7 @@ export default class PixivNovelKawpaaLinkInsertion extends KawpaaLinkInsertion {
       $.each(btns, (i, btn) => {
         if(i === 0 || i === (btns.length-1)) return
         $(btn).trigger('click')
-        content += getNovelText
+        content += this.getNovelText()
       })
     }
     else {
