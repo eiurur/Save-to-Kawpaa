@@ -1,12 +1,12 @@
 # Save to Kawpaa
 
-Chrome Extension to assist your masturbation life. Old name is 'Save to Ona it
-Later'.
+This is a Chrome Extension that allows you to register contents to <a href="https://kawpaa.eiurur.xyz/" target="_blank">Kawpaa</a> that aggregates images/videos/text/links used for masturbation.
 
-This is to be used in conjunction with the web service
-(<a href="https://kawpaa.eiurur.xyz/" target="_blank">Kawpaa</a>).
+# Status
 
-<br>
+<p align="left">
+<a href="https://github.com/eiurur/Save-to-Kawpaa/actions?query=workflow%3Anodejs"><img src="https://github.com/eiurur/Save-to-Kawpaa/workflows/Node.js%20CI/badge.svg?branch=master" alt="Node.js CI"></a>
+</p>
 
 # Usage
 
