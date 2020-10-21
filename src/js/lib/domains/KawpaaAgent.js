@@ -16,11 +16,6 @@ export default class KawpaaAgent {
   getAxios() {
     return axios.create({
       baseURL: this.getBaseURL(),
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-      },
-      maxContentLength: Infinity,
-      maxBodyLength: Infinity,
     });
   }
 
