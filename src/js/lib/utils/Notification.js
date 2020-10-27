@@ -15,29 +15,32 @@ export default class Notification {
   }
 
   static fail(err) {
+    console.log(err.message);
     if (!err) {
       alertify.error(
-        `statusCode: 500 <br> Kawpaa server has problems. Please wait for a moment.`,
+        `StatusCode: 500 <br> Kawpaa server has problems. Please wait for a moment.`,
+      );
+    } else if (err.statusCode && err.message) {
+      // chrome extension内の例外処理
+      alertify.error(
+        `StatusCode: ${err.statusCode} <br> Error: ${err.message}`,
       );
     } else if (err.response) {
       // axios
       alertify.error(
-        `statusCode: ${err.response.status} <br> statusText: ${err.response.statusText} <br> ${err.response.data.message}`,
+        `StatusCode: ${err.response.status} <br> statusText: ${err.response.statusText} <br> ${err.response.data.message}`,
       );
     } else if (err.statusCode) {
       // Base64に変換をかますときとかにこけた
-      alertify.error(`statusCode: ${err.statusCode} <br> ${err.statusMessage}`);
-    } else if (err.message) {
-      // chrome extension内の例外処理
-      alertify.error(err.message);
+      alertify.error(`StatusCode: ${err.statusCode} <br> ${err.statusMessage}`);
     } else {
       alertify.error(err.toString());
     }
   }
 
   static makeErrorMessgage(err) {
-    let errorReason = err
-    if(err) {
+    let errorReason = err;
+    if (err) {
       errorReason = err.response ? err.response : err.message;
     }
     const errorMessage = [
@@ -65,7 +68,7 @@ export default class Notification {
         name,
         function factory() {
           return {
-            build: function() {
+            build: function () {
               this.setHeader(header);
             },
           };
