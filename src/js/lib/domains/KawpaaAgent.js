@@ -38,9 +38,6 @@ export default class KawpaaAgent {
         maxBodyLength: Infinity,
       });
     } catch (err) {
-      console.log(err.statusCode);
-      console.log(err.response);
-      console.log('request:', err.response.data);
       let statusCode = 500;
       if (err.response) statusCode = err.response.status;
       else if (err.statusCode) statusCode = err.statusCode;

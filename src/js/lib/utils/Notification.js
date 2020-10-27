@@ -15,7 +15,6 @@ export default class Notification {
   }
 
   static fail(err) {
-    console.log(err.message);
     if (!err) {
       alertify.error(
         `StatusCode: 500 <br> Kawpaa server has problems. Please wait for a moment.`,

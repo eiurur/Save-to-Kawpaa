@@ -68,7 +68,6 @@ export default class InsertionFactory {
   }
 
   static create(hostname, url) {
-    console.log(hostname, url);
     // 例外(複数)
     if (url.includes(SUPPORT_SERVICE_URL.PIXIV_URL)) {
       patches.pixiv();
