@@ -6,6 +6,7 @@ export default class ScriptExecuter {
   constructor(info) {
     this.tasks = [
       ChromeExecuter.insertCSS({ file: CHROME_EXTENSION_RESOURCES.css.lib }),
+      ChromeExecuter.insertCSS({ file: CHROME_EXTENSION_RESOURCES.css.patch }),
       ChromeExecuter.executeScript({ code: `var info = ${info};` }),
     ];
     return this;
