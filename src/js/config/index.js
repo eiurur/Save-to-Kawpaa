@@ -35,6 +35,7 @@ const CONTENT_TYPE = {
 const CHROME_EXTENSION_RESOURCES = {
   css: {
     lib: `build/css/vendors/lib.css`,
+    patch: 'build/css/patch.css',
   },
   js: {
     contents: 'build/js/contents.bundle.js',
