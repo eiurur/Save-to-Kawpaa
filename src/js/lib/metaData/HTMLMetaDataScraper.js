@@ -3,7 +3,6 @@ import QueryStringParser from '../utils/QueryStringParser';
 
 export default class HTMLMetaDataScraper {
   constructor(data) {
-    console.log(data);
     this.data = data;
   }
 
@@ -21,7 +20,7 @@ export default class HTMLMetaDataScraper {
   removeTag(tagName, html) {
     const TAG_REGEX = new RegExp(
       `<${tagName}\\b[^<]*(?:(?!<\\/${tagName}>)<[^<]*)*<\\/${tagName}>`,
-      'gi',
+      'gi'
     );
     while (TAG_REGEX.test(html)) {
       html = html.replace(TAG_REGEX, '');

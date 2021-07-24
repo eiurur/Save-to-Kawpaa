@@ -38,11 +38,14 @@ export default class KawpaaAgent {
         maxBodyLength: Infinity,
       });
     } catch (err) {
+      console.log(err);
       let statusCode = 500;
       if (err.response) statusCode = err.response.status;
       else if (err.statusCode) statusCode = err.statusCode;
 
-      throw httpException.happend(err.response.data, statusCode);
+      let errorMessage = err;
+      if (err.response) errorMessage = err.response.data;
+      throw httpException.happend(errorMessage, statusCode);
     }
   }
 

@@ -1,5 +1,4 @@
 import ChromeExecuter from './ChromeExecuter';
-import ChromeSyncStorageManager from './ChromeSyncStorageManager';
 import { CHROME_EXTENSION_RESOURCES } from '../../config';
 
 export default class ScriptExecuter {
@@ -12,10 +11,10 @@ export default class ScriptExecuter {
   }
 
   execute() {
-    Promise.all(this.tasks).then(results => {
+    Promise.all(this.tasks).then((results) => {
       const task = { file: CHROME_EXTENSION_RESOURCES.js.contents };
-      ChromeExecuter.executeScript(task).then(result =>
-        console.log('script injected'),
+      ChromeExecuter.executeScript(task).then((result) =>
+        console.log('script injected')
       );
     });
   }
