@@ -130,11 +130,11 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
     if (existKawpaaButton || !(hasPhoto || hasVideo)) return;
 
     let actions = [];
-    const isDialog = _$.find('[role="dialog"]');
-    if (isDialog) {
-      actions = _$.find('[role=group]');
-    } else {
+    const isModal = _$.is('[aria-labelledby="modal-header"]');
+    if (isModal) {
       actions = _$.find('[aria-label][role=group]');
+    } else {
+      actions = _$.find('[role=group]');
     }
     if (!actions.length) return;
 
