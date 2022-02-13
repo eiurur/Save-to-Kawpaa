@@ -11,7 +11,7 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
   constructor() {
     super(SUPPORT_SERVICE_DOMAIN.TWITTER_HOSTNAME);
     this.container =
-      '[role=main] article[role=article], [aria-labelledby="modal-header"]';
+      '[role=main] article[role=article], [aria-labelledby="modal-header"], [data-testid="tweet"]';
     this.tweet_container = '[data-testid="tweet"]';
     this.tweet_url = 'a[role=link][aria-label]';
     this.tweet_image = 'img[draggable]';
@@ -129,7 +129,13 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
     const hasVideo = _$.find(this.tweet_video).length > 0;
     if (existKawpaaButton || !(hasPhoto || hasVideo)) return;
 
-    const actions = _$.find('[aria-label][role=group]');
+    let actions = [];
+    const isDialog = _$.find('[role="dialog"]');
+    if (isDialog) {
+      actions = _$.find('[role=group]');
+    } else {
+      actions = _$.find('[aria-label][role=group]');
+    }
     if (!actions.length) return;
 
     const headAction = $(actions).children('div:first');
