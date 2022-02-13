@@ -1,7 +1,7 @@
 # Save to Kawpaa
 
 <p>
-This is a Chrome Extension that allows you to register contents to <a href="https://kawpaa.eiurur.xyz/" target="_blank">Kawpaa</a> that aggregates images/videos/text/links used for masturbation.
+This is a Chrome Extension that allows you to register contents to <a href="https://github.com/eiurur/Kawpaa" target="_blank">Kawpaa</a> that aggregates images/videos/text/links used for masturbation.
 </p>
 
 <div align="center">
