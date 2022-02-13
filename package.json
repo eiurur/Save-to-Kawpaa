@@ -4,6 +4,9 @@
   "description": "",
   "author": "eiurur",
   "license": "MIT",
+  "engines": {
+    "node": "16.x"
+  },
   "dependencies": {
     "alertifyjs": "^1.13.1",
     "axios": "^0.25.0",
