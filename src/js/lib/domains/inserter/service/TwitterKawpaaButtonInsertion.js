@@ -12,7 +12,7 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
     super(SUPPORT_SERVICE_DOMAIN.TWITTER_HOSTNAME);
     this.container =
       '[role=main] article[role=article], [aria-labelledby="modal-header"]';
-    this.tweet_container = '[data-testid=tweet]';
+    this.tweet_container = '[data-testid="tweet"]';
     this.tweet_url = 'a[role=link][aria-label]';
     this.tweet_image = 'img[draggable]';
     this.tweet_video = 'video';
@@ -51,7 +51,9 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
     if (document.location.href.indexOf('/status/') !== -1) {
       tweetUrl = document.location.href;
     } else {
-      const tu = targetElement.find(this.tweet_container).find(this.tweet_url);
+      const tu = targetElement
+        .closest(this.tweet_container)
+        .find(this.tweet_url);
       if (tu && tu.length > 0) {
         tweetUrl = `https://twitter.com${tu.first().attr('href')}`;
       } else {
@@ -115,7 +117,7 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
         },
         (data) => {
           return resolve(data);
-        },
+        }
       );
     });
   }
@@ -186,7 +188,7 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
           _this.show($(this));
         },
       },
-      _this.container,
+      _this.container
     );
   }
 }
