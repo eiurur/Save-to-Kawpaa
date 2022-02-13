@@ -28,11 +28,7 @@ export default class LinkScraper extends HTMLMetaDataScraper {
 
     let content = null;
     if (isYoutube) {
-      let vNumber = location.search
-        .split('&')
-        .shift()
-        .split('=')
-        .pop();
+      let vNumber = location.search.split('&').shift().split('=').pop();
       content = `\
           <iframe width="560" height="315" src="https://www.youtube.com/embed/${vNumber}" frameborder="0" allowfullscreen></iframe>\
         `;
@@ -80,8 +76,8 @@ export default class LinkScraper extends HTMLMetaDataScraper {
     // 例外中の例外。もし、他のChromeExtensionがimgを挿入していた場合、urlにchrome-extension://から始まる画像ファイルが代入され、保存に失敗してしまう。
     const isAtChromeExtensionPage =
       this.__guard__(
-        this.__guard__(this.data, x1 => x1.url),
-        x => x.indexOf('chrome-extension://'),
+        this.__guard__(this.data, (x1) => x1.url),
+        (x) => x.indexOf('chrome-extension://')
       ) > -1;
     if (isAtChromeExtensionPage) {
       u = $img.get(1).src;
@@ -97,9 +93,8 @@ export default class LinkScraper extends HTMLMetaDataScraper {
     let siteURL = this.getSiteURL();
 
     // youtube
-    const youtubeMatch = /https:\/\/www.youtube.com\/watch\?v=([a-zA-Z0-9\-\_]{11})/.exec(
-      siteURL,
-    );
+    const youtubeMatch =
+      /https:\/\/www.youtube.com\/watch\?v=([a-zA-Z0-9\-\_]{11})/.exec(siteURL);
     if (youtubeMatch) {
       const youtubeVideoId = youtubeMatch[1];
       if (youtubeVideoId.length == 11) {
@@ -112,6 +107,6 @@ export default class LinkScraper extends HTMLMetaDataScraper {
       u = $('img.thumb').attr('src');
     }
 
-    return u;
+    return u || '';
   }
 }
