@@ -1,21 +1,28 @@
 import axios from 'axios';
-import { API, CHROME_RUNTIME_ID, ENDPOINT, IS_PRODUCTION } from '../../config/';
+import { API, CHROME_RUNTIME_ID, ENDPOINT } from '../../config/';
+import ChromeSyncStorageManager from '../utils/ChromeSyncStorageManager';
 import httpException from '../errors/httpException';
 import { version } from '../../../../manifest.json';
 
 export default class KawpaaAgent {
   constructor(payload) {
     this.payload = payload === null ? {} : payload;
-    this.instance = this.getAxios();
+    this.instance = null;
   }
 
-  getBaseURL() {
-    return IS_PRODUCTION ? ENDPOINT.PROD : ENDPOINT.ENV;
+  async setup() {
+    this.instance = await this.getAxios();
   }
 
-  getAxios() {
+  async getBaseURL() {
+    const endpoint = await ChromeSyncStorageManager.get('endpoint');
+    return endpoint ? endpoint : ENDPOINT.DEFAULT;
+  }
+
+  async getAxios() {
+    const baseURL = await this.getBaseURL();
     return axios.create({
-      baseURL: this.getBaseURL(),
+      baseURL,
     });
   }
 

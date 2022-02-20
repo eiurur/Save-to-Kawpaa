@@ -32,7 +32,8 @@ import KawpaaAgent from './lib/domains/KawpaaAgent';
         post: postData,
       };
       const agent = new KawpaaAgent(payload);
-      const result = await agent.save();
+      await agent.setup();
+      await agent.save();
       Notification.success();
     } catch (err) {
       Notification.fail(err);

@@ -48,6 +48,7 @@ export default class RuntimeMessageListener {
       token,
     };
     const agent = new KawpaaAgent(payload);
+    await agent.setup();
     const tweet = await agent.get(`/api/convert/tweet/${tweetId}`);
     return tweet;
   }
