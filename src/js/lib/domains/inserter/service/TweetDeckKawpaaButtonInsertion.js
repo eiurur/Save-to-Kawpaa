@@ -6,9 +6,6 @@ import {
 } from '../../../../config';
 import KawpaaButtonInsertion from '../KawpaaButtonInsertion';
 
-import ChromeSyncStorageManager from '../../../utils/ChromeSyncStorageManager';
-import KawpaaAgent from '../../KawpaaAgent';
-
 export default class TweetDeckKawpaaButtonInsertion extends KawpaaButtonInsertion {
   constructor() {
     super(SUPPORT_SERVICE_DOMAIN.TWEETDECK_HOSTNAME);
@@ -59,7 +56,7 @@ export default class TweetDeckKawpaaButtonInsertion extends KawpaaButtonInsertio
         const { data } = await this.fetchTweet(tweetId);
         const videos = data.data.extended_entities.media[0].video_info.variants;
         const mp4VideoHasHighestSize = videos
-          .filter(video => video.bitrate)
+          .filter((video) => video.bitrate)
           .sort((a, b) => b.bitrate - a.bitrate)[0];
         const videoUrl = mp4VideoHasHighestSize.url;
         info = Object.assign(info, {
@@ -95,7 +92,7 @@ export default class TweetDeckKawpaaButtonInsertion extends KawpaaButtonInsertio
 
   onClick() {
     const _this = this;
-    $(document).on('click', this.onClickElement, function(e) {
+    $(document).on('click', this.onClickElement, function (e) {
       e.preventDefault();
 
       // 画像の差し替え
@@ -106,8 +103,8 @@ export default class TweetDeckKawpaaButtonInsertion extends KawpaaButtonInsertio
       const targetElement = $(this).closest(_this.container);
       _this
         .getInfo(targetElement)
-        .then(info => _this.getParamsToServer(info))
-        .then(params => _this.send(params));
+        .then((info) => _this.getParamsToServer(info))
+        .then((params) => _this.send(params));
     });
   }
 
@@ -115,24 +112,24 @@ export default class TweetDeckKawpaaButtonInsertion extends KawpaaButtonInsertio
     const _this = this;
     $(document).on(
       {
-        mouseenter: function(e) {
+        mouseenter: function (e) {
           _this.show($(this));
         },
       },
-      _this.container,
+      _this.container
     );
   }
 
   fetchTweet(tweetId) {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       chrome.runtime.sendMessage(
         {
           func: 'fetchTweet',
           tweetId: tweetId,
         },
-        data => {
+        (data) => {
           return resolve(data);
-        },
+        }
       );
     });
   }
