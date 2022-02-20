@@ -119,6 +119,9 @@ body {
 
 .cover {
   padding: 0 20px;
+  & + .cover {
+    padding-top: 20px;
+  }
 }
 
 .cover .btn-lg {
