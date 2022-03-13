@@ -56,7 +56,7 @@ export default class TweetDeckKawpaaButtonInsertion extends KawpaaButtonInsertio
         const { data } = await this.fetchTweet(tweetId);
         const videos = data.data.extended_entities.media[0].video_info.variants;
         const mp4VideoHasHighestSize = videos
-          .filter((video) => video.bitrate)
+          .filter((video) => video.content_type === 'video/mp4')
           .sort((a, b) => b.bitrate - a.bitrate)[0];
         const videoUrl = mp4VideoHasHighestSize.url;
         info = Object.assign(info, {
