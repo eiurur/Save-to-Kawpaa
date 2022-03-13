@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Save to Kawpaa",
   "description": "あとで抜く",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "permissions": ["tabs", "storage", "contextMenus", "notifications", "http://*/*", "https://*/*", "chrome://favicon/"],
   "content_scripts": [{
     "matches": ["https://amatsuka.herokuapp.com/*", "https://anime-pictures.net/*", "https://twitter.com/*", "https://tweetdeck.twitter.com/*", "https://www.tumblr.com/*", "https://chan.sankakucomplex.com/*/post/show/*", "https://chan.sankakucomplex.com/post/show/*", "*://danbooru.donmai.us/posts/*", "*://donmai.us/posts/*", "*://*.deviantart.com/art/*", "https://gelbooru.com/*", "*://*.iwara.tv/videos/*", "https://konachan.com/post/show/*", "https://www.pixiv.net/artworks/*", "https://www.pixiv.net/novel/*", "https://www.pixiv.net/users/*/novels*", "https://yande.re/post/show/*", "*://nijie.info/view.php*", "*://nijie.info/view_popup.php*", "*://nijiuradeck.herokuapp.com/*", "https://nozomi.la/*"],
