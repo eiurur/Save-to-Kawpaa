@@ -85,9 +85,11 @@ export default class TwitterKawpaaButtonInsertion extends KawpaaButtonInsertion 
         }
         const media = tweet.extended_entities.media[indexIdx];
         const imageUrl = media.media_url_https;
+        const ext = imageUrl.split(/[#?]/)[0].split('.').pop().trim();
+        const srcUrl = `${imageUrl}?format=${ext}&name=orig`;
         info = Object.assign(info, {
           type: CONTENT_TYPE.IMAGE,
-          srcUrl: imageUrl,
+          srcUrl: srcUrl,
         });
         break;
       }
