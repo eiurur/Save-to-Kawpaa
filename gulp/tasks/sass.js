@@ -10,7 +10,7 @@ gulp.task('sass', () =>
     .pipe(sass().on('error', sass.logError))
     .pipe(gulp.dest(config.dest))
     .pipe($.rename({ suffix: '.min' }))
-    .pipe($.cssmin())
+    .pipe($.cleanCss())
     .pipe(gulp.dest(config.dest))
     .pipe($.notify('CSS task complete'))
 );
