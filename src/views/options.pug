@@ -32,14 +32,14 @@ html(lang='ja')
               .form-group.row
                 label.col-sm-2.col-form-label(for='endpoint') Endpoint
                 .col-sm-10
-                  input#endpoint.form-control(type='text', placeholder='eg: https://127.0.0.1:9021/')
+                  input#endpoint.form-control(type='text', name="endpoint", placeholder='eg: https://127.0.0.1:9021/')
 
           .inner.cover
             form
               .form-group.row
                 label.col-sm-2.col-form-label(for='token') Token
                 .col-sm-10
-                  input#token.form-control(type='text', placeholder='eg: 000000-xxxxxxxxxxxxxxxxxxxxx')
+                  input#token.form-control(type='text', name="token", placeholder='eg: 000000-xxxxxxxxxxxxxxxxxxxxx')
 
           .cover
             #console
