@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import { CONTENT_TYPE } from '../../../config';
 
 export default class KawpaaLinkInsertion {
   constructor(hostname) {
@@ -10,7 +11,7 @@ export default class KawpaaLinkInsertion {
   }
 
   wait(ms = 1000) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
   exist() {
@@ -27,9 +28,7 @@ export default class KawpaaLinkInsertion {
     const existKawpaaLink = $(`[class^="kawpaa-save-link"]`).length > 0;
     if (existKawpaaLink) return false;
 
-    $(document)
-      .find(this.selector)
-      .append(this.html);
+    $(document).find(this.selector).append(this.html);
 
     return true;
   }
@@ -43,7 +42,7 @@ export default class KawpaaLinkInsertion {
   }
 
   getType() {
-    return 'image';
+    return CONTENT_TYPE.IMAGE;
   }
 
   getContent() {
@@ -56,7 +55,7 @@ export default class KawpaaLinkInsertion {
 
   getParamsToServer(info = {}) {
     return Promise.all([this.getType(), this.getContent(), this.getUrl()]).then(
-      getedData => ({
+      (getedData) => ({
         name: this.hostname,
         info: Object.assign(
           {
@@ -65,16 +64,16 @@ export default class KawpaaLinkInsertion {
             srcUrl: getedData[2], // TODO: urlだけに統一できない？
             url: getedData[2],
           },
-          info,
+          info
         ),
-      }),
+      })
     );
   }
 
   onClick() {
-    $(document).on('click', this.onClickElement, e => {
+    $(document).on('click', this.onClickElement, (e) => {
       e.preventDefault();
-      this.getParamsToServer().then(params => this.send(params));
+      this.getParamsToServer().then((params) => this.send(params));
     });
   }
 
@@ -83,6 +82,6 @@ export default class KawpaaLinkInsertion {
   }
 
   send(params) {
-    chrome.runtime.sendMessage(params, response => console.log(response));
+    chrome.runtime.sendMessage(params, (response) => console.log(response));
   }
 }

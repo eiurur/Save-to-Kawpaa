@@ -1,6 +1,5 @@
-import $ from 'jquery';
-import QueryStringParser from '../utils/QueryStringParser';
 import HTMLMetaDataScraper from './HTMLMetaDataScraper';
+import { CONTENT_TYPE } from '../../config';
 
 export default class ImageScraper extends HTMLMetaDataScraper {
   constructor(data) {
@@ -9,7 +8,7 @@ export default class ImageScraper extends HTMLMetaDataScraper {
   }
 
   getType() {
-    return 'image';
+    return CONTENT_TYPE.IMAGE;
   }
 
   getContent() {

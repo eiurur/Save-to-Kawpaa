@@ -7,18 +7,16 @@ export default class IwaraKawpaaLinkInsertion extends KawpaaLinkInsertion {
     super(SUPPORT_SERVICE_DOMAIN.IWARA_HOSTNAME);
     this.selector = '.node-buttons';
     this.html = `
-      <a id="kawpaa-save-button" href="#" target="_blank" class="${
-        this.kawpaaLinkClassName
-      } btn btn-info">
+      <a id="kawpaa-save-button" href="#" target="_blank" class="${this.kawpaaLinkClassName} btn btn-info">
         <span class="glyphicon glyphicon-record"></span> Save to Kawpaa
       </a>`;
   }
 
   getType() {
     if (location.href.includes('iwara.tv/videos')) {
-      return 'link';
+      return CONTENT_TYPE.LINK;
     } else {
-      return 'image';
+      return CONTENT_TYPE.IMAGE;
     }
   }
 
@@ -42,7 +40,7 @@ export default class IwaraKawpaaLinkInsertion extends KawpaaLinkInsertion {
   }
 
   getUrl() {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       if (location.href.includes('ecchi.iwara.tv/videos')) {
         const videoThumbnailImage = $('#video-player').attr('poster');
         const srcUrl = `http:${videoThumbnailImage}`;

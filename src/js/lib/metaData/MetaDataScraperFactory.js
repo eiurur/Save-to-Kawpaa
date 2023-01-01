@@ -1,3 +1,4 @@
+import { CONTENT_TYPE } from '../../config';
 import ImageScraper from './ImageScraper';
 import LinkScraper from './LinkScraper';
 import TextScraper from './TextScraper';
@@ -20,7 +21,7 @@ export default class MetaDataScraperFactory {
   static isImage(data) {
     return (
       data &&
-      (data.type === 'image' ||
+      (data.type === CONTENT_TYPE.IMAGE ||
         (data.mediaType !== null && data.menuItemId === 'image'))
     );
   }
@@ -30,6 +31,8 @@ export default class MetaDataScraperFactory {
   }
 
   static isVideo(data) {
-    return data && (data.type === 'video' || data.menuItemId === 'video');
+    return (
+      data && (data.type === CONTENT_TYPE.VIDEO || data.menuItemId === 'video')
+    );
   }
 }

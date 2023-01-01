@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import { CONTENT_TYPE } from '../../../config';
 
 export default class KawpaaButtonInsertion {
   constructor(hostname) {
@@ -23,9 +24,9 @@ export default class KawpaaButtonInsertion {
         name: this.hostname,
         info: Object.assign(
           {
-            type: 'image',
+            type: CONTENT_TYPE.IMAGE,
           },
-          info,
+          info
         ),
       };
       return resolve(params);
@@ -59,7 +60,7 @@ export default class KawpaaButtonInsertion {
           _this.show($(this));
         },
       },
-      _this.container,
+      _this.container
     );
   }
 }
