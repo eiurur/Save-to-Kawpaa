@@ -28,7 +28,7 @@ This is a Chrome Extension that allows you to register contents to <a href="http
 
 ![](https://github.com/eiurur/Save-to-Kawpaa/raw/master/images/description/open_option.jpg)
 
-5. Copy token on <a href="https://kawpaa.eiurur.xyz/account" target="_blank">Kawpaa's account page</a>
+5. Copy token on Kawpaa's account page. (e.g. https://kawpaa.example.com/account)
 
    If you are changing your Kawpaa domain, enter your domain in the form next to Endpoint. (e.g. https://kawpaa.example.com/)  
    On the other hand, if you have not changed it and want to use https://127.0.0.1:9021, you can leave it blank.
@@ -63,9 +63,7 @@ To be written
 
 ## How to browse
 
-Go to Site
-
-> <a href="https://kawpaa.eiurur.xyz/" target="_blank">Kawpaa</a>
+Go to the <a href="https://github.com/eiurur/Kawpaa" target="_blank">Kawpaa</a> page you have set up
 
 <br>
 
