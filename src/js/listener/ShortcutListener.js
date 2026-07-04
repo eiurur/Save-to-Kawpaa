@@ -1,11 +1,11 @@
-export default class ShortcutListener {
-  constructor() {
-    return this;
-  }
+// export default class ShortcutListener {
+//   constructor() {
+//     return this;
+//   }
 
-  activate() {
-    chrome.commands.onCommand.addListener(command =>
-      console.log('Command:', command),
-    );
-  }
-}
+//   activate() {
+//     chrome.commands.onCommand.addListener(command =>
+//       console.log('Command:', command),
+//     );
+//   }
+// }
