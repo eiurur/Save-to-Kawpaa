@@ -15,8 +15,8 @@ import PixivKawpaaLinkInsertion from './PixivKawpaaLinkInsertion';
 import PixivNovelKawpaaLinkInsertion from './PixivNovelKawpaaLinkInsertion';
 import SankakuComplexKawpaaLinkInsertion from './SankakuComplexKawpaaLinkInsertion';
 import TumblrKawpaaButtonInsertion from './TumblrKawpaaButtonInsertion';
-import TweetDeckKawpaaButtonInsertion from './TweetDeckKawpaaButtonInsertion';
-import TwitterKawpaaButtonInsertion from './TwitterKawpaaButtonInsertion';
+// import TweetDeckKawpaaButtonInsertion from './TweetDeckKawpaaButtonInsertion';
+// import TwitterKawpaaButtonInsertion from './TwitterKawpaaButtonInsertion';
 import YandereKawpaaLinkInsertion from './YandereKawpaaLinkInsertion';
 
 export {
@@ -36,7 +36,7 @@ export {
   PixivNovelKawpaaLinkInsertion,
   SankakuComplexKawpaaLinkInsertion,
   TumblrKawpaaButtonInsertion,
-  TwitterKawpaaButtonInsertion,
-  TweetDeckKawpaaButtonInsertion,
+  // TwitterKawpaaButtonInsertion,
+  // TweetDeckKawpaaButtonInsertion,
   YandereKawpaaLinkInsertion,
 };

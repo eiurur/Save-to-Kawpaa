@@ -21,8 +21,8 @@ import {
   PixivNovelKawpaaLinkInsertion,
   SankakuComplexKawpaaLinkInsertion,
   TumblrKawpaaButtonInsertion,
-  TwitterKawpaaButtonInsertion,
-  TweetDeckKawpaaButtonInsertion,
+  // TwitterKawpaaButtonInsertion,
+  // TweetDeckKawpaaButtonInsertion,
   YandereKawpaaLinkInsertion,
 } from './service';
 
@@ -117,10 +117,10 @@ export default class InsertionFactory {
         return new SankakuComplexKawpaaLinkInsertion();
       case SUPPORT_SERVICE_DOMAIN.TUMBLR_HOSTNAME:
         return new TumblrKawpaaButtonInsertion();
-      case SUPPORT_SERVICE_DOMAIN.TWEETDECK_HOSTNAME:
-        return new TweetDeckKawpaaButtonInsertion();
-      case SUPPORT_SERVICE_DOMAIN.TWITTER_HOSTNAME:
-        return new TwitterKawpaaButtonInsertion();
+      // case SUPPORT_SERVICE_DOMAIN.TWEETDECK_HOSTNAME:
+      //   return new TweetDeckKawpaaButtonInsertion();
+      // case SUPPORT_SERVICE_DOMAIN.TWITTER_HOSTNAME:
+      //   return new TwitterKawpaaButtonInsertion();
       case SUPPORT_SERVICE_DOMAIN.YANDE_RE_HOSTNAME:
         return new YandereKawpaaLinkInsertion();
       default:
