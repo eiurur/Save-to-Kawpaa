@@ -9,14 +9,16 @@ export default class RuntimeMessageListener {
   }
 
   changeIconState({ path, tabId }) {
-    chrome.browserAction.setIcon({
+    // ❌ chrome.browserAction.setIcon から ⭕️ chrome.action.setIcon に修正
+    chrome.action.setIcon({
       path: path,
       tabId: tabId,
     });
   }
 
-  registerContentToKawpaa(info) {
-    new ScriptExecuter(info).execute();
+  registerContentToKawpaa(tabId, info) {
+    // コンストラクタで tabId を渡すように修正
+    new ScriptExecuter(tabId, info).execute();
   }
 
   openErrorReportPage() {
@@ -62,23 +64,31 @@ export default class RuntimeMessageListener {
           path: request.newIconPath,
           tabId: sender.tab.id,
         });
-        return sendResponse(`Done send link`);
+        sendResponse(`Done send link`);
+        return;
       }
 
       if (this.isRequestFromSpecificService(request.name)) {
-        this.registerContentToKawpaa(JSON.stringify(request.info));
-      } else if (request.func) {
+        this.registerContentToKawpaa(sender.tab.id, request.info);
+        sendResponse(`ok`);
+        return;
+      } 
+      
+      if (request.func) {
+        // 非同期（Promise）処理を実行してレスポンスを返す
         this[request.func](request)
           .then((result) => sendResponse(result))
           .catch((err) => sendResponse(err));
-        return true; // Will respond asynchronously.
+        return true; // MV3でも非同期でレスポンスを返すために必須
       }
 
       if (request.name === 'REPORT_ERROR') {
         this.openErrorReportPage();
+        sendResponse(`ok`);
+        return;
       }
 
-      return sendResponse(`ok`);
+      sendResponse(`ok`);
     });
   }
 }

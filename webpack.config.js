@@ -1,10 +1,23 @@
 const path = require('path');
 const webpack = require('webpack');
 
-module.exports = {
+// 共通のモジュールルール
+const commonModule = {
+  rules: [
+    {
+      test: /\.js$/,
+      exclude: /node_modules/,
+    },
+  ],
+};
+
+// ==========================================
+// 1. 画面側（コンテンツスクリプトやオプション画面）の設定
+// ==========================================
+const webConfig = {
   context: `${__dirname}/src/js`,
+  target: 'web', 
   entry: {
-    background: './background.js',
     contents: './contents.js',
     options: './options.js',
     insert: './insert.js',
@@ -14,13 +27,25 @@ module.exports = {
     path: path.resolve(__dirname, './build/js'),
     filename: '[name].bundle.js',
   },
-  devtool: 'cheap-module-source-map',
-  module: {
-    rules: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-      },
-    ],
-  },
+  devtool: false,
+  module: commonModule,
 };
+
+// ==========================================
+// 2. バックグラウンド（Service Worker）の設定
+// ==========================================
+const workerConfig = {
+  context: `${__dirname}/src/js`,
+  target: 'webworker',
+  entry: {
+    background: './background.js',
+  },
+  output: {
+    path: path.resolve(__dirname, './build/js'),
+    filename: '[name].bundle.js',
+  },
+  devtool: false,
+  module: commonModule,
+};
+
+module.exports = [webConfig, workerConfig];

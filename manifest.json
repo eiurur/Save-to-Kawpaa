@@ -1,33 +1,36 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "Save to Kawpaa",
   "description": "あとで抜く",
-  "version": "1.0.5",
-  "permissions": ["tabs", "storage", "contextMenus", "notifications", "http://*/*", "https://*/*", "chrome://favicon/"],
+  "version": "1.1.0",
+  "permissions": ["tabs", "storage", "contextMenus", "scripting", "activeTab", "notifications"],
+  "host_permissions": ["http://*/*", "https://*/*"],
   "content_scripts": [{
-    "matches": ["https://amatsuka.herokuapp.com/*", "https://anime-pictures.net/*", "https://twitter.com/*", "https://tweetdeck.twitter.com/*", "https://www.tumblr.com/*", "https://chan.sankakucomplex.com/*/post/show/*", "https://chan.sankakucomplex.com/post/show/*", "*://danbooru.donmai.us/posts/*", "*://donmai.us/posts/*", "*://*.deviantart.com/art/*", "https://gelbooru.com/*", "*://*.iwara.tv/videos/*", "https://konachan.com/post/show/*", "https://www.pixiv.net/artworks/*", "https://www.pixiv.net/novel/*", "https://www.pixiv.net/users/*/novels*", "https://yande.re/post/show/*", "*://nijie.info/view.php*", "*://nijie.info/view_popup.php*", "*://nijiuradeck.herokuapp.com/*", "https://nozomi.la/*"],
+    "matches": ["https://anime-pictures.net/*", "https://twitter.com/*", "https://www.tumblr.com/*", "https://chan.sankakucomplex.com/*/post/show/*", "https://chan.sankakucomplex.com/post/show/*", "*://danbooru.donmai.us/posts/*", "*://donmai.us/posts/*", "*://*.deviantart.com/art/*", "https://gelbooru.com/*", "*://*.iwara.tv/videos/*", "https://konachan.com/post/show/*", "https://www.pixiv.net/artworks/*", "https://www.pixiv.net/novel/*", "https://www.pixiv.net/users/*/novels*", "https://yande.re/post/show/*", "*://nijie.info/view.php*", "*://nijie.info/view_popup.php*", "https://nozomi.la/*"],
     "js": ["build/js/insert.bundle.js"],
     "run_at": "document_end"
   }],
-  "browser_action": {
+  "action": {
     "default_icon": {
-      "19": "build/images/gray/icon19.png",
-      "38": "build/images/gray/icon38.png"
+      "16": "build/images/gray/icon19.png",
+      "32": "build/images/gray/icon38.png"
     },
     "default_title": "Save to Kawpaa"
   },
   "background": {
-    "persistent": false,
-    "scripts": ["build/js/vendors/lib.min.js", "build/js/background.bundle.js"]
+    "service_worker": "build/js/background.bundle.js"
   },
-  "options_page": "build/views/options.html",
+  "options_ui": {
+    "page": "build/views/options.html",
+    "open_in_tab": true
+  },
   "icons": {
     "16": "build/images/blue/icon19.png",
     "48": "build/images/blue/icon48.png",
     "128": "build/images/blue/icon128.png"
   },
   "commands": {
-    "_execute_browser_action": {
+    "_execute_action": {
       "suggested_key": {
         "windows": "Ctrl+Shift+U",
         "mac": "Command+Shift+U",

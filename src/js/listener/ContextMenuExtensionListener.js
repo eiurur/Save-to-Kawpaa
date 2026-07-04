@@ -2,13 +2,13 @@ import ScriptExecuter from '../lib/utils/ScriptExecuter';
 import { ENDPOINT } from '../config/';
 
 export default class ContextMenuExtensionListener {
-  constructor() {
+constructor() {
     this.contexts = ['page', 'image', 'selection', 'video'];
-    this.rebuildContextMext();
-    return this;
   }
 
+
   rebuildContextMext() {
+    // 確実にメニューをリセットしてから作成
     chrome.contextMenus.removeAll(() => {
       this.createContextMenu();
       this.createBrowserIconContextMenu();
@@ -31,7 +31,7 @@ export default class ContextMenuExtensionListener {
   createBrowserIconContextMenu() {
     chrome.contextMenus.create({
       title: 'Open Kawpaa',
-      contexts: ['browser_action'],
+      contexts: ['action'],
       id: 'browser_action_open_kawpaa',
     });
   }
@@ -42,16 +42,26 @@ export default class ContextMenuExtensionListener {
     );
   }
 
-  registerContentToKawpaa(info) {
-    new ScriptExecuter(info).execute();
+  registerContentToKawpaa(tabId, info) {
+    // tabId が undefined にならないようガード
+    if (tabId) {
+      new ScriptExecuter(tabId, info).execute();
+    }
   }
 
   activate() {
-    chrome.contextMenus.onClicked.addListener((info, tab) => {
-      if (info.menuItemId === 'browser_action_open_kawpaa') {
-        return this.goToKawpaa();
-      }
-      this.registerContentToKawpaa(JSON.stringify(info));
-    });
+    // 既存のリスナーがあれば一度オフにする（重複登録防止）
+    chrome.contextMenus.onClicked.removeListener(this.handleContextMenuClick);
+    chrome.contextMenus.onClicked.addListener(this.handleContextMenuClick);
+    this.rebuildContextMext(); // メニューの作成
+  }
+
+  // アロー関数を使って this を保持
+  handleContextMenuClick = (info, tab) => {
+    if (info.menuItemId === 'browser_action_open_kawpaa') {
+      return this.goToKawpaa();
+    }
+    // ここで tab.id が取れているかチェック
+    this.registerContentToKawpaa(tab ? tab.id : null, info);
   }
 }

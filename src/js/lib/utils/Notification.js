@@ -7,10 +7,11 @@ export default class Notification {
   }
 
   // アイコンに色をつけて、完了したことをわかるようにする。通知もする。
-  static success() {
-    chrome.runtime.sendMessage({
-      newIconPath: CHROME_EXTENSION_RESOURCES.images.BLUE_19,
-    });
+  static async success() {
+    // 参照できないので一旦無効化
+    // await chrome.runtime.sendMessage({
+    //   newIconPath: CHROME_EXTENSION_RESOURCES.images.BLUE_19,
+    // });
     alertify.success('Saved :)');
   }
 

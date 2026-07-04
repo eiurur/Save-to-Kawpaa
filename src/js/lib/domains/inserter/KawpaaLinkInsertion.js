@@ -73,7 +73,9 @@ export default class KawpaaLinkInsertion {
   onClick() {
     $(document).on('click', this.onClickElement, (e) => {
       e.preventDefault();
-      this.getParamsToServer().then((params) => this.send(params));
+      this.getParamsToServer().then(async (params) => {
+        await this.send(params)
+      });
     });
   }
 
@@ -81,7 +83,7 @@ export default class KawpaaLinkInsertion {
     $(document).off('click', this.onClickElement);
   }
 
-  send(params) {
-    chrome.runtime.sendMessage(params, (response) => console.log(response));
+  async send(params) {
+    await chrome.runtime.sendMessage(params);
   }
 }

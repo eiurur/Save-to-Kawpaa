@@ -5,13 +5,14 @@ export default class BroswerIconClickListener {
     return this;
   }
 
-  registerContentToKawpaa() {
-    new ScriptExecuter(null).execute();
+  registerContentToKawpaa(tabId, info) {
+    // コンストラクタで tabId を渡すように修正
+    new ScriptExecuter(tabId, info).execute();
   }
 
   activate() {
-    chrome.browserAction.onClicked.addListener(tab => {
-      this.registerContentToKawpaa();
+    chrome.action.onClicked.addListener(tab => {
+      this.registerContentToKawpaa(tab.id, {});
     });
   }
 }

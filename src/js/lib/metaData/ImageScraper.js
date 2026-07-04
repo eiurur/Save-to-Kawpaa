@@ -16,9 +16,6 @@ export default class ImageScraper extends HTMLMetaDataScraper {
   }
 
   getURL() {
-    if (this.data.srcUrl.indexOf('https://pbs.twimg.com/media/') !== -1) {
-      this.data.srcUrl = this.data.srcUrl.replace(/name=(.*)/, 'name=large');
-    }
     return this.data.srcUrl;
   }
 }

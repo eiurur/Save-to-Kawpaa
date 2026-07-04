@@ -37,8 +37,8 @@ export default class KawpaaButtonInsertion {
     return $(this.selector).length > 0;
   }
 
-  send(params) {
-    chrome.runtime.sendMessage(params, (response) => console.log(response));
+  async send(params) {
+    await chrome.runtime.sendMessage(params);
   }
 
   on() {
